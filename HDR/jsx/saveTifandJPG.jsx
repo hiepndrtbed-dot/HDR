@@ -1,0 +1,131 @@
+var nameTxt2 = "/resizeImage.txt";
+(function () {
+    purgeAll();
+    var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt2);
+    if (txtFile.exists) {
+        alert("Resize về kích thước gốc!");
+        return;
+    }
+    // Kiểm tra xem có tài liệu đang mở không
+    if (app.documents.length > 0) {
+        //Channels to path
+        // alert("Kiem tra thong tin truoc khi Save!")
+        // doc.activeLayer = doc.layers["MERGE 1"];
+        // cameraRawFilterALL(0, 0, 10, 10, 5, false);
+        // Lấy tên file không có phần mở rộng
+        var fileName = doc.name.replace(/\.[^\.]+$/, '');
+
+        // lay duoi mo rong.
+        var partsEnd = doc.name.split('.').pop().toLowerCase();
+
+        // Lấy đường dẫn thư mục chứa file gốc
+        var originalPath = doc.path;
+
+        if (partsEnd == "tif" || partsEnd == "psd" || partsEnd == "psb") {
+            var folderTif = new Folder(originalPath.parent + "/Tif");
+            var folderJpg = new Folder(originalPath.parent + "/DoneJPG")
+            var folderJpgNoGrass = new Folder(originalPath.parent + "/DoneJPGNoGrass")
+        } else {
+            var folderTif = new Folder(originalPath + "/Tif");
+            var folderJpg = new Folder(originalPath + "/DoneJPG")
+            var folderJpgNoGrass = new Folder(originalPath + "/DoneJPGNoGrass")
+
+        }
+
+        // Kiểm tra và tạo thư mục 'done' nếu chưa có
+        if (!folderTif.exists) {
+            folderTif.create();
+        }
+
+        if (!folderJpg.exists) {
+            folderJpg.create();
+        }
+
+        if (!folderJpgNoGrass.exists) {
+            folderJpgNoGrass.create();
+        }
+
+        // Tạo đường dẫn lưu TIFF và JPEG
+        var tifFile = new File(folderTif + "/" + fileName + ".tif");
+        var jpgFile = new File(folderJpg + "/" + fileName + ".jpg");
+        var jpgFileNoGrass = new File(folderJpgNoGrass + "/" + fileName + ".jpg");
+        var jpgFileDTD = new File(folderJpg + "/" + fileName + "_addon_dtd.jpg");
+
+        doc.convertProfile("sRGB IEC61966-2.1",
+            Intent.RELATIVECOLORIMETRIC,
+            true,
+            true);
+
+        // Setup JPG
+        var jpgOptions = new JPEGSaveOptions();
+        jpgOptions.embedColorProfile = true;                        // Nhúng profile màu (giữ màu chính xác)
+        jpgOptions.formatOptions = FormatOptions.STANDARDBASELINE;  // Đảm bảo tương thích cao nhất
+        jpgOptions.matte = MatteType.NONE;                          // Không áp nền (tránh dính màu nền)
+        jpgOptions.quality = 12;
+
+        if (selectLayer("Grass")) {
+            if (selectLayer("DTD")) {
+                //Save JPG
+                doc.layers.getByName("DTD").visible = false;
+                doc.saveAs(jpgFile, jpgOptions, true);
+
+                //Save No Grass
+                doc.layers.getByName("Grass").visible = false;
+                doc.saveAs(jpgFileNoGrass, jpgOptions, true);
+                doc.layers.getByName("Grass").visible = true;
+
+                //Save JPG DTD
+                doc.layers.getByName("DTD").visible = true;
+                doc.saveAs(jpgFileDTD, jpgOptions, true);
+
+            } else {
+                //Save JPG
+                doc.saveAs(jpgFile, jpgOptions, true);
+                //Save No Grass
+                doc.layers.getByName("Grass").visible = false;
+                doc.saveAs(jpgFileNoGrass, jpgOptions, true);
+                doc.layers.getByName("Grass").visible = true;
+
+            }
+        } else {
+            if (selectLayer("DTD")) {
+                //Save JPG
+                doc.layers.getByName("DTD").visible = false;
+                doc.saveAs(jpgFile, jpgOptions, true);
+
+                //Save JPG DTD
+                doc.layers.getByName("DTD").visible = true;
+                doc.saveAs(jpgFileDTD, jpgOptions, true);
+
+            } else {
+                //Save JPG
+                doc.saveAs(jpgFile, jpgOptions, true);
+            }
+        }
+
+
+        // Save TIFF
+        var tifOptions = new TiffSaveOptions();
+        tifOptions.imageCompression = TIFFEncoding.NONE;
+        tifOptions.layers = true;
+        doc.saveAs(tifFile, tifOptions, true);
+        doc.close(SaveOptions.DONOTSAVECHANGES);
+
+
+        // // Đóng tất cả tài liệu mà không lưu
+        // while (app.documents.length > 0) {
+        //     app.documents[0].close(SaveOptions.DONOTSAVECHANGES);
+        // }
+
+        // Mở Adobe Bridge bằng BridgeTalk
+        if (app.documents.length > 0) { return; } //Thoat lenh neu document nhieu hon 1.
+        BridgeTalk.launch("bridge");
+        var bt = new BridgeTalk();
+        bt.target = "bridge";
+        bt.body = "app.bringToFront();";
+        bt.send();
+    } else {
+        alert("Không có tài liệu nào đang mở.");
+    }
+})();
+
