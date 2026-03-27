@@ -68,20 +68,31 @@ var withDialog = false;
 
     //process
     //Create file window temp
-    doc.activeLayer = doc.layerSets[0].artLayers[0];
-    doc.selection.selectAll();
-    doc.selection.copy();
-    selectChoseMultiLayer(doc.layers[0].name, doc.layers[doc.layers.length - 1].name);
-    convertSmart();
-    doc.activeLayer.name = "MERGE 1";
-    doc.paste();
-    doc.activeLayer.name = "WindowTemp";
-    doc.activeLayer.move(doc.artLayers["MERGE 1"], ElementPlacement.PLACEAFTER);
-    convertSmart();
-    doc.activeLayer = doc.artLayers["MERGE 1"];
-    processPreset(valuePreset, withDialog);
-    showCurves();
-    selecTool("penTool");
+    try {
+        doc.activeLayer = doc.layerSets[0].artLayers[0];
+        doc.selection.selectAll();
+        doc.selection.copy();
+        selectChoseMultiLayer(doc.layers[0].name, doc.layers[doc.layers.length - 1].name);
+        convertSmart();
+        doc.activeLayer.name = "MERGE 1";
+        processPreset(valuePreset, withDialog);
+        convertSmart();
+        pasteFolder();
+        doc.activeLayer.name = "WindowTemp";
+        doc.activeLayer.move(doc.artLayers["MERGE 1"], ElementPlacement.PLACEAFTER);
+        convertSmart();
+    } catch (error) {
+        doc.activeLayer.name = "MERGE 1";
+        convertSmart();
+        processPreset(valuePreset, withDialog);
+        convertSmart();
+    } finally {
+        doc.activeLayer = doc.artLayers["MERGE 1"];
+        showCurves();
+        shadowAndHighlight(0,0);
+        selecTool("penTool");
+    }
+
 
 })();
 

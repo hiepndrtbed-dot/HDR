@@ -1,28 +1,61 @@
-var nameTxt = "/resizeImage.txt";
+var nameJson = "/resizeImage.json";
 var valuePreset = null;
 var withDialog = false;
 var temp = 0;
 var value = 50;
 (function main() {
     purgeAll();
-    var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
-    if (txtFile.exists) {
+    var jsonFile = new File(scriptFolder.fsName + "/Data" + nameJson);
+    if (jsonFile.exists) {
+        jsonFile.open("r");
+        var localData = JSON.parse(jsonFile.read());
+        jsonFile.close();
+        if(localData.nameDocument != doc.name){
+            alert("Về files ** " + localData.nameDocument + " ** để hiện nhé!");
+            return;
+        }
         if (hasSelection()) {
             saveAlphaChnl("SelectionTemp");
-            resizeImagePercent(200);
-            txtFile.remove();
+            if (doc.width != parseInt(localData.width)) {
+                resizeDocument(localData.width, localData.height, null);
+
+            }
+            jsonFile.remove();
             doc.selection.load(doc.channels.getByName("SelectionTemp"));
             doc.channels.getByName("SelectionTemp").remove();
         } else {
-            resizeImagePercent(200);
-            txtFile.remove();
+            if (doc.width != parseInt(localData.width)) {
+                resizeDocument(localData.width, localData.height, null);
+            }
+            jsonFile.remove();
         }
     } else {
-        // Lưu lựa chọn vào file TXT
-        resizeImagePercent(50);
-        txtFile.encoding = "UTF8";
-        txtFile.open("w");
-        txtFile.write(value.toString());
-        txtFile.close();
+        // Lưu lựa chọn vào file Json
+        // alert(parseInt(doc.width));
+        var valueSizeImages = { width: parseInt(doc.width), height: parseInt(doc.height), nameDocument: doc.name };
+        if (hasSelection()) {
+            saveAlphaChnl("SelectionTemp");
+            resizeImagePercent(33);
+            doc.selection.load(doc.channels.getByName("SelectionTemp"));
+            doc.channels.getByName("SelectionTemp").remove();
+        } else {
+            resizeImagePercent(33);
+        }
+        jsonFile.encoding = "UTF8";
+        jsonFile.open("w");
+        jsonFile.write(JSON.stringify(valueSizeImages, null, 2));
+        jsonFile.close();
     }
 })();
+
+function resizeDocument(width, height, resolution) {
+    var doc = app.activeDocument;
+
+    // Resize image (width, height, resolution, resample method)
+    doc.resizeImage(
+        UnitValue(width, "px"),   // new width
+        UnitValue(height, "px"),   // new height
+        resolution,                     // resolution (dpi)
+        // ResampleMethod.BICUBIC // resampling method
+    );
+}

@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "checkJs": true,
+    "noLib": false,
+    "baseUrl": "."
+  },
+  "include": [
+    "**/*.jsx",
+    "types/**/*.d.ts"
+  ]
+}

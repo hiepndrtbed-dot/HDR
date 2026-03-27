@@ -1,14 +1,15 @@
 var nameTxt = "/Preset.txt";
-var nameTxt2 = "/resizeImage.txt";
+var nameFileJson = "/resizeImage.json";
 var valuePreset = null;
 var withDialog = true;
 var temp = 0;
 (function main() {
     purgeAll();
-    var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt2);
-    if (txtFile.exists) {
+    var jsonFile = new File(scriptFolder.fsName + "/Data" + nameFileJson);
+    if (jsonFile.exists) {
         alert("Resize về kích thước gốc!");
-        return;
+        $.evalFile(currentFolder + "/resizeImage.jsx");
+        // return;
     }
     var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
     if (txtFile.exists) {

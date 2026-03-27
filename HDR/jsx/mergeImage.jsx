@@ -18,7 +18,11 @@ for (var i = 0; i < lengthArtLayers - 1; i++) {
     }
 }
 
-doc.activeLayer = doc.layers["Darken 1"];
+if (lengthArtLayers != 2) {
+    doc.activeLayer = doc.layers["Darken 1"];
+} else {
+    doc.activeLayer = doc.artLayers[0];
+}
 selecTool("paintbrushTool");
 resetBackground(false);
 selectMask();

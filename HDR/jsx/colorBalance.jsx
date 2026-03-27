@@ -11,20 +11,22 @@
         }
     }
     if (activeDocument.quickMaskMode == true) { activeDocument.quickMaskMode = false; }
-    var newLayer1 = doc.artLayers.add();
-    newLayer1.name = "Color Balance";
-    newLayer1.move(doc.artLayers["Not delete"], ElementPlacement.PLACEAFTER);
-    mergeVisible();
-    //thay vao day
-    actionCharID("ClrB");
+    // var newLayer1 = doc.artLayers.add();
+    // newLayer1.name = "Color Balance";
+    // newLayer1.move(doc.artLayers["Not delete"], ElementPlacement.PLACEAFTER);
+    // mergeVisible();
+    // //thay vao day
+    // actionCharID("ClrB");
 
-    if (!hasSelection()) {
-        doc.selection.selectAll();
-        addMask(); invert();
-        return;
-    } else {
-        addMask(); applyMask();
-    }
+    // if (!hasSelection()) {
+    //     doc.selection.selectAll();
+    //     addMask(); invert();
+    //     return;
+    // } else {
+    //     addMask(); applyMask();
+    // }
+    makeColorBalance();
+    doc.activeLayer.move(doc.artLayers["Not delete"], ElementPlacement.PLACEAFTER);
 })();
 
 function layerViaCopy(nameLayer) {

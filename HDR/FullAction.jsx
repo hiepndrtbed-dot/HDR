@@ -62,6 +62,20 @@ function runabcedfasddfashiepnguyenduc() {
     buttonAlign.preferredSize.width = 170;
     buttonAlign.helpTip = "Align Layer có độ rung, sau đó Merge các Layer có các độ sáng khác nhau! \nPhím tắt: F3";
 
+    //Align and merge Exposure
+    var buttonAlignFlash = group1.add("button", undefined, undefined, { name: "Align and merge Exposure" });
+    buttonAlignFlash.text = "ALignMergeExFlash";
+    buttonAlignFlash.alignment = ["left", "center"];
+    buttonAlignFlash.preferredSize.width = 170;
+    buttonAlignFlash.helpTip = "Align Layer có độ rung, sau đó Merge các Layer có các độ sáng khác nhau! ";
+
+    //Merge Exposure Flash
+    var buttonMergeExposureFlash = group1.add("button", undefined, undefined, { name: "Merge Exposure" });
+    buttonMergeExposureFlash.text = "Merge Exposure Flash";
+    buttonMergeExposureFlash.alignment = ["left", "center"];
+    buttonMergeExposureFlash.preferredSize.width = 170;
+    buttonMergeExposureFlash.helpTip = "MergeFlash các Layer có các độ sáng khác nhau!";
+
     //Fill white Ceiling, molding
     var buttonFillCeilingMolding = group1.add("button", undefined, undefined, { name: "Ceiling, molding" });
     buttonFillCeilingMolding.text = "Fill white Ceiling, molding (F4)";
@@ -180,10 +194,11 @@ function runabcedfasddfashiepnguyenduc() {
     buttonHueSaturation.text = "Hue Saturation(U)";
     buttonHueSaturation.preferredSize.width = 170;
 
-    //Replace color Red + yellow
-    var buttonAddRed = group2.add("button", undefined, undefined, { name: "deleteSetAction 75%" });
-    buttonAddRed.text = "Create Layer Blending Color (Y)";
-    buttonAddRed.preferredSize.width = 170;
+    //Color and vibrance
+    var buttonColorAndVibrance = group2.add("button", undefined, undefined, { name: "Hue Color" });
+    buttonColorAndVibrance.text = "ColorAndVibrance(Y)";
+    buttonColorAndVibrance.preferredSize.width = 170;
+
 
     //Copy Path
     var buttonCopyPath = group2.add("button", undefined, undefined, { name: "Flip_Canvas_Product_White" });
@@ -199,6 +214,12 @@ function runabcedfasddfashiepnguyenduc() {
     var buttonSaveSelectionAllDetail = group2.add("button", undefined, undefined, { name: "Flip_Canvas_Product_White" });
     buttonSaveSelectionAllDetail.text = "Save Selection All Detail (F)";
     buttonSaveSelectionAllDetail.preferredSize.width = 170;
+
+    //Replace color Red + yellow
+    var buttonAddRed = group2.add("button", undefined, undefined, { name: "deleteSetAction 75%" });
+    buttonAddRed.text = "Create Layer Blending Color (C)";
+    buttonAddRed.preferredSize.width = 170;
+
 
     //Copy Path
     var buttonRunActionPath = group2.add("button", undefined, undefined, { name: "Run action path" });
@@ -288,13 +309,13 @@ function runabcedfasddfashiepnguyenduc() {
     // --- Map button ↔ file ---
     bindBtn(buttonCopyExposure, currentFolder + "/copyToMerge.jsx");
     bindBtn(buttonMergeExposure, currentFolder + "/mergeImage.jsx");
+    bindBtn(buttonMergeExposureFlash, currentFolder + "/mergeBWBD.jsx");
     bindBtn(buttonFillCeilingMolding, currentFolder + "/Whitening.jsx");
     bindBtn(buttonFillWall, currentFolder + "/wallColor.jsx");
     bindBtn(buttonFillWall2, currentFolder + "/wallColor2.jsx");
     bindBtn(buttonAddTV, currentFolder + "/InsertElectronic.jsx");
     bindBtn(buttonAddGrass, currentFolder + "/insertGrass.jsx");
     bindBtn(buttonWindow, currentFolder + "/insertWindow.jsx");
-    bindBtn(buttonAddRed, currentFolder + "/+redYellow.jsx");
     bindBtn(buttonSky, currentFolder + "/insertSky.jsx");
     bindBtn(buttonAddSkyDTD, currentFolder + "/insertSkyDTD.jsx");
     bindBtn(buttonAddLight, currentFolder + "/insertFlight.jsx");
@@ -303,12 +324,14 @@ function runabcedfasddfashiepnguyenduc() {
     bindBtn(buttonResetram, currentFolder + "/resetRam.jsx");
     bindBtn(buttonReplaceColor, currentFolder + "/replaceColor.jsx");
     bindBtn(buttonHueSaturation, currentFolder + "/hueSaturation.jsx");
+    bindBtn(buttonColorAndVibrance, currentFolder + "/colorAndVibrance.jsx");
     bindBtn(buttonColorBalance, currentFolder + "/colorBalance.jsx");
     bindBtn(buttonSelectiveColor, currentFolder + "/selectiveColor.jsx");
     bindBtn(buttonCameraRaw, currentFolder + "/cameraRaw.jsx");
     bindBtn(buttonReduceHueSaturation, currentFolder + "/-hueSaturation.jsx");
     bindBtn(buttonResetData, currentFolder + "/removeDataTxt.jsx");
     bindBtn(buttonResetDataBlending, currentFolder + "/resetBlending.jsx");
+    bindBtn(buttonAddRed, currentFolder + "/+redYellow.jsx");
     bindBtn(buttonResizeImage, currentFolder + "/resizeImage.jsx");
     bindBtn(buttonSaveSelectionAllDetail, currentFolder + "/selectionDetails.jsx");
     bindBtn(buttonCopyPath, currentFolder + "/copyPathTodocument.jsx");
@@ -325,6 +348,12 @@ function runabcedfasddfashiepnguyenduc() {
         dialog.close();
         loadAction("ALign", "DataAction(HDR).atn");
         runScript(currentFolder + "/mergeImage.jsx");
+    });
+
+    buttonAlignFlash.addEventListener("click", function () {
+        dialog.close();
+        loadAction("ALign", "DataAction(HDR).atn");
+        runScript(currentFolder + "/mergeBWBD.jsx");
     });
 
     // Save Selection Detail
@@ -353,7 +382,9 @@ function runabcedfasddfashiepnguyenduc() {
         const actions = {
             "F1": buttonCopyExposure,
             "F2": buttonMergeExposure,
+            "0": buttonMergeExposureFlash,
             "F3": buttonAlign,
+            "-": buttonAlignFlash,
             "F4": buttonFillCeilingMolding,
             "F5": buttonFillWall,
             "F6": buttonFillWall2,
@@ -373,8 +404,8 @@ function runabcedfasddfashiepnguyenduc() {
             "E": buttonColorBalance,
             "R": buttonCameraRaw,
             "T": buttonReduceHueSaturation,
-            "Y": buttonAddRed,
             "U": buttonHueSaturation,
+            "Y": buttonColorAndVibrance,
             "I": buttonResizeImage,
             "P": buttonResetram,
             "A": buttonCopyPath,
@@ -383,6 +414,7 @@ function runabcedfasddfashiepnguyenduc() {
             "F": buttonSaveSelectionAllDetail,
             "Z": buttonResetData,
             "X": buttonResetDataBlending,
+            "C": buttonAddRed,
             "F10": buttonRunActionPath,
             "Escape": buttonClose
         };
@@ -493,6 +525,22 @@ function resizeImage2(width, height) {
     app.activeDocument.activeLayer.resize(resizePercent, resizePercent, AnchorPosition.MIDDLECENTER);
 
 }
+
+function pasteFolder() {
+    var idpast = charIDToTypeID("past");
+    var desc4765 = new ActionDescriptor();
+    var idinPlace = stringIDToTypeID("inPlace");
+    desc4765.putBoolean(idinPlace, true);
+    var idAntA = charIDToTypeID("AntA");
+    var idAnnt = charIDToTypeID("Annt");
+    var idAnno = charIDToTypeID("Anno");
+    desc4765.putEnumerated(idAntA, idAnnt, idAnno);
+    var idAs = charIDToTypeID("As  ");
+    var idPxel = charIDToTypeID("Pxel");
+    desc4765.putClass(idAs, idPxel);
+    executeAction(idpast, desc4765, DialogModes.NO);
+}
+
 
 
 function selectMask() {
@@ -709,6 +757,61 @@ function checkSelectionName(nameChannel) {
         }
     } catch (error) { }
     return result;
+}
+
+function shadowAndHighlight(shadow, highlight) {
+    var idadaptCorrect = stringIDToTypeID("adaptCorrect");
+    var desc6260 = new ActionDescriptor();
+    var idsdwM = charIDToTypeID("sdwM");
+    var desc6261 = new ActionDescriptor();
+    var idAmnt = charIDToTypeID("Amnt");
+    var idPrc = charIDToTypeID("#Prc");
+    desc6261.putUnitDouble(idAmnt, idPrc, shadow);
+    var idWdth = charIDToTypeID("Wdth");
+    var idPrc = charIDToTypeID("#Prc");
+    desc6261.putUnitDouble(idWdth, idPrc, 50.000000);
+    var idRds = charIDToTypeID("Rds ");
+    desc6261.putInteger(idRds, 30);
+    var idadaptCorrectTones = stringIDToTypeID("adaptCorrectTones");
+    desc6260.putObject(idsdwM, idadaptCorrectTones, desc6261);
+    var idhglM = charIDToTypeID("hglM");
+    var desc6262 = new ActionDescriptor();
+    var idAmnt = charIDToTypeID("Amnt");
+    var idPrc = charIDToTypeID("#Prc");
+    desc6262.putUnitDouble(idAmnt, idPrc, highlight);
+    var idWdth = charIDToTypeID("Wdth");
+    var idPrc = charIDToTypeID("#Prc");
+    desc6262.putUnitDouble(idWdth, idPrc, 50.000000);
+    var idRds = charIDToTypeID("Rds ");
+    desc6262.putInteger(idRds, 30);
+    var idadaptCorrectTones = stringIDToTypeID("adaptCorrectTones");
+    desc6260.putObject(idhglM, idadaptCorrectTones, desc6262);
+    var idBlcC = charIDToTypeID("BlcC");
+    desc6260.putDouble(idBlcC, 0.010000);
+    var idWhtC = charIDToTypeID("WhtC");
+    desc6260.putDouble(idWhtC, 0.010000);
+    var idCntr = charIDToTypeID("Cntr");
+    desc6260.putInteger(idCntr, 0);
+    var idClrC = charIDToTypeID("ClrC");
+    desc6260.putInteger(idClrC, 20);
+    executeAction(idadaptCorrect, desc6260, DialogModes.NO);
+
+}
+
+function selectRGB() {
+    // activeDocument.activeLayer = lyr;
+    var idslct = charIDToTypeID("slct");
+    var desc219 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref138 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idChnl = charIDToTypeID("Chnl");
+    var idRGB = charIDToTypeID("RGB ");
+    ref138.putEnumerated(idChnl, idChnl, idRGB);
+    desc219.putReference(idnull, ref138);
+    var idMkVs = charIDToTypeID("MkVs");
+    desc219.putBoolean(idMkVs, false);
+    executeAction(idslct, desc219, DialogModes.NO);
 }
 
 function loadSelectionByMask(id) {
@@ -932,6 +1035,13 @@ function slectionSky() {
     deleteChannel();
 }
 
+function fillColor(red, green, blue) {
+    var myColor = new SolidColor()
+    myColor.rgb.red = red // 0 - 255
+    myColor.rgb.green = green
+    myColor.rgb.blue = blue
+    activeDocument.selection.fill(myColor)
+}
 function makeHue(hue, saturation, lightness) {
     // =======================================================
     var idMk = charIDToTypeID("Mk  ");
@@ -988,6 +1098,67 @@ function makeHue(hue, saturation, lightness) {
     var idHStr = charIDToTypeID("HStr");
     desc262.putObject(idT, idHStr, desc263);
     executeAction(idsetd, desc262, DialogModes.NO);
+}
+
+function makeColorBalance() {
+    var idMk = charIDToTypeID("Mk  ");
+    var desc494 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref55 = new ActionReference();
+    var idAdjL = charIDToTypeID("AdjL");
+    ref55.putClass(idAdjL);
+    desc494.putReference(idnull, ref55);
+    var idUsng = charIDToTypeID("Usng");
+    var desc495 = new ActionDescriptor();
+    var idType = charIDToTypeID("Type");
+    var desc496 = new ActionDescriptor();
+    var idShdL = charIDToTypeID("ShdL");
+    var list38 = new ActionList();
+    list38.putInteger(0);
+    list38.putInteger(0);
+    list38.putInteger(0);
+    desc496.putList(idShdL, list38);
+    var idMdtL = charIDToTypeID("MdtL");
+    var list39 = new ActionList();
+    list39.putInteger(0);
+    list39.putInteger(0);
+    list39.putInteger(0);
+    desc496.putList(idMdtL, list39);
+    var idHghL = charIDToTypeID("HghL");
+    var list40 = new ActionList();
+    list40.putInteger(0);
+    list40.putInteger(0);
+    list40.putInteger(0);
+    desc496.putList(idHghL, list40);
+    var idPrsL = charIDToTypeID("PrsL");
+    desc496.putBoolean(idPrsL, true);
+    var idClrB = charIDToTypeID("ClrB");
+    desc495.putObject(idType, idClrB, desc496);
+    var idAdjL = charIDToTypeID("AdjL");
+    desc494.putObject(idUsng, idAdjL, desc495);
+    executeAction(idMk, desc494, DialogModes.NO);
+}
+
+function makeColorAndVibrane() {
+    var idMk = charIDToTypeID("Mk  ");
+    var desc3908 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref180 = new ActionReference();
+    var idAdjL = charIDToTypeID("AdjL");
+    ref180.putClass(idAdjL);
+    desc3908.putReference(idnull, ref180);
+    var idUsng = charIDToTypeID("Usng");
+    var desc3909 = new ActionDescriptor();
+    var idType = charIDToTypeID("Type");
+    var desc3910 = new ActionDescriptor();
+    var iduseLegacy = stringIDToTypeID("useLegacy");
+    desc3910.putBoolean(iduseLegacy, false);
+    var idvibrance = stringIDToTypeID("vibrance");
+    desc3909.putObject(idType, idvibrance, desc3910);
+    var idAdjL = charIDToTypeID("AdjL");
+    desc3908.putObject(idUsng, idAdjL, desc3909);
+    executeAction(idMk, desc3908, DialogModes.NO);
+
 }
 
 function selectLayer(layerName) {
@@ -1226,7 +1397,7 @@ function cameraRawOutdoorBWPD(withDialog) {
 }
 
 // Preset Outdoor
-function cameraRawOutdoor(temp, withDialog) {
+function cameraRawOutdoor(temp, withDialog, vertical) {
     try {
         var a = new ActionDescriptor();
         a.putInteger(charIDToTypeID('Cr12'), 5);//contract
@@ -1239,6 +1410,14 @@ function cameraRawOutdoor(temp, withDialog) {
         a.putInteger(charIDToTypeID('LNR '), 12);//Noise Reduction
         a.putInteger(charIDToTypeID('LNRD'), 50);//Detail Noise Reduction
         a.putInteger(charIDToTypeID('LNRC'), 0);//Contract Noise Reduction
+
+        // 🔥 Auto Vertical
+        a.putInteger(charIDToTypeID('PerU'), vertical);
+        // 0 = Off
+        // 1 = Auto        // 🔥 tự động toàn diện (nên dùng)
+        // 2 = Level       // chỉ cân bằng ngang
+        // 3 = Vertical    // chỉ chỉnh dọc
+        // 4 = Full        // mạnh hơn Auto
         executeAction(stringIDToTypeID('Adobe Camera Raw Filter'), a, withDialog ? DialogModes.ALL : DialogModes.NO);
     } catch (error) {
         doc.activeLayer.remove();
@@ -1342,9 +1521,6 @@ function transformLayer(points) {
 
     layer.translate(p1[0] - x1, p1[1] - y1);
 }
-
-
-
 
 function loadAction(actionName, action) {
     //--------------------------------------------------------------------------------------------------------

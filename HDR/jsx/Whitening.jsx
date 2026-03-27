@@ -72,6 +72,8 @@ if (!hasSelection()) {
             setColorLayer("Rd  ");
             blendingOptions(0, 0, 255, 255, 0, 0, destWhiteMin, 255);// blendingOptions(0, 47, 189, 255, 0, 36, 233, 255);
             doc.activeLayer.opacity = hueValue;
+            makeHue(0, -90, 0);
+            doc.activeLayer.grouped = true;
             makeSolidColor(255, 254, 252);
             doc.activeLayer.blendMode = BlendMode.COLORBLEND;
             doc.activeLayer.grouped = true;
@@ -88,21 +90,6 @@ if (!hasSelection()) {
 }
 
 
-function selectRGB() {
-    // activeDocument.activeLayer = lyr;
-    var idslct = charIDToTypeID("slct");
-    var desc219 = new ActionDescriptor();
-    var idnull = charIDToTypeID("null");
-    var ref138 = new ActionReference();
-    var idChnl = charIDToTypeID("Chnl");
-    var idChnl = charIDToTypeID("Chnl");
-    var idRGB = charIDToTypeID("RGB ");
-    ref138.putEnumerated(idChnl, idChnl, idRGB);
-    desc219.putReference(idnull, ref138);
-    var idMkVs = charIDToTypeID("MkVs");
-    desc219.putBoolean(idMkVs, false);
-    executeAction(idslct, desc219, DialogModes.NO);
-}
 
 function selectMask() {
     var idslct = charIDToTypeID("slct");

@@ -58,7 +58,11 @@
             Algn("ADSCentersH") //"ADSCentersV" Doc
             Algn("ADSCentersV") //"ADSCentersV" Ngang
             doc.selection.deselect();
-            actionMenu("freeTransform");
+            try {
+                actionMenu("freeTransform");
+            } catch (error) {
+
+            }
             setFeatherMask(1);
             if (nameFile == "TV - Black View") { return; }
             doc.activeLayer.opacity = 80;

@@ -2,30 +2,37 @@
     saveChannel("Window");
     if (layerExists("WindowTemp")) {
         doc.activeLayer = doc.artLayers.getByName("WindowTemp");
+        doc.activeLayer.move(doc.layers[0], ElementPlacement.PLACEBEFORE);
+        doc.activeLayer.name = "Window";
+        addMask(); selectRGB();
+        setFeatherMask(1);
+        setLevels(0, 255, 0, 255);
+        loadSelectionByMask(doc.activeLayer.id);
+        selecTool("lassoTool");
     } else {
         doc.activeLayer = doc.layerSets[0].artLayers[0];
+        doc.selection.expand(20);
+        doc.selection.copy();
+        doc.activeLayer = doc.layers[0];
+        doc.selection.load(doc.channels.getByName("Window"));
+        doc.channels.getByName("Window").remove();
+        var idpasteInto = stringIDToTypeID("pasteInto");
+        executeAction(idpasteInto, undefined, DialogModes.NO);
+        // pasteFolder();
+        // doc.activeLayer.merge();
+        // doc.selection.load(doc.channels.getByName("Window"));
+        // doc.selection.expand(20);
+        // doc.selection.invert();
+        // doc.selection.clear();
+        // doc.selection.deselect();
+        doc.activeLayer.name = "Window";
+        // setCurves(0, 0, 250, 255, 0, 0, 255, 250); 
+        setFeatherMask(1);
+        // actionCharID("Lvls");
+        setLevels(0, 255, 0, 255);
+        loadSelectionByMask(doc.activeLayer.id);
+        selecTool("lassoTool");
     }
-    doc.selection.expand(20);
-    doc.selection.copy();
-    doc.activeLayer = doc.layers[0];
-    doc.selection.load(doc.channels.getByName("Window"));
-    doc.channels.getByName("Window").remove();
-    var idpasteInto = stringIDToTypeID("pasteInto");
-    executeAction(idpasteInto, undefined, DialogModes.NO);
-    // pasteFolder();
-    // doc.activeLayer.merge();
-    // doc.selection.load(doc.channels.getByName("Window"));
-    // doc.selection.expand(20);
-    // doc.selection.invert();
-    // doc.selection.clear();
-    // doc.selection.deselect();
-    doc.activeLayer.name = "Window";
-    // setCurves(0, 0, 250, 255, 0, 0, 255, 250); 
-    setFeatherMask(1);
-    // actionCharID("Lvls");
-    setLevels(10, 245, 10, 245);
-    loadSelectionByMask(doc.activeLayer.id);
-    selecTool("lassoTool");
 })();
 
 //save selection Channel
@@ -39,26 +46,7 @@ function saveChannel(name) {
     return activeDocument.channels.getByName(name);
 }
 
-//Paste
-function pasteFolder() {
-    try {
-        var idpast = charIDToTypeID("past");
-        var desc262 = new ActionDescriptor();
-        var idinPlace = stringIDToTypeID("inPlace");
-        desc262.putBoolean(idinPlace, true);
-        var idAntA = charIDToTypeID("AntA");
-        var idAnnt = charIDToTypeID("Annt");
-        var idAnno = charIDToTypeID("Anno");
-        desc262.putEnumerated(idAntA, idAnnt, idAnno);
-        var idAs = charIDToTypeID("As  ");
-        var idPxel = charIDToTypeID("Pxel");
-        desc262.putClass(idAs, idPxel);
-        executeAction(idpast, desc262, DialogModes.NO);
 
-    } catch (e) {
-        //alert("err");
-    }
-}
 
 //Group layer
 function setFeatherMask(userMaskFeather) {

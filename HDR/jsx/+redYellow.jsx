@@ -17,14 +17,15 @@ var valueHue = -50; // Giá trị Hue
     if (activeDocument.quickMaskMode == true) { activeDocument.quickMaskMode = false; }
     var newLayer1 = doc.artLayers.add();
     newLayer1.name = "Color";
-    newLayer1.move(doc.artLayers["Not delete"], ElementPlacement.PLACEAFTER);
+    newLayer1.move(doc.artLayers["Not delete"], ElementPlacement.PLACEBEFORE);
+    doc.activeLayer.blendMode = BlendMode.COLORBLEND;
+
 
     //thay vao day
-    doc.activeLayer.blendMode = BlendMode.COLORBLEND;
-    makeHue(0, valueHue, 0)
-    executeAction(charIDToTypeID("Invr"), undefined, DialogModes.NO);
-    doc.activeLayer.name = "-Hue saturation";
-    doc.activeLayer = doc.artLayers["Color"];
+    // makeHue(0, valueHue, 0)
+    // executeAction(charIDToTypeID("Invr"), undefined, DialogModes.NO);
+    // doc.activeLayer.name = "-Hue saturation";
+    // doc.activeLayer = doc.artLayers["Color"];
     selecTool("paintbrushTool");
 })();
 

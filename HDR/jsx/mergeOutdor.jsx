@@ -71,7 +71,8 @@ var withDialog = false;
     doc.activeLayer.name = "MERGE 1";
     convertSmart();
     alert("Check VERTICAL && CAMERA")
-    cameraRawOutdoor(3, true);
+    cameraRawOutdoor(3, true, 4);
+    shadowAndHighlight(0,0);
 
 })();
 
@@ -97,3 +98,5 @@ function openCameraRaw() {
 }
 
 
+
+cameraRawFilterALL

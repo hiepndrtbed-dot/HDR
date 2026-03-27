@@ -8,6 +8,8 @@ var path = "/Library PE/Library/Sky/Exterior/";
     var widthSelection = doc.selection.bounds[2] - doc.selection.bounds[0];
     var heightSelection = doc.selection.bounds[3] - doc.selection.bounds[1];
     addMask();
+    selectRGB();
+    fillColor(128, 128, 128);
     //Lay thu muc hien tao
     var folderImage = scriptFolder.fsName + path;
 
@@ -52,14 +54,15 @@ var path = "/Library PE/Library/Sky/Exterior/";
         } catch (error) {
         }
         resizeImage(widthSelection, heightSelection);
-        doc.activeLayer.merge();
-        setMaskLink(false);
-        loadSelectionMask();
+        doc.activeLayer.grouped = true;;
+        // setMaskLink(false);
+        loadSelectionByMask(doc.artLayers["Sky"].id);
         Algn("ADSCentersH");//"ADSCentersV" Doc;
         Algn("ADSCentersV");//"ADSCentersV" Ngang;
         doc.selection.deselect();
         actionMenu("freeTransform");
         // doc.activeLayer.opacity = 80;
+        doc.activeLayer = doc.artLayers["Sky"];
         setFeatherMask(1);
         selectMashChannel();
         selecTool("burnInTool");
