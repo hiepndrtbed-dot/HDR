@@ -1,15 +1,19 @@
 var nameTxt = "/Preset.txt";
 var nameFileJson = "/resizeImage.json";
 var valuePreset = null;
-var withDialog = true;
 var temp = 0;
 (function main() {
     purgeAll();
     var jsonFile = new File(scriptFolder.fsName + "/Data" + nameFileJson);
     if (jsonFile.exists) {
-        alert("Resize về kích thước gốc!");
-        $.evalFile(currentFolder + "/resizeImage.jsx");
-        // return;
+        // alert("Resize về kích thước gốc!");
+        var flagResize = $.evalFile(currentFolder + "/resizeImage.jsx");
+        if (flagResize) {
+            jsonFile.remove();
+        } else {
+            return;
+        }
+        // purgeAll();
     }
     var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
     if (txtFile.exists) {
@@ -74,13 +78,12 @@ var temp = 0;
         }
         dialog.show();
     }
-
-
     if (valuePreset == 1) { // kiem tra neu la preset trang xam
         temp = 2;
     }
     doc.activeLayer = doc.layers[0];
     doc.artLayers.add();
+    var withDialog = true;
     if (layerExists("Sky")) {
         doc.layers.getByName("Sky").visible = false;
         mergeVisible();

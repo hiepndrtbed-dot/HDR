@@ -116,13 +116,7 @@ function hasSelection() {
     return desc.count > 0;
 }
 
-function fillColor(red, green, blue) {
-    var myColor = new SolidColor()
-    myColor.rgb.red = red // 0 - 255
-    myColor.rgb.green = green
-    myColor.rgb.blue = blue
-    activeDocument.selection.fill(myColor)
-}
+
 function hasChannel(name) {
     var chs = app.activeDocument.channels;
     for (var i = 0; i < chs.length; i++) {

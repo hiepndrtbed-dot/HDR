@@ -3,6 +3,7 @@ var path = "/Library PE/Library/Fireplace/";
 
 (function main() {
     if (!hasSelection()) { alert("Chua co vung chon!"); return; }
+    doc.activeLayer = doc.artLayers["MERGE 1"];
     doc.artLayers.add().name = "Fire";
     var width = doc.selection.bounds[2] - doc.selection.bounds[0];
     var hight = doc.selection.bounds[3] - doc.selection.bounds[1]

@@ -567,6 +567,16 @@ function purgeAll() {
     desc7726.putEnumerated(idnull, idPrgI, idAl);
     executeAction(idPrge, desc7726, DialogModes.NO);
 }
+function purgeHistory() {
+    var idPrge = charIDToTypeID("Prge");
+    var desc8090 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var idPrgI = charIDToTypeID("PrgI");
+    var idHsty = charIDToTypeID("Hsty");
+    desc8090.putEnumerated(idnull, idPrgI, idHsty);
+    executeAction(idPrge, desc8090, DialogModes.NO);
+}
+
 
 function selecTool(tool) {
     var desc9 = new ActionDescriptor();

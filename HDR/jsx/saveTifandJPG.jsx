@@ -3,9 +3,13 @@ var nameFileJson = "/resizeImage.json";
     purgeAll();
     var jsonFile = new File(scriptFolder.fsName + "/Data" + nameFileJson);
     if (jsonFile.exists) {
-        alert("Resize về kích thước gốc!");
-        $.evalFile(currentFolder + "/resizeImage.jsx");
-        return;
+        // alert("Resize về kích thước gốc!");
+        var flagResize = $.evalFile(currentFolder + "/resizeImage.jsx");
+        if (flagResize) {
+            jsonFile.remove();
+        } else {
+            return;
+        }
     }
     // Kiểm tra xem có tài liệu đang mở không
     if (app.documents.length > 0) {
