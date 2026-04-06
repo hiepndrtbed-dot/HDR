@@ -578,6 +578,23 @@ function purgeHistory() {
 }
 
 
+function subtractSelecTion(nameSlection) {
+    var idSbtr = charIDToTypeID("Sbtr");
+    var desc5678 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref154 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    ref154.putName(idChnl, nameSlection);
+    desc5678.putReference(idnull, ref154);
+    var idFrom = charIDToTypeID("From");
+    var ref155 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idfsel = charIDToTypeID("fsel");
+    ref155.putProperty(idChnl, idfsel);
+    desc5678.putReference(idFrom, ref155);
+    executeAction(idSbtr, desc5678, DialogModes.NO);
+}
+
 function selecTool(tool) {
     var desc9 = new ActionDescriptor();
     var ref7 = new ActionReference();
