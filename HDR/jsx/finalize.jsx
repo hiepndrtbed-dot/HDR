@@ -4,6 +4,8 @@ var valuePreset = null;
 var temp = 0;
 (function main() {
     purgeAll();
+
+    //kiem tra ressize.
     var jsonFile = new File(scriptFolder.fsName + "/Data" + nameFileJson);
     if (jsonFile.exists) {
         // alert("Resize về kích thước gốc!");
@@ -15,7 +17,8 @@ var temp = 0;
         }
         // purgeAll();
     }
-    var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
+    //kiem tra preset
+    /*var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
     if (txtFile.exists) {
         txtFile.encoding = "UTF8"; // hoặc "ASCII" nếu file không có dấu tiếng Việt
         txtFile.open("r"); // "r" = read
@@ -81,38 +84,40 @@ var temp = 0;
     if (valuePreset == 1) { // kiem tra neu la preset trang xam
         temp = 2;
     }
-    doc.activeLayer = doc.layers[0];
+    */
+    //end check preset
+    // doc.activeLayer = doc.layers[];
     doc.artLayers.add();
     var withDialog = true;
-    if (layerExists("Sky")) {
-        doc.layers.getByName("Sky").visible = false;
-        mergeVisible();
-        doc.activeLayer.move(doc.layers.getByName("Sky"), ElementPlacement.PLACEAFTER);
-        doc.layers.getByName("Sky").visible = true;
-        doc.activeLayer.name = "CHECK";
-        try {//bat loi khong thay doi thong so
-            showCurves();
-            doc.activeLayer = doc.layers[0];
-            mergeVisible();
-            doc.activeLayer.name = "FINALIZE";
-            // alert("Check VERTICAL && CAMERA!!");
-            cameraRawFilterALL(temp, 0, 0, 0, 4, withDialog);
-            doc.artLayers.getByName("CHECK").remove();
-        } catch (error) {
-            doc.artLayers.getByName("CHECK").remove();
-        }
-    } else {
-        mergeVisible();
-        doc.activeLayer.name = "FINALIZE";
-        try {//bat loi khong thay doi thong so
-            showCurves();
-            // alert("Check VERTICAL && CAMERA!!");
-            // cameraRawIndor(2, true);
-            cameraRawFilterALL(temp, 0, 0, 0, 4, withDialog);
-        } catch (error) {
-            doc.artLayers.getByName("FINALIZE").remove();
-        }
+    // if (layerExists("Sky")) {
+    //     doc.layers.getByName("Sky").visible = false;
+    //     mergeVisible();
+    //     doc.activeLayer.move(doc.layers.getByName("Sky"), ElementPlacement.PLACEAFTER);
+    //     doc.layers.getByName("Sky").visible = true;
+    //     doc.activeLayer.name = "CHECK";
+    //     try {//bat loi khong thay doi thong so
+    //         showCurves();
+    //         doc.activeLayer = doc.layers[0];
+    //         mergeVisible();
+    //         doc.activeLayer.name = "FINALIZE";
+    //         // alert("Check VERTICAL && CAMERA!!");
+    //         cameraRawFilterALL(temp, 0, 0, 0, 4, withDialog);
+    //         doc.artLayers.getByName("CHECK").remove();
+    //     } catch (error) {
+    //         doc.artLayers.getByName("CHECK").remove();
+    //     }
+    // } else {
+    mergeVisible();
+    doc.activeLayer.name = "FINALIZE";
+    try {//bat loi khong thay doi thong so
+        showCurves();
+        // alert("Check VERTICAL && CAMERA!!");
+        // cameraRawIndor(2, true);
+        cameraRawFilterALL(temp, 0, 0, 0, 4, withDialog);
+    } catch (error) {
+        doc.artLayers.getByName("FINALIZE").remove();
     }
+    // }
 })();
 
 function mergeVisible() {

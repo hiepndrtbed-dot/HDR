@@ -4,41 +4,27 @@ maskall();
 // createAlphaChannelBlack("Details");
 // selectRGB();
 var lengthGroup = doc.layerSets.length;
-var checkLengGroupNew = doc.layerSets.length;
 for (var i = 0; i < lengthGroup; i++) {
-    if (doc.layerSets[i].name == "Darken" || doc.layerSets[i].name == "HighDarken") {
-        break;
-    }
-    try {
+    if (!hasSelection()) {
         loadSelectionByMask(doc.layerSets[i].id);
-    } catch (error) {
+    } else {
+        addSelectionGroup(doc.layerSets[i].name);
+    }
+    if (lengthGroup == 2) {
+        saveAlphaChnl("Details")
     }
     if (lengthGroup == 1) {
+        loadSelectionByMask(doc.layerSets[i].id);
         saveAlphaChnl("San");
         doc.layerSets[i].remove();
         doc.selection.deselect();
         selecTool("quickSelectTool");
         break;
     }
-    if (lengthGroup == checkLengGroupNew) {
-        try {
-            saveAlphaChnl("Details")
-        } catch (error) {
-
-        }
-    }
-    else {
-        try {
-            addSelectionToChannelName("Details");
-        } catch (error) {
-
-        }
-    }
-
     doc.layerSets[i].remove();
     lengthGroup--;
     i--;
-    doc.selection.deselect();
+    // doc.selection.deselect();
 }
 // doc.selection.selectAll();
 // subtractSelecTion("San");

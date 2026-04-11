@@ -26,6 +26,8 @@ if (lengthArtLayers != 2) {
 selecTool("paintbrushTool");
 resetBackground(false);
 selectMask();
+loadSelectionChannelName("Bl  " );
+doc.selection.feather(30);
 
 function addMaskWhite() {
     var d = new ActionDescriptor();

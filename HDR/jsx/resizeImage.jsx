@@ -34,23 +34,23 @@ var jsonFile = new File(scriptFolder.fsName + "/Data" + nameJson);
             }
         }
     } else {
-        saveResize();
+        saveResize(50);
     }
     purgeHistory();
     return true;
 })();
 
-function saveResize() {
+function saveResize(percentResize) {
     // Lưu lựa chọn vào file Json
     // alert(parseInt(doc.width));
     var valueSizeImages = { width: parseInt(doc.width), height: parseInt(doc.height), nameDocument: doc.name };
     if (hasSelection()) {
         saveAlphaChnl("SelectionTemp");
-        resizeImagePercent(33);
+        resizeImagePercent(percentResize);
         doc.selection.load(doc.channels.getByName("SelectionTemp"));
         doc.channels.getByName("SelectionTemp").remove();
     } else {
-        resizeImagePercent(33);
+        resizeImagePercent(percentResize);
     }
     jsonFile.encoding = "UTF8";
     jsonFile.open("w");

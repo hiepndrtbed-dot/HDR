@@ -9,7 +9,7 @@ var middleLevelsValue = 1.2;
 var nameChannel = "Tran_ChiPhao";
 var nameTxt = "/Blending.txt";
 var destWhiteMin = 180;
-
+//kiem tra blending;
 var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
 if (txtFile.exists) {
     txtFile.encoding = "UTF8"; // hoặc "ASCII" nếu file không có dấu tiếng Việt
@@ -54,6 +54,71 @@ if (txtFile.exists) {
     }
     dialog.show();
 }
+//kiem tra preset
+var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
+if (txtFile.exists) {
+    txtFile.encoding = "UTF8"; // hoặc "ASCII" nếu file không có dấu tiếng Việt
+    txtFile.open("r"); // "r" = read
+    var contentFile = txtFile.read();
+    txtFile.close();
+    valuePreset = contentFile;
+} else {
+    // Tạo file TXT cùng thư mục
+    // Tạo một cửa sổ dialog
+    var dialog = new Window("dialog", "Chose Preset...");
+    dialog.alignChildren = "left";
+    dialog.orientation = "column";
+
+    // Panel chứa radio button
+    var radioGroup = dialog.add("panel", undefined, "Chọn Preset");
+    radioGroup.orientation = "column";
+    radioGroup.alignChildren = "left";
+
+    // Mảng các lựa chọn
+    var presets = [
+        "Preset Indoor",
+        "Preset Indoor Trắng xám",
+        "Preset Indoor BWPD",
+        "Preset Outdoor",
+        "Preset Outdoor BWPD",
+    ];
+
+    // Sinh radio button từ mảng
+    var radios = [];
+    for (var i = 0; i < presets.length; i++) {
+        radios[i] = radioGroup.add("radiobutton", undefined, presets[i]);
+    }
+
+    // Đặt mặc định chọn radio đầu tiên
+    radios[0].value = true;
+
+    // Nhóm nút OK/Cancel
+    var buttonGroup = dialog.add("group");
+    buttonGroup.alignment = "right";
+    var saveButton = buttonGroup.add("button", undefined, "OK");
+    var cancelButton = buttonGroup.add("button", undefined, "Cancel");
+
+    // Xử lý khi nhấn OK
+    saveButton.onClick = function () {
+        dialog.close();
+        var chosenPreset = "";
+        for (var i = 0; i < radios.length; i++) {
+            if (radios[i].value) {
+                chosenPreset = i;
+                break;
+            }
+        }
+        // Lưu lựa chọn vào file TXT
+        valuePreset = chosenPreset;
+        var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
+        txtFile.encoding = "UTF8";
+        txtFile.open("w");
+        txtFile.write(chosenPreset.toString());
+        txtFile.close();
+    }
+    dialog.show();
+}
+
 
 if (!hasSelection()) {
     alert("Chua co vung chon!");
@@ -74,9 +139,18 @@ if (!hasSelection()) {
             doc.activeLayer.opacity = hueValue;
             makeHue(0, -90, 0);
             doc.activeLayer.grouped = true;
-            makeSolidColor(255, 254, 252);
+            makeSolidColor(255, 255, 255);
             doc.activeLayer.blendMode = BlendMode.COLORBLEND;
             doc.activeLayer.grouped = true;
+            makeColorAndVibrane(2, 0);
+            doc.activeLayer.grouped = true;
+            if (valuePreset == 1) { // kiem tra neu la preset trang xam
+                doc.activeLayer.visible = true;
+            } else {
+                doc.activeLayer.visible = false;
+                doc.activeLayer.opacity(0);
+            }
+
             /////
         } else {
             addSelectionToChannelName(nameChannel);

@@ -72,7 +72,7 @@ function getTxtFileNames(folderPath) {
     }
 
     // Lọc chỉ lấy file .txt
-    var files = folder.getFiles("*.txt");
+    var files = folder.getFiles("*.*");
 
     // Trả về mảng tên file (không bao gồm đường dẫn)
     var names = [];

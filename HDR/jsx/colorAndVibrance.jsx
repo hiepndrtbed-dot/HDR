@@ -25,7 +25,7 @@
     // } else {
     //     addMask(); applyMask();
     // }
-    makeColorAndVibrane();
+    makeColorAndVibrane(6, 2);
     doc.activeLayer.move(doc.artLayers["Not delete"], ElementPlacement.PLACEAFTER);
 })();
 

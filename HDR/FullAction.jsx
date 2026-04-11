@@ -595,6 +595,46 @@ function subtractSelecTion(nameSlection) {
     executeAction(idSbtr, desc5678, DialogModes.NO);
 }
 
+function addSelectionGroup(nameGroup) {
+    var idAdd = charIDToTypeID("Add ");
+    var desc2775 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref91 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idChnl = charIDToTypeID("Chnl");
+    var idMsk = charIDToTypeID("Msk ");
+    ref91.putEnumerated(idChnl, idChnl, idMsk);
+    var idLyr = charIDToTypeID("Lyr ");
+    ref91.putName(idLyr, nameGroup);
+    desc2775.putReference(idnull, ref91);
+    var idT = charIDToTypeID("T   ");
+    var ref92 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idfsel = charIDToTypeID("fsel");
+    ref92.putProperty(idChnl, idfsel);
+    desc2775.putReference(idT, ref92);
+    executeAction(idAdd, desc2775, DialogModes.NO);
+}
+
+function loadSelectionChannelName(channelName) {
+    var idsetd = charIDToTypeID("setd");
+    var desc4293 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref89 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idfsel = charIDToTypeID("fsel");
+    ref89.putProperty(idChnl, idfsel);
+    desc4293.putReference(idnull, ref89);
+    var idT = charIDToTypeID("T   ");
+    var ref90 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idChnl = charIDToTypeID("Chnl");
+    //"Bl  " : Blue
+    var idBl = charIDToTypeID(channelName);
+    ref90.putEnumerated(idChnl, idChnl, idBl);
+    desc4293.putReference(idT, ref90);
+    executeAction(idsetd, desc4293, DialogModes.NO);
+}
 function selecTool(tool) {
     var desc9 = new ActionDescriptor();
     var ref7 = new ActionReference();
@@ -1166,7 +1206,7 @@ function makeColorBalance() {
     executeAction(idMk, desc494, DialogModes.NO);
 }
 
-function makeColorAndVibrane() {
+function makeColorAndVibrane(temp, tint) {
     var idMk = charIDToTypeID("Mk  ");
     var desc3908 = new ActionDescriptor();
     var idnull = charIDToTypeID("null");
@@ -1186,6 +1226,32 @@ function makeColorAndVibrane() {
     desc3908.putObject(idUsng, idAdjL, desc3909);
     executeAction(idMk, desc3908, DialogModes.NO);
 
+    var idsetd = charIDToTypeID("setd");
+    var desc124155 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref3129 = new ActionReference();
+    var idAdjL = charIDToTypeID("AdjL");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref3129.putEnumerated(idAdjL, idOrdn, idTrgt);
+    desc124155.putReference(idnull, ref3129);
+    var idT = charIDToTypeID("T   ");
+    var desc124156 = new ActionDescriptor();
+    var idwhiteBalancePopupIndex = stringIDToTypeID("whiteBalancePopupIndex");
+    desc124156.putInteger(idwhiteBalancePopupIndex, 2);
+    var idtemperature = stringIDToTypeID("temperature");
+    desc124156.putInteger(idtemperature, temp);
+    var idtint = stringIDToTypeID("tint");
+    desc124156.putInteger(idtint, tint);
+    var idvibrance = stringIDToTypeID("vibrance");
+    desc124156.putInteger(idvibrance, 0);
+    var idStrt = charIDToTypeID("Strt");
+    desc124156.putInteger(idStrt, 0);
+    var iduseLegacy = stringIDToTypeID("useLegacy");
+    desc124156.putBoolean(iduseLegacy, false);
+    var idvibrance = stringIDToTypeID("vibrance");
+    desc124155.putObject(idT, idvibrance, desc124156);
+    executeAction(idsetd, desc124155, DialogModes.NO);
 }
 
 function selectLayer(layerName) {

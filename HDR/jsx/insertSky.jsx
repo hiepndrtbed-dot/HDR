@@ -3,13 +3,18 @@ var path = "/Library PE/Library/Sky/Exterior/";
 
 (function main() {
     doc.activeLayer = doc.artLayers.getByName("MERGE 1");
-    doc.artLayers.add().name = "Sky";
-    slectionSky();
-    var widthSelection = doc.selection.bounds[2] - doc.selection.bounds[0];
-    var heightSelection = doc.selection.bounds[3] - doc.selection.bounds[1];
-    addMask();
-    selectRGB();
-    fillColor(128, 128, 128);
+   try {
+     doc.artLayers.add().name = "Sky";
+     slectionSky();
+     var widthSelection = doc.selection.bounds[2] - doc.selection.bounds[0];
+     var heightSelection = doc.selection.bounds[3] - doc.selection.bounds[1];
+     addMask();
+     selectRGB();
+     fillColor(128, 128, 128);
+   } catch (error) {
+    doc.artLayers["Sky"].remove();
+    return;
+   }
     //Lay thu muc hien tao
     var folderImage = scriptFolder.fsName + path;
 

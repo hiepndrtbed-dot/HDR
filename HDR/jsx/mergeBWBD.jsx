@@ -1,4 +1,5 @@
 var gaussianBlur = 50;
+var opacityFlash = 100;
 try {
     makeHistory("Save Struct");
 } catch (error) {
@@ -15,8 +16,9 @@ for (var i = 0; i < lengthArtLayers - 1; i++) {
         doc.activeLayer.applyGaussianBlur(gaussianBlur);
     } else {
         doc.activeLayer = doc.artLayers[0];
-        doc.activeLayer.opacity = 35;
+        doc.activeLayer.opacity = opacityFlash;
         doc.activeLayer.name = "Flash"
+        doc.activeLayer.blendMode = BlendMode.COLORBLEND;
     }
     if (i != lengthArtLayers - 2) {
         if (i != 0) {
@@ -24,9 +26,9 @@ for (var i = 0; i < lengthArtLayers - 1; i++) {
             addMaskBlack();
         }
     } else {
-        loadSelectionByMask(doc.activeLayer.id);
-        doc.activeLayer = doc.artLayers["Flash"];
-        addMask();
+        // loadSelectionByMask(doc.activeLayer.id);
+        // doc.activeLayer = doc.artLayers["Flash"];
+        // addMask();
     }
 }
 

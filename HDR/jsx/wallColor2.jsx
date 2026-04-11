@@ -111,9 +111,9 @@ var destWhiteMin = 180;
             checkSelectionName(nameChannel) ? addSelectionToChannelName(nameChannel) : saveAlphaChnl(nameChannel);
             prepareSelection(expandSelection, feather);
             try {
-                doc.layers[nameLayer];
                 makeLevelsAdjustment(middleLevelsValue);
                 doc.activeLayer.name = nameLayer + "X";
+                nameLayer =  nameLayer + "X"
                 setColorLayer("Bl  ");
             } catch (error) {
                 makeLevelsAdjustment(middleLevelsValue);
@@ -133,6 +133,7 @@ var destWhiteMin = 180;
                 createSolidWithColorPicker(nameSolid + nameRandum);
                 doc.activeLayer.blendMode = BlendMode.COLORBLEND;
                 doc.activeLayer.grouped = true;
+                doc.activeLayer = doc.layers[nameLayer];
             }
         }
     }
