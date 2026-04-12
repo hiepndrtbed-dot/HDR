@@ -3,8 +3,6 @@ try {
     makeHistory("Save Struct");
 } catch (error) {
 }
-// checkSnapshot()
-//neu ton tai 4 composer
 
 var lengthArtLayers = doc.artLayers.length;
 for (var i = 0; i < lengthArtLayers - 1; i++) {
@@ -18,11 +16,18 @@ for (var i = 0; i < lengthArtLayers - 1; i++) {
     }
 }
 
+//tao layer retouch tren cung
+doc.activeLayer = doc.artLayers[doc.artLayers.length - 1];
+doc.artLayers.add().name = "Retouch";
+
+//neu nhieu hon 2 layer
 if (lengthArtLayers != 2) {
     doc.activeLayer = doc.layers["Darken 1"];
 } else {
     doc.activeLayer = doc.artLayers[0];
 }
+
+
 selecTool("paintbrushTool");
 resetBackground(false);
 selectMask();
