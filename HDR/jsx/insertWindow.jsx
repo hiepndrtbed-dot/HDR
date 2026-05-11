@@ -30,8 +30,9 @@
         setFeatherMask(1);
         // actionCharID("Lvls");
         setLevels(0, 255, 0, 255);
+        selectMask();
         loadSelectionByMask(doc.activeLayer.id);
-        selecTool("lassoTool");
+        selecTool("paintbrushTool");
     }
 })();
 

@@ -66,14 +66,22 @@ var withDialog = false;
     }
 
     //process
+    if (selectLayer("Align") == true) {
+        flagMerge = true;
+    }
     //Create file window temp
     selectChoseMultiLayer(doc.layers[0].name, doc.layers[doc.layers.length - 1].name);
     doc.activeLayer.name = "MERGE 1";
     convertSmart();
     alert("Check VERTICAL && CAMERA")
+    if (flagMerge == true) {
+        freeTransform(101);
+        actionMenu("freeTransform");
+    }
     cameraRawOutdoor(1, true, 4);
-    shadowAndHighlight(0,0);
+    shadowAndHighlight(0, 0);
 
+    selecTool("penTool");
 })();
 
 

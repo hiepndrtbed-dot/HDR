@@ -1,5 +1,5 @@
 (function () {
-    var nameTxt = "/file_infoSkyDTD.txt"
+    var nameTxt = "/SkyDTD.txt"
     var path = "/Library PE/Library/Twilight/"
     doc.activeLayer = doc.layers[0];
     //Tao layer cuvels tang chut Red
@@ -115,50 +115,6 @@ function addMask() {
     desc358.putEnumerated(idUsng, idUsrM, idRvlS);
     executeAction(idMk, desc358, DialogModes.NO);
 }
-
-function actionMenu(action) {
-    app.runMenuItem(stringIDToTypeID(action));
-
-    /*Invert - "invert"  
-    Free Transform - "freeTransform"  
-    Flip Horizontal - "flipHorizontal"  
-    Flip Vertical - "flipVertical"  
-    Rotate 180° - "rotate180"  
-    Rotate 90° CW - "rotate90CW"  
-    Rotate 90° CCW - "rotate90CCW"  
-    Merge Layers - "mergeLayers"  
-    Merge Visible - "mergeVisible"  
-    Flatten Image - "flattenImage"  
-    Add Layer Mask - "addLayerMask"  
-    Apply Layer Mask - "applyLayerMask"  
-    Delete Layer Mask - "deleteLayerMask"  
-    Enable Layer Mask - "enableLayerMask"  
-    Disable Layer Mask - "disableLayerMask"  
-    New Layer - "newLayer"  
-    Duplicate Layer - "duplicateLayer"  
-    Delete Layer - "deleteLayer"  
-    Desaturate - "desaturate"  
-    Auto Contrast - "autoContrast"  
-    Auto Levels - "autoLevels"  
-    Auto Color - "autoColor"  
-    Gaussian Blur - "gaussianBlur"  
-    Unsharp Mask - "unsharpMask"  
-    Shadows/Highlights - "shadowHighlight"  
-    Select All - "selectAll"  
-    Deselect - "deselect"  
-    Reselect - "reselect"  
-    Inverse Selection - "inverse"  
-    Feather - "feather"  
-    Crop - "crop"  
-    Content-Aware Fill - "contentAwareFill"  
-    Open - "open"  
-    Save - "save"  
-    Save As - "saveAs"  
-    Close - "close"  
-    New Document - "newDocument"  
-    Revert - "revert"*/
-}
-
 
 function selecTool(tool) {
     var desc9 = new ActionDescriptor();

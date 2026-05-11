@@ -9,6 +9,7 @@ var scriptFolder = baseFolder;
 var thePathActions = baseFolder.fsName + "/Action";
 var targetScript = File(scriptFolder.fsName + "/py/login_check.jsx");
 var status = false;
+var flagMerge = false;
 
 if (targetScript.exists) {
     $.evalFile(targetScript);
@@ -348,12 +349,14 @@ function runabcedfasddfashiepnguyenduc() {
         dialog.close();
         loadAction("ALign", "DataAction(HDR).atn");
         runScript(currentFolder + "/mergeImage.jsx");
+        doc.layers[0].name = "Align";
     });
 
     buttonAlignFlash.addEventListener("click", function () {
         dialog.close();
         loadAction("ALign", "DataAction(HDR).atn");
         runScript(currentFolder + "/mergeBWBD.jsx");
+        doc.layers[0].name = "Align";
     });
 
     // Save Selection Detail
@@ -635,6 +638,108 @@ function loadSelectionChannelName(channelName) {
     desc4293.putReference(idT, ref90);
     executeAction(idsetd, desc4293, DialogModes.NO);
 }
+
+function randomOneToTen() {
+    return Math.floor(Math.random() * 10) + 1;
+}
+function selectNolayer() {
+    var idselectNoLayers = stringIDToTypeID("selectNoLayers");
+    var desc32974 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref969 = new ActionReference();
+    var idLyr = charIDToTypeID("Lyr ");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref969.putEnumerated(idLyr, idOrdn, idTrgt);
+    desc32974.putReference(idnull, ref969);
+    executeAction(idselectNoLayers, desc32974, DialogModes.NO);
+}
+
+function freeTransform(percent) {
+    var idTrnf = charIDToTypeID("Trnf");
+    var desc70087 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref1317 = new ActionReference();
+    var idLyr = charIDToTypeID("Lyr ");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref1317.putEnumerated(idLyr, idOrdn, idTrgt);
+    desc70087.putReference(idnull, ref1317);
+    var idFTcs = charIDToTypeID("FTcs");
+    var idQCSt = charIDToTypeID("QCSt");
+    var idQcsa = charIDToTypeID("Qcsa");
+    desc70087.putEnumerated(idFTcs, idQCSt, idQcsa);
+    var idOfst = charIDToTypeID("Ofst");
+    var desc70088 = new ActionDescriptor();
+    var idHrzn = charIDToTypeID("Hrzn");
+    var idPxl = charIDToTypeID("#Pxl");
+    desc70088.putUnitDouble(idHrzn, idPxl, 0.000000);
+    var idVrtc = charIDToTypeID("Vrtc");
+    var idPxl = charIDToTypeID("#Pxl");
+    desc70088.putUnitDouble(idVrtc, idPxl, 0.000000);
+    var idOfst = charIDToTypeID("Ofst");
+    desc70087.putObject(idOfst, idOfst, desc70088);
+    var idWdth = charIDToTypeID("Wdth");
+    var idPrc = charIDToTypeID("#Prc");
+    desc70087.putUnitDouble(idWdth, idPrc, percent);
+    var idHght = charIDToTypeID("Hght");
+    var idPrc = charIDToTypeID("#Prc");
+    desc70087.putUnitDouble(idHght, idPrc, percent);
+    var idLnkd = charIDToTypeID("Lnkd");
+    desc70087.putBoolean(idLnkd, true);
+    var idIntr = charIDToTypeID("Intr");
+    var idIntp = charIDToTypeID("Intp");
+    var idBcbc = charIDToTypeID("Bcbc");
+    desc70087.putEnumerated(idIntr, idIntp, idBcbc);
+    executeAction(idTrnf, desc70087, DialogModes.NO);
+}
+
+function actionMenu(action) {
+    try {
+        app.runMenuItem(stringIDToTypeID(action));
+    } catch (error) {
+
+    }
+    /*Invert - "invert"  
+    Free Transform - "freeTransform"  
+    Flip Horizontal - "flipHorizontal"  
+    Flip Vertical - "flipVertical"  
+    Rotate 180° - "rotate180"  
+    Rotate 90° CW - "rotate90CW"  
+    Rotate 90° CCW - "rotate90CCW"  
+    Merge Layers - "mergeLayers"  
+    Merge Visible - "mergeVisible"  
+    Flatten Image - "flattenImage"  
+    Add Layer Mask - "addLayerMask"  
+    Apply Layer Mask - "applyLayerMask"  
+    Delete Layer Mask - "deleteLayerMask"  
+    Enable Layer Mask - "enableLayerMask"  
+    Disable Layer Mask - "disableLayerMask"  
+    New Layer - "newLayer"  
+    Duplicate Layer - "duplicateLayer"  
+    Delete Layer - "deleteLayer"  
+    Desaturate - "desaturate"  
+    Auto Contrast - "autoContrast"  
+    Auto Levels - "autoLevels"  
+    Auto Color - "autoColor"  
+    Gaussian Blur - "gaussianBlur"  
+    Unsharp Mask - "unsharpMask"  
+    Shadows/Highlights - "shadowHighlight"  
+    Select All - "selectAll"  
+    Deselect - "deselect"  
+    Reselect - "reselect"  
+    Inverse Selection - "inverse"  
+    Feather - "feather"  
+    Crop - "crop"  
+    Content-Aware Fill - "contentAwareFill"  
+    Open - "open"  
+    Save - "save"  
+    Save As - "saveAs"  
+    Close - "close"  
+    New Document - "newDocument"  
+    Revert - "revert"*/
+}
+
 function selecTool(tool) {
     var desc9 = new ActionDescriptor();
     var ref7 = new ActionReference();
@@ -1405,7 +1510,7 @@ function cameraRawIndorWhiteGray(withDialog) {
         var a = new ActionDescriptor();
         a.putInteger(charIDToTypeID('PrVN'), 6);// Process Version
         a.putEnumerated(charIDToTypeID('WBal'), charIDToTypeID('WBal'), charIDToTypeID('Cst ')); // White Balance: Custom
-        a.putInteger(charIDToTypeID('Temp'), 2);//temp
+        a.putInteger(charIDToTypeID('Temp'), 0);//temp
         a.putInteger(charIDToTypeID('Cr12'), 9);//contract
         a.putInteger(charIDToTypeID('Hi12'), -4);//highlight
         a.putInteger(charIDToTypeID('Sh12'), 5);//shadow

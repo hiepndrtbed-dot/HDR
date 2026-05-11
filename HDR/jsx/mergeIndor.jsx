@@ -66,10 +66,14 @@ var withDialog = false;
         dialog.show();
     }
 
+    if(selectLayer("Align") == true){
+        flagMerge = true;
+    }
     //process
     //Create file window temp
     try {
         doc.activeLayer = doc.layerSets[0].artLayers[0];
+        selectRGB();
         doc.selection.selectAll();
         doc.selection.copy();
         selectChoseMultiLayer(doc.layers[0].name, doc.layers[doc.layers.length - 1].name);
@@ -87,10 +91,16 @@ var withDialog = false;
         processPreset(valuePreset, withDialog);
         convertSmart();
     } finally {
-        doc.activeLayer = doc.artLayers["MERGE 1"];
+        if (flagMerge == true) {
+            selectChoseMultiLayer(doc.layers[0].name, doc.layers[doc.layers.length - 1].name);
+            freeTransform(101);
+            actionMenu("freeTransform");
+        }
+        selectLayer("MERGE 1");
         showCurves();
-        shadowAndHighlight(0,0);
+        shadowAndHighlight(0, 0);
         selecTool("penTool");
+
     }
 
 

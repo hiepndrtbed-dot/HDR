@@ -15,6 +15,7 @@ var valueHue = -50; // Giá trị Hue
         }
     }
     if (activeDocument.quickMaskMode == true) { activeDocument.quickMaskMode = false; }
+    if (selectLayer("Color")) { selecTool("paintbrushTool"); return; }
     var newLayer1 = doc.artLayers.add();
     newLayer1.name = "Color";
     newLayer1.move(doc.artLayers["Not delete"], ElementPlacement.PLACEBEFORE);

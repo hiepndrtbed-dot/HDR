@@ -10,11 +10,11 @@ var temp = 0;
     if (jsonFile.exists) {
         // alert("Resize về kích thước gốc!");
         var flagResize = $.evalFile(currentFolder + "/resizeImage.jsx");
-        if (flagResize) {
-            jsonFile.remove();
-        } else {
-            return;
-        }
+        // if (flagResize) {
+        //     jsonFile.remove();
+        // } else {
+        //     return;
+        // }
         // purgeAll();
     }
     //kiem tra preset
@@ -86,7 +86,7 @@ var temp = 0;
     }
     */
     //end check preset
-    // doc.activeLayer = doc.layers[];
+    doc.activeLayer = doc.layers["MERGE 1"];
     doc.artLayers.add();
     var withDialog = true;
     // if (layerExists("Sky")) {

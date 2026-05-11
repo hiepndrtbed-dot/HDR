@@ -19,15 +19,18 @@ const doc = activeDocument;
         }
     }
     if (activeDocument.quickMaskMode == true) { activeDocument.quickMaskMode = false; }
-    var newLayer1 = doc.artLayers.add();
-    newLayer1.name = "Dong bo tham";
-    newLayer1.move(doc.artLayers["Not delete"], ElementPlacement.PLACEAFTER);
-    mergeVisible();
-    addMask(); applyMask();
-    hueSaturation(0, -90, 0);
-    cameraRawFilter(10, 5);
-    hueSaturation(-4, 0, 0);
-    cameraRawFilter(3, 0);
+    // var newLayer1 = doc.artLayers.add();
+    makeHue(0, -80, 0);
+    doc.activeLayer.name = "Dong bo tham";
+    doc.activeLayer.move(doc.artLayers["Not delete"], ElementPlacement.PLACEAFTER);
+    makeColorAndVibrane(6, 10);
+    doc.activeLayer.grouped = true;
+    // mergeVisible();
+    // addMask(); applyMask();
+    // hueSaturation(0, -80, 0);
+
+    // hueSaturation(-10, 0, 0);
+    // cameraRawFilter(3, 0);
 })();
 
 function layerViaCopy(nameLayer) {

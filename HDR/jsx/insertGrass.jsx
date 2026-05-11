@@ -1,4 +1,4 @@
-var nameTxt = "/file_infoGrass.txt"
+var nameTxt = "/Grass.txt"
 var path = "/Library PE/Library/Grass/";
 
 (function main() {
@@ -37,7 +37,8 @@ var path = "/Library PE/Library/Grass/";
         }
     }
     try {
-        resizeImage(width, hight);
+        // resizeImage(width, hight);
+        alert("`Vui long canh chinh kich thuoc layer Grass theo vung chon!`");
         doc.activeLayer.merge();
         setMaskLink(false);
         loadSelectionMask();
@@ -90,47 +91,7 @@ function addMask() {
     executeAction(idMk, desc358, DialogModes.NO);
 }
 
-function actionMenu(action) {
-    app.runMenuItem(stringIDToTypeID(action));
-    /*Invert - "invert"  
-    Free Transform - "freeTransform"  
-    Flip Horizontal - "flipHorizontal"  
-    Flip Vertical - "flipVertical"  
-    Rotate 180° - "rotate180"  
-    Rotate 90° CW - "rotate90CW"  
-    Rotate 90° CCW - "rotate90CCW"  
-    Merge Layers - "mergeLayers"  
-    Merge Visible - "mergeVisible"  
-    Flatten Image - "flattenImage"  
-    Add Layer Mask - "addLayerMask"  
-    Apply Layer Mask - "applyLayerMask"  
-    Delete Layer Mask - "deleteLayerMask"  
-    Enable Layer Mask - "enableLayerMask"  
-    Disable Layer Mask - "disableLayerMask"  
-    New Layer - "newLayer"  
-    Duplicate Layer - "duplicateLayer"  
-    Delete Layer - "deleteLayer"  
-    Desaturate - "desaturate"  
-    Auto Contrast - "autoContrast"  
-    Auto Levels - "autoLevels"  
-    Auto Color - "autoColor"  
-    Gaussian Blur - "gaussianBlur"  
-    Unsharp Mask - "unsharpMask"  
-    Shadows/Highlights - "shadowHighlight"  
-    Select All - "selectAll"  
-    Deselect - "deselect"  
-    Reselect - "reselect"  
-    Inverse Selection - "inverse"  
-    Feather - "feather"  
-    Crop - "crop"  
-    Content-Aware Fill - "contentAwareFill"  
-    Open - "open"  
-    Save - "save"  
-    Save As - "saveAs"  
-    Close - "close"  
-    New Document - "newDocument"  
-    Revert - "revert"*/
-}
+
 //Kiem tra co ton tai vung chon
 function hasSelection() {
     var hasSelection = false;

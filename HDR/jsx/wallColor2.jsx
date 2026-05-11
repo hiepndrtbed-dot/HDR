@@ -11,6 +11,7 @@ var destWhiteMin = 180;
 (function main() {
     var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
     var txtFileLV = new File(scriptFolder.fsName + "/Data" + nameTxtLV);
+    
     if (txtFile.exists) {
         txtFile.encoding = "UTF8"; // hoặc "ASCII" nếu file không có dấu tiếng Việt
         txtFile.open("r"); // "r" = read

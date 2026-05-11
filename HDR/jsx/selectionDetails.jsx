@@ -26,6 +26,7 @@ for (var i = 0; i < lengthGroup; i++) {
     i--;
     // doc.selection.deselect();
 }
+var flagResize = $.evalFile(currentFolder + "/resizeImage.jsx");
 // doc.selection.selectAll();
 // subtractSelecTion("San");
 // subtractSelecTion("Details");

@@ -8,6 +8,7 @@ var hueValue = 100;
 var middleLevelsValue = 1.2;
 var nameChannel = "Tran_ChiPhao";
 var nameTxt = "/Blending.txt";
+var nameTxtPreset = "/Preset.txt";
 var destWhiteMin = 180;
 //kiem tra blending;
 var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
@@ -55,12 +56,12 @@ if (txtFile.exists) {
     dialog.show();
 }
 //kiem tra preset
-var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
-if (txtFile.exists) {
-    txtFile.encoding = "UTF8"; // hoặc "ASCII" nếu file không có dấu tiếng Việt
-    txtFile.open("r"); // "r" = read
-    var contentFile = txtFile.read();
-    txtFile.close();
+var txtFilePreset = new File(scriptFolder.fsName + "/Data" + nameTxtPreset);
+if (txtFilePreset.exists) {
+    txtFilePreset.encoding = "UTF8"; // hoặc "ASCII" nếu file không có dấu tiếng Việt
+    txtFilePreset.open("r"); // "r" = read
+    var contentFile = txtFilePreset.read();
+    txtFilePreset.close();
     valuePreset = contentFile;
 } else {
     // Tạo file TXT cùng thư mục
@@ -110,11 +111,11 @@ if (txtFile.exists) {
         }
         // Lưu lựa chọn vào file TXT
         valuePreset = chosenPreset;
-        var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
-        txtFile.encoding = "UTF8";
-        txtFile.open("w");
-        txtFile.write(chosenPreset.toString());
-        txtFile.close();
+        var txtFilePreset = new File(scriptFolder.fsName + "/Data" + nameTxtPreset);
+        txtFilePreset.encoding = "UTF8";
+        txtFilePreset.open("w");
+        txtFilePreset.write(chosenPreset.toString());
+        txtFilePreset.close();
     }
     dialog.show();
 }

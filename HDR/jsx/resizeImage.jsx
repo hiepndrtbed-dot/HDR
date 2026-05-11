@@ -2,7 +2,7 @@ var nameJson = "/resizeImage.json";
 var valuePreset = null;
 var withDialog = false;
 var temp = 0;
-var value = 50;
+var value = 33;
 var jsonFile = new File(scriptFolder.fsName + "/Data" + nameJson);
 (function main() {
     purgeAll();
@@ -30,11 +30,11 @@ var jsonFile = new File(scriptFolder.fsName + "/Data" + nameJson);
                 // jsonFile.remove();
             } else {
                 jsonFile.remove();
-                alert("Đã xóa dữ liệu resize trước đó.");
+                // alert("Đã xóa dữ liệu resize trước đó.");
             }
         }
     } else {
-        saveResize(50);
+        saveResize(value);
     }
     purgeHistory();
     return true;

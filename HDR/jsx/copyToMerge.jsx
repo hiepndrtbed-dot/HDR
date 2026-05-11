@@ -145,6 +145,7 @@ buttonAlign.addEventListener("click", function () {
     var targetScript = File(currentFolder + "/mergeImage.jsx");
     if (targetScript.exists) {
         $.evalFile(targetScript);
+        doc.layers[0].name = "Align";
     } else {
         alert("❌ Không tìm thấy file: " + targetScript.fsName);
     }
