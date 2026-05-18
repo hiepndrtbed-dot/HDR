@@ -2,19 +2,15 @@ var nameTxt = "/Sky.txt"
 var path = "/Library PE/Library/Sky/Exterior/";
 
 (function main() {
-    doc.activeLayer = doc.artLayers.getByName("MERGE 1");
-   try {
-     doc.artLayers.add().name = "Sky";
-     slectionSky();
-     var widthSelection = doc.selection.bounds[2] - doc.selection.bounds[0];
-     var heightSelection = doc.selection.bounds[3] - doc.selection.bounds[1];
-     addMask();
-     selectRGB();
-     fillColor(128, 128, 128);
-   } catch (error) {
-    doc.artLayers["Sky"].remove();
-    return;
-   }
+    selectLayer("MERGE 1");
+    try {
+        slectionSky();
+        var widthSelection = doc.selection.bounds[2] - doc.selection.bounds[0];
+        var heightSelection = doc.selection.bounds[3] - doc.selection.bounds[1];
+        saveAlphaChnl("Sky");
+    } catch (error) {
+        return;
+    }
     //Lay thu muc hien tao
     var folderImage = scriptFolder.fsName + path;
 
@@ -46,35 +42,22 @@ var path = "/Library PE/Library/Sky/Exterior/";
         }
     }
 
-
     try {
-        //vi sao tai day lai dung activeDocument ve khi chuyen sang file khac 
-        //thi la doc moi nen se khong goi lai duoc doc = activeDocument
-        // activeDocument.selection.selectAll();
-        // activeDocument.selection.copy();
-        // activeDocument.close(SaveOptions.DONOTSAVECHANGES);
-        // doc.paste();
-        try {
-            doc.artLayers.getByName("WindowTemp").remove();
-        } catch (error) {
-        }
-        resizeImage(widthSelection, heightSelection);
-        doc.activeLayer.grouped = true;;
-        // setMaskLink(false);
-        loadSelectionByMask(doc.artLayers["Sky"].id);
+        doc.activeLayer.name = "Sky";
+        doc.activeLayer.move(doc.layers[0], ElementPlacement.PLACEBEFORE);
+        resizeImage2(widthSelection, heightSelection);
+        doc.selection.load(doc.channels.getByName("Sky"));
+        doc.channels.getByName("Sky").remove();
         Algn("ADSCentersH");//"ADSCentersV" Doc;
         Algn("ADSCentersV");//"ADSCentersV" Ngang;
-        doc.selection.deselect();
-        actionMenu("freeTransform");
-        // doc.activeLayer.opacity = 80;
-        doc.activeLayer = doc.artLayers["Sky"];
+        addMask();
         setFeatherMask(1);
+        selectRGB();
+        setMaskLink(false);
+        actionMenu("freeTransform");
         selectMashChannel();
         selecTool("burnInTool");
-    } catch (error) {
-
-    }
-
+    } catch (error) { }
 })();
 
 //add mask

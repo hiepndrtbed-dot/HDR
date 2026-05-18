@@ -1,17 +1,14 @@
-var nameTxt = "/Fire.txt"
-var path = "/Library PE/Library/Fireplace/";
 
 (function main() {
     if (!hasSelection()) { alert("Chua co vung chon!"); return; }
-    try {
-        doc.activeLayer = doc.artLayers["MERGE 1"];
-    } catch (error) {
+    var nameTxt = "/Fire.txt"
+    var path = "/Library PE/Library/Fireplace/";
+    ////
+    selectLayer("MERGE 1");
+    var widthSelection = doc.selection.bounds[2] - doc.selection.bounds[0];
+    var heightSelection = doc.selection.bounds[3] - doc.selection.bounds[1];
+    saveAlphaChnl("Fire");
 
-    }
-    doc.artLayers.add().name = "Fire";
-    var width = doc.selection.bounds[2] - doc.selection.bounds[0];
-    var hight = doc.selection.bounds[3] - doc.selection.bounds[1]
-    addMask();
     //Lay thu muc hien tao
     var folderImage = scriptFolder.fsName + path;
     var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
@@ -39,18 +36,20 @@ var path = "/Library PE/Library/Fireplace/";
         }
     }
     try {
-        resizeImage2(width, hight);
-        doc.activeLayer.merge();
-        setMaskLink(false);
-        loadSelectionMask();
-        Algn("ADSCentersH") //"ADSCentersV" Doc
-        Algn("ADSCentersV") //"ADSCentersV" Ngang
-        doc.selection.deselect();
-        actionMenu("freeTransform");
+        doc.activeLayer.name = "Fire";
         doc.activeLayer.blendMode = BlendMode.SCREEN;
+        doc.activeLayer.move(doc.layers[0], ElementPlacement.PLACEBEFORE);
+        resizeImage2(widthSelection, heightSelection);
+        doc.selection.load(doc.channels.getByName("Fire"));
+        doc.channels.getByName("Fire").remove();
+        Algn("ADSCentersH");//"ADSCentersV" Doc;
+        Algn("ADSCentersV");//"ADSCentersV" Ngang;
+        addMask();
         setFeatherMask(1);
+        setMaskLink(false);
+        selectRGB();
+        try { actionMenu("freeTransform"); } catch (error) { }
     } catch (error) { }
-
 })();
 
 //add mask

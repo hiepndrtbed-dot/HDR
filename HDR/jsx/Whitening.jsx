@@ -8,7 +8,7 @@ var hueValue = 100;
 var middleLevelsValue = 1.2;
 var nameChannel = "Tran_ChiPhao";
 var nameTxt = "/Blending.txt";
-var nameTxtPreset = "/Preset.txt";
+var nameTxtPreset = "/PresetI.txt";
 var destWhiteMin = 180;
 //kiem tra blending;
 var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);

@@ -3,14 +3,11 @@ var path = "/Library PE/Library/Grass/";
 
 (function main() {
     if (!hasSelection()) { alert("Chua co vung chon Grass!"); return; }
-
-    doc.artLayers.add().name = "Grass";
-    var width = doc.selection.bounds[2] - doc.selection.bounds[0];
-    var hight = doc.selection.bounds[3] - doc.selection.bounds[1]
-    addMask();
+    var widthSelection = doc.selection.bounds[2] - doc.selection.bounds[0];
+    var heightSelection = doc.selection.bounds[3] - doc.selection.bounds[1];
+    saveAlphaChnl("Grass");
     //Lay thu muc hien tai
     var folderImage = scriptFolder.fsName + path;
-
     var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
 
     if (txtFile.exists) {
@@ -37,19 +34,21 @@ var path = "/Library PE/Library/Grass/";
         }
     }
     try {
-        // resizeImage(width, hight);
-        alert("`Vui long canh chinh kich thuoc layer Grass theo vung chon!`");
-        doc.activeLayer.merge();
-        setMaskLink(false);
-        loadSelectionMask();
-        Algn("ADSCentersH") //"ADSCentersV" Doc
-        Algn("ADSCentersV") //"ADSCentersV" Ngang
-        doc.selection.deselect();
-        actionMenu("freeTransform");
+        doc.activeLayer.name = "Grass";
+        doc.activeLayer.move(doc.layers[0], ElementPlacement.PLACEBEFORE);
         doc.activeLayer.opacity = 85;
+        resizeImage2(widthSelection, heightSelection);
         setLevels(0.8);
-        setFeatherMask(1);
         setHue(-15);
+        doc.selection.load(doc.channels.getByName("Grass"));
+        Algn("ADSCentersH");//"ADSCentersV" Doc;
+        Algn("ADSCentersV");//"ADSCentersV" Ngang;
+        doc.selection.feather(2);
+        addMask();
+        setFeatherMask(1);
+        setMaskLink(false);
+        selectRGB();
+        actionMenu("freeTransform");
         selectMask();
         resetBackground(true);
         selecTool("paintbrushTool");

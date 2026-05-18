@@ -1,4 +1,4 @@
-var nameTxt = "/Preset.txt";
+var nameTxt = "/PresetO.txt";
 var valuePreset = null;
 var withDialog = false;
 (function main() {

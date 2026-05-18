@@ -1,5 +1,5 @@
 //Merge to one layer
-var nameTxt = "/Preset.txt";
+var nameTxt = "/PresetI.txt";
 var valuePreset = null;
 var withDialog = false;
 (function main() {

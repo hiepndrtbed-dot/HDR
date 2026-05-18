@@ -1,77 +1,60 @@
 (function () {
-    if (hasSelection()) {
-        var nameTxt = "/TV.txt"
-        var path = "/Library PE/Library/TV/"
+    var nameTxt = "/TV.txt"
+    var path = "/Library PE/Library/TV/"
+    if (!hasSelection()) { alert("Chua co vung chon TV!"); return; }
+    selectLayer("MERGE 1");
+    var widthSelection = doc.selection.bounds[2] - doc.selection.bounds[0];
+    var heightSelection = doc.selection.bounds[3] - doc.selection.bounds[1];
+    saveAlphaChnl("TV");
 
-        doc.artLayers.add().name = "TV";
-        var width = doc.selection.bounds[2] - doc.selection.bounds[0];
-        var hight = doc.selection.bounds[3] - doc.selection.bounds[1]
-        addMask();
-        // // var file = new File("/d/1freelance/HDR/Data/shutterstock_2482507883.jpg");
-        // if (file.exists) {
-        //     app.open(file);
-        // }
+    //Lay thu muc hien tao
+    var folderImage = scriptFolder.fsName + path;
+    var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
 
-        //Lay thu muc hien tao
-        var folderImage = scriptFolder.fsName + path;
-
-        var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
-
-        if (txtFile.exists) {
-            txtFile.encoding = "UTF8"; // hoặc "ASCII" nếu file không có dấu tiếng Việt
-            txtFile.open("r"); // "r" = read
-            var fileName = txtFile.read();
-            txtFile.close();
-            var file = new File(fileName);
-            //Name file can mo
-            // app.open(file);
-            var nameFile = getFileNameWithoutExt(file.fsName);
-            replaceContents(file);
-        } else {
-            var folder = new Folder(folderImage);
-            var selectFile = folder.openDlg("Khong tim thay file, vui long chon file!");
-            if (selectFile.exists) {
-                // app.open(selectFile);
-                replaceContents(selectFile);
-                var nameFile = getFileNameWithoutExt(selectFile.fsName);
-                // Tạo file TXT cùng thư mục
-                var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
-                txtFile.encoding = "UTF8";
-                txtFile.open("w");
-                txtFile.write(decodeURI(selectFile));
-                txtFile.close();
-            } else {
-                alert("Khong co file nao duoc chon!");
-            }
-        }
-        try {
-            //vi sao tai day lai dung activeDocument ve khi chuyen sang file khac 
-            //thi la doc moi nen se khong goi lai duoc doc = activeDocument
-            // activeDocument.selection.selectAll();
-            // activeDocument.selection.copy();
-            // activeDocument.close(SaveOptions.DONOTSAVECHANGES);
-            // doc.paste();
-            resizeImage2(width, hight);
-            doc.activeLayer.merge();
-            setMaskLink(false);
-            loadSelectionMask();
-            Algn("ADSCentersH") //"ADSCentersV" Doc
-            Algn("ADSCentersV") //"ADSCentersV" Ngang
-            doc.selection.deselect();
-            try {
-                actionMenu("freeTransform");
-            } catch (error) {
-
-            }
-            setFeatherMask(1);
-            if (nameFile == "TV - Black View") { return; }
-            doc.activeLayer.opacity = 80;
-        } catch (error) {
-
-        }
+    if (txtFile.exists) {
+        txtFile.encoding = "UTF8"; // hoặc "ASCII" nếu file không có dấu tiếng Việt
+        txtFile.open("r"); // "r" = read
+        var fileName = txtFile.read();
+        txtFile.close();
+        var file = new File(fileName);
+        //Name file can mo
+        // app.open(file);
+        var nameFile = getFileNameWithoutExt(file.fsName);
+        replaceContents(file);
     } else {
-        alert("Chua co vung chon TV!")
+        var folder = new Folder(folderImage);
+        var selectFile = folder.openDlg("Khong tim thay file, vui long chon file!");
+        if (selectFile.exists) {
+            // app.open(selectFile);
+            replaceContents(selectFile);
+            var nameFile = getFileNameWithoutExt(selectFile.fsName);
+            // Tạo file TXT cùng thư mục
+            var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
+            txtFile.encoding = "UTF8";
+            txtFile.open("w");
+            txtFile.write(decodeURI(selectFile));
+            txtFile.close();
+        } else {
+            alert("Khong co file nao duoc chon!");
+        }
     }
+    try {
+        doc.activeLayer.name = "TV";
+        doc.activeLayer.move(doc.layers[0], ElementPlacement.PLACEBEFORE);
+        resizeImage2(widthSelection, heightSelection);
+        doc.selection.load(doc.channels.getByName("TV"));
+        doc.channels.getByName("TV").remove();
+        Algn("ADSCentersH");//"ADSCentersV" Doc;
+        Algn("ADSCentersV");//"ADSCentersV" Ngang;
+        addMask();
+        setFeatherMask(1);
+        setMaskLink(false);
+        selectRGB();
+        try { actionMenu("freeTransform"); } catch (error) { }
+        if (nameFile == "TV - Black View") { return; }
+        doc.activeLayer.opacity = 80;
+    } catch (error) { }
+
 })();
 
 //add mask
