@@ -1,8 +1,17 @@
 var nameTxt = "/Sky.txt"
 var path = "/Library PE/Library/Sky/Exterior/";
-
+var nameFileJson = "/resizeImage.json";
 (function main() {
-    selectLayer("MERGE 1");
+    var jsonFile = new File(scriptFolder.fsName + "/Data" + nameFileJson);
+    if (jsonFile.exists) {
+        // alert("Resize về kích thước gốc!");
+        var plagResizeFinalize = true;
+        // var flagResize = $.evalFile(currentFolder + "/resizeImage.jsx"); 
+    }
+    try {
+        selectLayer("MERGE 1");
+    } catch (error) {
+    }
     try {
         slectionSky();
         var widthSelection = doc.selection.bounds[2] - doc.selection.bounds[0];

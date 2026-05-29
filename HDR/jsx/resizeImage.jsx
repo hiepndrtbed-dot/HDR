@@ -20,20 +20,24 @@ var jsonFile = new File(scriptFolder.fsName + "/Data" + nameJson);
                 resizeDocument(localData.width, localData.height, null);
             } else {
                 jsonFile.remove();
-                alert("Đã xóa dữ liệu resize trước đó.");
+                if (flagresize == true) {
+                    saveResize(value);
+                }
             }
             doc.selection.load(doc.channels.getByName("SelectionTemp"));
             doc.channels.getByName("SelectionTemp").remove();
         } else {
             if (doc.width != parseInt(localData.width)) {
                 resizeDocument(localData.width, localData.height, null);
-                // jsonFile.remove();
             } else {
                 jsonFile.remove();
-                // alert("Đã xóa dữ liệu resize trước đó.");
+                if (flagresize == true) {
+                    saveResize(value);
+                }
             }
         }
     } else {
+        // alert("Không tìm thấy dữ liệu resize trước đó. Vui lòng thực hiện thao tác resize trước khi finalize!");
         saveResize(value);
     }
     purgeHistory();

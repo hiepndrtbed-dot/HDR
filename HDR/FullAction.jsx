@@ -1,435 +1,1010 @@
 //By Duc Hiep - Acad DN Version 1.0 -- HDR
-$.evalFile(new File(new File($.fileName).parent + "/json/json2.js"));
-const versionTo = " By Duc Hiep (Version -- 1.0.1 --) ";
+const versionTo = " By Duc Hiep (Version -- 1.0.2 --) ";
 preferences.rulerUnits = Units.PIXELS;
 const doc = activeDocument;
-var baseFolder = new File($.fileName).parent;
-var currentFolder = baseFolder.fsName + "/jsx";
-var scriptFolder = baseFolder;
-var thePathActions = baseFolder.fsName + "/Action";
-var targetScript = File(scriptFolder.fsName + "/py/login_check.jsx");
-var status = false;
-var flagMerge = false;
+var scriptFolder = new File($.fileName).parent;
+var thePathActions = scriptFolder.fsName + "/Action";
+var flagresize = true;
+(function () {
+    #include "json/json2.js";
+    //$.evalFile(File(new File($.fileName).parent + "/json/json2.js"));
+    var currentFolder = scriptFolder.fsName + "/jsx";
+    $.evalFile(currentFolder + "/dataPreset.jsx");
+    var flagMerge = false;
+    if (loginCheck() == true) {
+        doc.suspendHistory("By Hiep!", "runabcedfasddfashiepnguyenduc()");
+        // runabcedfasddfashiepnguyenduc();
+    } else { alert("⚠️ Vui lòng đăng nhập để sử dụng action!"); }
 
-if (targetScript.exists) {
-    $.evalFile(targetScript);
-} else {
-    alert("❌ Không tìm thấy file: " + targetScript.fsName);
-}
-// alert(status)
-if (status == true) {
-    doc.suspendHistory("By Hiep!", "runabcedfasddfashiepnguyenduc()");
-    // runabcedfasddfashiepnguyenduc();
-}
+    function runabcedfasddfashiepnguyenduc() {
+        // // DIALOG
+        // // DIALOG
+        // var dialog = new Window("dialog");
+        // dialog.text = "ACTION HDR(Cubicasa) - " + versionTo;
+        // dialog.orientation = "row";
+        // dialog.alignChildren = ["fill", "top"];
+        // dialog.spacing = 3;
+        // dialog.margins = 10;
 
-//processing
-function runabcedfasddfashiepnguyenduc() {
-    // DIALOG
-    var dialog = new Window("dialog")
-    dialog.text = "ACTION HDR(Cubicasa) - " + versionTo;
-    dialog.orientation = "row";
-    dialog.alignChildren = ["center", "top"];
-    dialog.spacing = 3;
-    dialog.margins = 10;
-    // dialog.active = true;
+        // // GROUP
+        // function createGroup(name) {
+        //     var g = dialog.add("group", undefined, { name: name });
+        //     g.orientation = "column";
+        //     g.alignChildren = ["fill", "top"];
+        //     // g.preferredSize = [170, 28];
+        //     // g.size = [170, 28];
+        //     g.spacing = 3;
+        //     g.margins = 1;
+        //     return g;
+        // }
 
-    // GROUP1
-    // ======
-    var group1 = dialog.add("group", undefined, { name: "group1" });
-    group1.orientation = "column";
-    group1.alignment = ["left", "center"];
-    group1.spacing = 3;
-    group1.margins = 1;
+        // var group1 = createGroup("group1");
+        // var group2 = createGroup("group2");
+        // var group3 = createGroup("group3");
+        // var group4 = createGroup("group4");
+        // var group5 = createGroup("group5");
 
-    //Copy
-    var buttonCopyExposure = group1.add("button", undefined, undefined, { name: "Copy Exposure (1)" });
-    buttonCopyExposure.text = "Copy Exposure (F1)";
-    buttonCopyExposure.alignment = ["left", "center"];
-    buttonCopyExposure.preferredSize.width = 170;
-    buttonCopyExposure.helpTip = "Copy các document (#Untitled-1) về một document có độ sáng cao nhất, sắp xếp các document theo các Layer có độ sáng thấp dần (Background sáng nhất), \nPhím tắt là F1";
-    buttonCopyExposure.helpTip.foregroundColor = buttonCopyExposure.graphics.newPen(buttonCopyExposure.graphics.PenType.SOLID_COLOR, [0, 0, 1], 1);
+        // // BUTTON
+        // function createButton(group, name, text, tip) {
+        //     var btn = group.add("button", undefined, text, { name: name });
+        //     btn.alignment = ["left", "center"];
+        //     btn.preferredSize.width = 170;
 
-    //Merge Exposure
-    var buttonMergeExposure = group1.add("button", undefined, undefined, { name: "Merge Exposure" });
-    buttonMergeExposure.text = "Merge Exposure (F2)";
-    buttonMergeExposure.alignment = ["left", "center"];
-    buttonMergeExposure.preferredSize.width = 170;
-    buttonMergeExposure.helpTip = "Merge các Layer có các độ sáng khác nhau! \nPhím tắt F2";
+        //     if (tip) btn.helpTip = tip;
 
-    //Align and merge Exposure
-    var buttonAlign = group1.add("button", undefined, undefined, { name: "Align and merge Exposure" });
-    buttonAlign.text = "ALign and Merge Exposure (F3)";
-    buttonAlign.alignment = ["left", "center"];
-    buttonAlign.preferredSize.width = 170;
-    buttonAlign.helpTip = "Align Layer có độ rung, sau đó Merge các Layer có các độ sáng khác nhau! \nPhím tắt: F3";
+        //     return btn;
+        // }
 
-    //Align and merge Exposure
-    var buttonAlignFlash = group1.add("button", undefined, undefined, { name: "Align and merge Exposure" });
-    buttonAlignFlash.text = "ALignMergeExFlash";
-    buttonAlignFlash.alignment = ["left", "center"];
-    buttonAlignFlash.preferredSize.width = 170;
-    buttonAlignFlash.helpTip = "Align Layer có độ rung, sau đó Merge các Layer có các độ sáng khác nhau! ";
+        // // ===== GROUP 1 =====
+        // var buttonCopyExposure = createButton(
+        //     group1,
+        //     "Copy Exposure",
+        //     "Copy Exposure (F1)",
+        //     "Copy các document (#Untitled-1) về một document có độ sáng cao nhất, sắp xếp các document theo các Layer có độ sáng thấp dần (Background sáng nhất), \nPhím tắt là F1"
+        // );
 
-    //Merge Exposure Flash
-    var buttonMergeExposureFlash = group1.add("button", undefined, undefined, { name: "Merge Exposure" });
-    buttonMergeExposureFlash.text = "Merge Exposure Flash";
-    buttonMergeExposureFlash.alignment = ["left", "center"];
-    buttonMergeExposureFlash.preferredSize.width = 170;
-    buttonMergeExposureFlash.helpTip = "MergeFlash các Layer có các độ sáng khác nhau!";
+        // var buttonMergeExposure = createButton(
+        //     group1,
+        //     "Merge Exposure",
+        //     "Merge Exposure (F2)",
+        //     "Merge các Layer có các độ sáng khác nhau! \nPhím tắt F2"
+        // );
 
-    //Fill white Ceiling, molding
-    var buttonFillCeilingMolding = group1.add("button", undefined, undefined, { name: "Ceiling, molding" });
-    buttonFillCeilingMolding.text = "Fill white Ceiling, molding (F4)";
-    buttonFillCeilingMolding.alignment = ["left", "center"];
-    buttonFillCeilingMolding.preferredSize.width = 170;
-    buttonFillCeilingMolding.helpTip = "Fill trắng tường trần! Có thể fill nhiều lần không tạo thêm layer. \nPhím tắt: F4";
+        // var buttonAlign = createButton(
+        //     group1,
+        //     "Align and merge Exposure",
+        //     "ALign and Merge Exposure (F3)",
+        //     "Align Layer có độ rung, sau đó Merge các Layer có các độ sáng khác nhau! \nPhím tắt: F3"
+        // );
+
+        // var buttonAlignFlash = createButton(
+        //     group1,
+        //     "Align and merge Exposure",
+        //     "ALignMergeExFlash",
+        //     "Align Layer có độ rung, sau đó Merge các Layer có các độ sáng khác nhau!"
+        // );
+
+        // var buttonMergeExposureFlash = createButton(
+        //     group1,
+        //     "Merge Exposure",
+        //     "Merge Exposure Flash",
+        //     "MergeFlash các Layer có các độ sáng khác nhau!"
+        // );
+
+        // var buttonFillCeilingMolding = createButton(
+        //     group1,
+        //     "Ceiling, molding",
+        //     "Fill white Ceiling, molding (F4)",
+        //     "Fill trắng tường trần! Có thể fill nhiều lần không tạo thêm layer. \nPhím tắt: F4"
+        // );
+
+        // var buttonFillWall = createButton(
+        //     group1,
+        //     "Wall color 1",
+        //     "Wall color - LV 1.2 (F5)",
+        //     "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới Levels mặc định (1.2). \nPhím tắt: F5"
+        // );
+
+        // var buttonFillWall2 = createButton(
+        //     group1,
+        //     "Wall color 2",
+        //     "Wall color - LV ~ (F6)",
+        //     "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới.\nLevels được lưu trước đó hoặc tùy chọn mới (Xóa dữ liệu cũ ở nút Reset Data). \nPhím tắt: F6"
+        // );
+
+        // var buttonDTD = createButton(
+        //     group1,
+        //     "DTD",
+        //     "DTD (F7)",
+        //     "Tạo ảnh tối! Chọn vùng chọn cửa trước khi chạy. \nPhím tắt: F7"
+        // );
+
+        // var buttonAddSkyDTD = createButton(
+        //     group2,
+        //     "Add sky (2)",
+        //     "Add Sky(DTD)(F8)",
+        //     "Thêm trời DTD. Lưu ý phải sử dụng action add trời và tạo ảnh tối(DTD) trước. \nPhím tắt: F8"
+        // );
+
+        // var buttonAddTV = createButton(
+        //     group2,
+        //     "Camera Raw",
+        //     "Add Television (4)",
+        //     "Fill ti vi. Lấy vùng chọn TV trước khi chạy action. \nPhím tắt: 4"
+        // );
+
+        // var buttonLoSuoi = createButton(
+        //     group2,
+        //     "Dust",
+        //     "Add Fire (5)",
+        //     "Fill lò sưởi. Lấy vùng chọn lò sưởi trước khi chạy action. \nPhím tắt: 5"
+        // );
+
+        // var buttonWindow = createButton(
+        //     group2,
+        //     "Copy Sill (2)",
+        //     "Add Window(6)",
+        //     "Thay cửa sổ. Lấy vùng chọn Cửa sổ trước khi chạy action. \nPhím tắt: 6"
+        // );
+
+        // var buttonSky = createButton(
+        //     group2,
+        //     "Line_War_Background (l)",
+        //     "Add Sky(7)",
+        //     "Thay trời. Khoanh vùng vùng chọn trời trước khi chạy action. \nPhím tắt: 7"
+        // );
+
+        // var buttonAddGrass = createButton(
+        //     group2,
+        //     "Camera Raw",
+        //     "Add Grass (8)"
+        // );
+
+        // var buttonAddLight = createButton(
+        //     group2,
+        //     "Add sky (2)",
+        //     "Add Light(9)",
+        //     "Truy cập folder chứa Light, add light cho DTD! \nPhím tắt: L"
+        // );
+
+        // var buttonReplaceColor = createButton(group2, "Replace Color", "Replace Color(Q)");
+        // var buttonSelectiveColor = createButton(group2, "Selective Color", "Selective Color(W)");
+        // var buttonColorBalance = createButton(group3, "ColorBalance", "ColorBalance(E)");
+        // var buttonCameraRaw = createButton(group3, "CameraRaw", "CameraRaw(R)");
+
+        // // ===== GROUP 2 =====
+        // var buttonReduceHueSaturation = createButton(group3, "Carpet synchronization", "Carpet synchronization(T)");
+        // var buttonHueSaturation = createButton(group3, "Hue Color", "Hue Saturation(U)");
+        // var buttonColorAndVibrance = createButton(group3, "Hue Color", "ColorAndVibrance(Y)");
+        // var buttonCopyPath = createButton(group3, "Flip_Canvas_Product_White", "Copy Path (A)");
+        // var buttonSaveSelectionDetail = createButton(group3, "Flip_Canvas_Product_White", "Save Selection Detail (D)");
+        // var buttonSaveSelectionAllDetail = createButton(group3, "Flip_Canvas_Product_White", "Save Selection All Detail (F)");
+        // var buttonAddRed = createButton(group3, "deleteSetAction 75%", "Create Layer Blending Color (C)");
+        // var buttonRunActionPath = createButton(group4, "Run action path", "Run action Path (F10)");
+        // var buttonIndor = createButton(group4, "INDOR", "MERGE (INDOR) (1)");
+        // var outDor = createButton(group4, "OUTDOR", "MERGE (OUTDOR) (2)");
+        // var buttonFinalize = createButton(group4, "FINALIZE", "MERGE (FINALIZE) (3)");
+        // var buttonResetData = createButton(group4, "Reset Data", "Reset Data (Z)");
+        // var buttonResizeImage = createButton(group4, "Resize Image", "Resize and UnResize (I)");
+        // var buttonResetDataBlending = createButton(group4, "Reset Blending", "Reset Blending (X)");
+        // var buttonSaveTif = createButton(group4, "Hair Fly", "Save tif and jpg (S)");
+
+        // var buttonResetram = createButton(
+        //     group4,
+        //     "Reset ram",
+        //     "Reset Ram(P)",
+        //     "Giải phóng bộ nhớ, giúp PTS hoạt động mượt hơn! \nPhím tắt: P"
+        // );
+
+        // var buttonLogout = createButton(group5, "Logout account", "Logout Account");
+        // var buttonUpdate = createButton(group5, "Update code", "Update!");
+
+        // var buttonClose = createButton(group5, "Cancel", "Cancel");
+        // // buttonClose.active = true;
+
+        // // Hàm helper: chạy file jsx
+        // function runScript(path) {
+        //     var targetScript = File(path);
+        //     if (targetScript.exists) {
+        //         $.evalFile(targetScript);
+        //     } else {
+        //         alert("❌ Không tìm thấy file: " + targetScript.fsName);
+        //     }
+        // }
+
+        // // Hàm helper: gắn listener cho button chạy file
+        // function bindBtn(btn, filePath) {
+        //     btn.addEventListener("click", function () {
+        //         dialog.close();
+        //         runScript(filePath);
+        //     });
+        // }
+
+        // DIALOG
+        var dialog = new Window("dialog")
+        dialog.text = "ACTION HDR(Cubicasa) - " + versionTo;
+        dialog.orientation = "row";
+        dialog.alignChildren = ["center", "top"];
+        dialog.spacing = 3;
+        dialog.margins = 10;
+        // dialog.active = true;
+
+        // GROUP1
+        // ======
+        var group1 = dialog.add("group", undefined, { name: "group1" });
+        group1.orientation = "column";
+        group1.alignment = ["left", "center"];
+        group1.spacing = 3;
+        group1.margins = 1;
+
+        //Copy
+        var buttonCopyExposure = group1.add("button", undefined, undefined, { name: "Copy Exposure (1)" });
+        buttonCopyExposure.text = "Copy Exposure (F1)";
+        buttonCopyExposure.alignment = ["left", "center"];
+        buttonCopyExposure.preferredSize.width = 170;
+        buttonCopyExposure.helpTip = "Copy các document (#Untitled-1) về một document có độ sáng cao nhất, sắp xếp các document theo các Layer có độ sáng thấp dần (Background sáng nhất), \nPhím tắt là F1";
+        buttonCopyExposure.helpTip.foregroundColor = buttonCopyExposure.graphics.newPen(buttonCopyExposure.graphics.PenType.SOLID_COLOR, [0, 0, 1], 1);
+
+        //Merge Exposure
+        var buttonMergeExposure = group1.add("button", undefined, undefined, { name: "Merge Exposure" });
+        buttonMergeExposure.text = "Merge Exposure (F2)";
+        buttonMergeExposure.alignment = ["left", "center"];
+        buttonMergeExposure.preferredSize.width = 170;
+        buttonMergeExposure.helpTip = "Merge các Layer có các độ sáng khác nhau! \nPhím tắt F2";
+
+        //Align and merge Exposure
+        var buttonAlign = group1.add("button", undefined, undefined, { name: "Align and merge Exposure" });
+        buttonAlign.text = "ALign and Merge Exposure (F3)";
+        buttonAlign.alignment = ["left", "center"];
+        buttonAlign.preferredSize.width = 170;
+        buttonAlign.helpTip = "Align Layer có độ rung, sau đó Merge các Layer có các độ sáng khác nhau! \nPhím tắt: F3";
+
+        //Align and merge Exposure
+        var buttonAlignFlash = group1.add("button", undefined, undefined, { name: "Align and merge Exposure" });
+        buttonAlignFlash.text = "ALignMergeExFlash";
+        buttonAlignFlash.alignment = ["left", "center"];
+        buttonAlignFlash.preferredSize.width = 170;
+        buttonAlignFlash.helpTip = "Align Layer có độ rung, sau đó Merge các Layer có các độ sáng khác nhau! ";
+
+        //Merge Exposure Flash
+        var buttonMergeExposureFlash = group1.add("button", undefined, undefined, { name: "Merge Exposure" });
+        buttonMergeExposureFlash.text = "Merge Exposure Flash";
+        buttonMergeExposureFlash.alignment = ["left", "center"];
+        buttonMergeExposureFlash.preferredSize.width = 170;
+        buttonMergeExposureFlash.helpTip = "MergeFlash các Layer có các độ sáng khác nhau!";
+
+        //Fill white Ceiling, molding
+        var buttonFillCeilingMolding = group1.add("button", undefined, undefined, { name: "Ceiling, molding" });
+        buttonFillCeilingMolding.text = "Fill white Ceiling, molding (F4)";
+        buttonFillCeilingMolding.alignment = ["left", "center"];
+        buttonFillCeilingMolding.preferredSize.width = 170;
+        buttonFillCeilingMolding.helpTip = "Fill trắng tường trần! Có thể fill nhiều lần không tạo thêm layer. \nPhím tắt: F4";
 
 
-    //Fill color Wall
-    var buttonFillWall = group1.add("button", undefined, undefined, { name: "Wall color 1" });
-    buttonFillWall.text = "Wall color - LV 1.2 (F5)";
-    buttonFillWall.alignment = ["left", "center"];
-    buttonFillWall.preferredSize.width = 170;
-    buttonFillWall.helpTip = "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới Levels mặc định (1.2). \nPhím tắt: F5";
+        //Fill color Wall
+        var buttonFillWall = group1.add("button", undefined, undefined, { name: "Wall color 1" });
+        buttonFillWall.text = "Wall color - LV 1.2 (F5)";
+        buttonFillWall.alignment = ["left", "center"];
+        buttonFillWall.preferredSize.width = 170;
+        buttonFillWall.helpTip = "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới Levels mặc định (1.2). \nPhím tắt: F5";
 
-    //Wall coloring 2
-    var buttonFillWall2 = group1.add("button", undefined, undefined, { name: "Wall color 2" });
-    buttonFillWall2.text = "Wall color - LV ~ (F6)"
-    buttonFillWall2.alignment = ["left", "center"]
-    buttonFillWall2.preferredSize.width = 170
-    buttonFillWall2.helpTip = "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới.\nLevels được lưu trước đó hoặc tùy chọn mới (Xóa dữ liệu cũ ở nút Reset Data). \nPhím tắt: F6";
+        //Wall coloring 2
+        var buttonFillWall2 = group1.add("button", undefined, undefined, { name: "Wall color 2" });
+        buttonFillWall2.text = "Wall color - LV ~ (F6)"
+        buttonFillWall2.alignment = ["left", "center"]
+        buttonFillWall2.preferredSize.width = 170
+        buttonFillWall2.helpTip = "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới.\nLevels được lưu trước đó hoặc tùy chọn mới (Xóa dữ liệu cũ ở nút Reset Data). \nPhím tắt: F6";
 
-    //DTD
-    var buttonDTD = group1.add("button", undefined, undefined, { name: "DTD" });
-    buttonDTD.text = "DTD (F7)";
-    buttonDTD.preferredSize.width = 170;
-    buttonDTD.helpTip = "Tạo ảnh tối! Chọn vùng chọn cửa trước khi chạy. \nPhím tắt: F7";
+        //DTD
+        var buttonDTD = group1.add("button", undefined, undefined, { name: "DTD" });
+        buttonDTD.text = "DTD (F7)";
+        buttonDTD.preferredSize.width = 170;
+        buttonDTD.helpTip = "Tạo ảnh tối! Chọn vùng chọn cửa trước khi chạy. \nPhím tắt: F7";
 
-    //Fill Sky DTD
-    var buttonAddSkyDTD = group1.add("button", undefined, undefined, { name: "Add sky (2)" });
-    buttonAddSkyDTD.text = "Add Sky(DTD)(F8)";
-    buttonAddSkyDTD.alignment = ["left", "center"];
-    buttonAddSkyDTD.preferredSize.width = 170;
-    buttonAddSkyDTD.helpTip = "Thêm trời DTD. Lưu ý phải sử dụng action add trời và tạo ảnh tối(DTD) trước. \nPhím tắt: F8";
+        //Fill Sky DTD
+        var buttonAddSkyDTD = group1.add("button", undefined, undefined, { name: "Add sky (2)" });
+        buttonAddSkyDTD.text = "Add Sky(DTD)(F8)";
+        buttonAddSkyDTD.alignment = ["left", "center"];
+        buttonAddSkyDTD.preferredSize.width = 170;
+        buttonAddSkyDTD.helpTip = "Thêm trời DTD. Lưu ý phải sử dụng action add trời và tạo ảnh tối(DTD) trước. \nPhím tắt: F8";
 
-    //Add TV
-    var buttonAddTV = group1.add("button", undefined, undefined, { name: "Camera Raw" });
-    buttonAddTV.text = "Add Television (4)";
-    buttonAddTV.alignment = ["left", "center"];
-    buttonAddTV.preferredSize.width = 170;
-    buttonAddTV.helpTip = "Fill ti vi. Lấy vùng chọn TV trước khi chạy action. \nPhím tắt: 4";
-
-
-    //Lo Fire
-    var buttonLoSuoi = group1.add("button", undefined, undefined, { name: "Dust" });
-    buttonLoSuoi.text = "Add Fire (5)";
-    buttonLoSuoi.alignment = ["left", "center"];
-    buttonLoSuoi.preferredSize.width = 170;
-    buttonLoSuoi.helpTip = "Fill lò sưởi. Lấy vùng chọn lò sưởi trước khi chạy action. \nPhím tắt: 5";
+        //Add TV
+        var buttonAddTV = group1.add("button", undefined, undefined, { name: "Camera Raw" });
+        buttonAddTV.text = "Add Television (4)";
+        buttonAddTV.alignment = ["left", "center"];
+        buttonAddTV.preferredSize.width = 170;
+        buttonAddTV.helpTip = "Fill ti vi. Lấy vùng chọn TV trước khi chạy action. \nPhím tắt: 4";
 
 
-    //Fill window
-    var buttonWindow = group1.add("button", undefined, undefined, { name: "Copy Sill (2)" });
-    buttonWindow.text = "Add Window(6)";
-    buttonWindow.alignment = ["left", "center"];
-    buttonWindow.preferredSize.width = 170;
-    buttonWindow.helpTip = "Thay cửa sổ. Lấy vùng chọn Cửa sổ trước khi chạy action. \nPhím tắt: 6";
-
-    //Fill Sky
-    var buttonSky = group1.add("button", undefined, undefined, { name: "Line_War_Background (l)" });
-    buttonSky.text = "Add Sky(7)";
-    buttonSky.preferredSize.width = 170;
-    buttonSky.helpTip = "Thêm trời! \nPhím tắt: 4";
-    buttonWindow.helpTip = "Thay trời. Khoanh vùng vùng chọn trời trước khi chạy action. \nPhím tắt: 7";
+        //Lo Fire
+        var buttonLoSuoi = group1.add("button", undefined, undefined, { name: "Dust" });
+        buttonLoSuoi.text = "Add Fire (5)";
+        buttonLoSuoi.alignment = ["left", "center"];
+        buttonLoSuoi.preferredSize.width = 170;
+        buttonLoSuoi.helpTip = "Fill lò sưởi. Lấy vùng chọn lò sưởi trước khi chạy action. \nPhím tắt: 5";
 
 
-    //Add Grass
-    var buttonAddGrass = group1.add("button", undefined, undefined, { name: "Camera Raw" });
-    buttonAddGrass.text = "Add Grass (8)";
-    buttonAddGrass.alignment = ["left", "center"];
-    buttonAddGrass.preferredSize.width = 170;
+        //Fill window
+        var buttonWindow = group1.add("button", undefined, undefined, { name: "Copy Sill (2)" });
+        buttonWindow.text = "Add Window(6)";
+        buttonWindow.alignment = ["left", "center"];
+        buttonWindow.preferredSize.width = 170;
+        buttonWindow.helpTip = "Thay cửa sổ. Lấy vùng chọn Cửa sổ trước khi chạy action. \nPhím tắt: 6";
 
-    //Add light
-    var buttonAddLight = group1.add("button", undefined, undefined, { name: "Add sky (2)" });
-    buttonAddLight.text = "Add Light(9)";
-    buttonAddLight.alignment = ["left", "center"];
-    buttonAddLight.preferredSize.width = 170;
-    buttonAddLight.helpTip = "Truy cập folder chứa Light, add light cho DTD! \nPhím tắt: L";
-
-
-    //Replace Color
-    var buttonReplaceColor = group1.add("button", undefined, undefined, { name: "Replace Color" });
-    buttonReplaceColor.text = "Replace Color(Q)";
-    buttonReplaceColor.preferredSize.width = 170;
-
-    //Selective Color
-    var buttonSelectiveColor = group1.add("button", undefined, undefined, { name: "Selective Color" });
-    buttonSelectiveColor.text = "Selective Color(W)";
-    buttonSelectiveColor.preferredSize.width = 170;
-
-    //ColorBalance
-    var buttonColorBalance = group1.add("button", undefined, undefined, { name: "ColorBalance" });
-    buttonColorBalance.text = "ColorBalance(E)";
-    buttonColorBalance.preferredSize.width = 170;
-
-    //CameraRaw
-    var buttonCameraRaw = group1.add("button", undefined, undefined, { name: "CameraRaw" });
-    buttonCameraRaw.text = "CameraRaw(R)";
-    buttonCameraRaw.preferredSize.width = 170;
+        //Fill Sky
+        var buttonSky = group1.add("button", undefined, undefined, { name: "Line_War_Background (l)" });
+        buttonSky.text = "Add Sky(7)";
+        buttonSky.preferredSize.width = 170;
+        buttonSky.helpTip = "Thêm trời! \nPhím tắt: 4";
+        buttonWindow.helpTip = "Thay trời. Khoanh vùng vùng chọn trời trước khi chạy action. \nPhím tắt: 7";
 
 
-    //GROUP 2
-    var group2 = dialog.add("group", undefined, { name: "Group 2" });
-    group2.orientation = "column";
-    group2.alignChildren = ["left", "center"];
-    group2.spacing = 3;
-    group2.margins = 1;
+        //Add Grass
+        var buttonAddGrass = group1.add("button", undefined, undefined, { name: "Camera Raw" });
+        buttonAddGrass.text = "Add Grass (8)";
+        buttonAddGrass.alignment = ["left", "center"];
+        buttonAddGrass.preferredSize.width = 170;
 
-    //Carpet synchronization
-    var buttonReduceHueSaturation = group2.add("button", undefined, undefined, { name: "Carpet synchronization" });
-    buttonReduceHueSaturation.text = "Carpet synchronization(T)";
-    buttonReduceHueSaturation.preferredSize.width = 170;
-
-    //Hue saturation
-    var buttonHueSaturation = group2.add("button", undefined, undefined, { name: "Hue Color" });
-    buttonHueSaturation.text = "Hue Saturation(U)";
-    buttonHueSaturation.preferredSize.width = 170;
-
-    //Color and vibrance
-    var buttonColorAndVibrance = group2.add("button", undefined, undefined, { name: "Hue Color" });
-    buttonColorAndVibrance.text = "ColorAndVibrance(Y)";
-    buttonColorAndVibrance.preferredSize.width = 170;
+        //Add light
+        var buttonAddLight = group1.add("button", undefined, undefined, { name: "Add sky (2)" });
+        buttonAddLight.text = "Add Light(9)";
+        buttonAddLight.alignment = ["left", "center"];
+        buttonAddLight.preferredSize.width = 170;
+        buttonAddLight.helpTip = "Truy cập folder chứa Light, add light cho DTD! \nPhím tắt: L";
 
 
-    //Copy Path
-    var buttonCopyPath = group2.add("button", undefined, undefined, { name: "Flip_Canvas_Product_White" });
-    buttonCopyPath.text = "Copy Path (A)";
-    buttonCopyPath.preferredSize.width = 170;
+        //Replace Color
+        var buttonReplaceColor = group1.add("button", undefined, undefined, { name: "Replace Color" });
+        buttonReplaceColor.text = "Replace Color(Q)";
+        buttonReplaceColor.preferredSize.width = 170;
 
-    //Save selection detail
-    var buttonSaveSelectionDetail = group2.add("button", undefined, undefined, { name: "Flip_Canvas_Product_White" });
-    buttonSaveSelectionDetail.text = "Save Selection Detail (D)";
-    buttonSaveSelectionDetail.preferredSize.width = 170;
+        //Selective Color
+        var buttonSelectiveColor = group1.add("button", undefined, undefined, { name: "Selective Color" });
+        buttonSelectiveColor.text = "Selective Color(W)";
+        buttonSelectiveColor.preferredSize.width = 170;
 
-    //Save selection detail
-    var buttonSaveSelectionAllDetail = group2.add("button", undefined, undefined, { name: "Flip_Canvas_Product_White" });
-    buttonSaveSelectionAllDetail.text = "Save Selection All Detail (F)";
-    buttonSaveSelectionAllDetail.preferredSize.width = 170;
+        //ColorBalance
+        var buttonColorBalance = group1.add("button", undefined, undefined, { name: "ColorBalance" });
+        buttonColorBalance.text = "ColorBalance(E)";
+        buttonColorBalance.preferredSize.width = 170;
 
-    //Replace color Red + yellow
-    var buttonAddRed = group2.add("button", undefined, undefined, { name: "deleteSetAction 75%" });
-    buttonAddRed.text = "Create Layer Blending Color (C)";
-    buttonAddRed.preferredSize.width = 170;
+        //CameraRaw
+        var buttonCameraRaw = group1.add("button", undefined, undefined, { name: "CameraRaw" });
+        buttonCameraRaw.text = "CameraRaw(R)";
+        buttonCameraRaw.preferredSize.width = 170;
 
 
-    //Copy Path
-    var buttonRunActionPath = group2.add("button", undefined, undefined, { name: "Run action path" });
-    buttonRunActionPath.text = "Run action Path (F10)";
-    buttonRunActionPath.preferredSize.width = 170;
+        //GROUP 2
+        var group2 = dialog.add("group", undefined, { name: "Group 2" });
+        group2.orientation = "column";
+        group2.alignChildren = ["left", "center"];
+        group2.spacing = 3;
+        group2.margins = 1;
 
-    // //Merge All layer to one Layer
-    // var buttonMerge = group2.add("button", undefined, undefined, { name: "buttonMerge" });
-    // buttonMerge.text = "MERGE LAYER (1)";
-    // buttonMerge.preferredSize.width = 170;
+        //Carpet synchronization
+        var buttonReduceHueSaturation = group2.add("button", undefined, undefined, { name: "Carpet synchronization" });
+        buttonReduceHueSaturation.text = "Carpet synchronization(T)";
+        buttonReduceHueSaturation.preferredSize.width = 170;
 
-    //Merge images indor
-    var buttonIndor = group2.add("button", undefined, undefined, { name: "INDOR" });
-    buttonIndor.text = "MERGE (INDOR) (1)"
-    buttonIndor.preferredSize.width = 170;
+        //Hue saturation
+        var buttonHueSaturation = group2.add("button", undefined, undefined, { name: "Hue Color" });
+        buttonHueSaturation.text = "Hue Saturation(U)";
+        buttonHueSaturation.preferredSize.width = 170;
 
-    //Merge OutDor
-    var outDor = group2.add("button", undefined, undefined, { name: "OUTDOR" });
-    outDor.text = "MERGE (OUTDOR) (2)";
-    outDor.preferredSize.width = 170;
+        //Color and vibrance
+        var buttonColorAndVibrance = group2.add("button", undefined, undefined, { name: "Hue Color" });
+        buttonColorAndVibrance.text = "ColorAndVibrance(Y)";
+        buttonColorAndVibrance.preferredSize.width = 170;
 
-    //FINALIZE
-    var buttonFinalize = group2.add("button", undefined, undefined, { name: "FINALIZE" });
-    buttonFinalize.text = "MERGE (FINALIZE) (3)";
-    buttonFinalize.preferredSize.width = 170;
 
-    //RESET ALL DATA
-    var buttonResetData = group2.add("button", undefined, undefined, { name: "Reset Data" });
-    buttonResetData.text = "Reset Data (Z)";
-    buttonResetData.preferredSize.width = 170;
+        //Copy Path
+        var buttonCopyPath = group2.add("button", undefined, undefined, { name: "Flip_Canvas_Product_White" });
+        buttonCopyPath.text = "Copy Path (A)";
+        buttonCopyPath.preferredSize.width = 170;
 
-    //RESET DATA blending
-    var buttonResizeImage = group2.add("button", undefined, undefined, { name: "Resize Image" });
-    buttonResizeImage.text = "Resize and UnResize (I)";
-    buttonResizeImage.preferredSize.width = 170;
+        //Save selection detail
+        var buttonSaveSelectionDetail = group2.add("button", undefined, undefined, { name: "Flip_Canvas_Product_White" });
+        buttonSaveSelectionDetail.text = "Save Selection Detail (D)";
+        buttonSaveSelectionDetail.preferredSize.width = 170;
 
-    //RESET DATA blending
-    var buttonResetDataBlending = group2.add("button", undefined, undefined, { name: "Reset Blending" });
-    buttonResetDataBlending.text = "Reset Blending (X)";
-    buttonResetDataBlending.preferredSize.width = 170;
+        //Save selection detail
+        var buttonSaveSelectionAllDetail = group2.add("button", undefined, undefined, { name: "Flip_Canvas_Product_White" });
+        buttonSaveSelectionAllDetail.text = "Save Selection All Detail (F)";
+        buttonSaveSelectionAllDetail.preferredSize.width = 170;
 
-    //Save tif and jpg
-    var buttonSaveTif = group2.add("button", undefined, undefined, { name: "Hair Fly" });
-    buttonSaveTif.text = "Save tif and jpg (S)";
-    buttonSaveTif.preferredSize.width = 170;
+        //Replace color Red + yellow
+        var buttonAddRed = group2.add("button", undefined, undefined, { name: "deleteSetAction 75%" });
+        buttonAddRed.text = "Create Layer Blending Color (C)";
+        buttonAddRed.preferredSize.width = 170;
 
-    //Reset Ram
-    var buttonResetram = group2.add("button", undefined, undefined, { name: "Reset ram" });
-    buttonResetram.text = "Reset Ram(P)";
-    buttonResetram.preferredSize.width = 170;
-    buttonResetram.helpTip = "Giải phóng bộ nhớ, giúp PTS hoạt động mượt hơn! \nPhím tắt: P";
 
-    //Logout
-    var buttonLogout = group2.add("button", undefined, undefined, { name: "Logout account" });
-    buttonLogout.text = "Logout Account";
-    buttonLogout.preferredSize.width = 170;
+        //Copy Path
+        var buttonRunActionPath = group2.add("button", undefined, undefined, { name: "Run action path" });
+        buttonRunActionPath.text = "Run action Path (F10)";
+        buttonRunActionPath.preferredSize.width = 170;
 
-    //update
-    var buttonUpdate = group2.add("button", undefined, undefined, { name: "Update code" });
-    buttonUpdate.text = "Update!";
-    buttonUpdate.preferredSize.width = 170;
+        // //Merge All layer to one Layer
+        // var buttonMerge = group2.add("button", undefined, undefined, { name: "buttonMerge" });
+        // buttonMerge.text = "MERGE LAYER (1)";
+        // buttonMerge.preferredSize.width = 170;
 
-    //Close Frame.
-    var buttonClose = group2.add("button", undefined, undefined, { name: "Cancel" });
-    buttonClose.text = "Cancel";
-    buttonClose.preferredSize.width = 170;
-    buttonClose.active = true
+        //Merge images indor
+        var buttonIndor = group2.add("button", undefined, undefined, { name: "INDOR" });
+        buttonIndor.text = "MERGE (INDOR) (1)"
+        buttonIndor.preferredSize.width = 170;
 
-    // Hàm helper: chạy file jsx
-    function runScript(path) {
-        var targetScript = File(path);
-        if (targetScript.exists) {
-            $.evalFile(targetScript);
-        } else {
-            alert("❌ Không tìm thấy file: " + targetScript.fsName);
+        //Merge OutDor
+        var outDor = group2.add("button", undefined, undefined, { name: "OUTDOR" });
+        outDor.text = "MERGE (OUTDOR) (2)";
+        outDor.preferredSize.width = 170;
+
+        //FINALIZE
+        var buttonFinalize = group2.add("button", undefined, undefined, { name: "FINALIZE" });
+        buttonFinalize.text = "MERGE (FINALIZE) (3)";
+        buttonFinalize.preferredSize.width = 170;
+
+        //RESET ALL DATA
+        var buttonResetData = group2.add("button", undefined, undefined, { name: "Reset Data" });
+        buttonResetData.text = "Reset Data (Z)";
+        buttonResetData.preferredSize.width = 170;
+
+        //RESET DATA blending
+        var buttonResizeImage = group2.add("button", undefined, undefined, { name: "Resize Image" });
+        buttonResizeImage.text = "Resize and UnResize (I)";
+        buttonResizeImage.preferredSize.width = 170;
+
+        //RESET DATA blending
+        var buttonResetDataBlending = group2.add("button", undefined, undefined, { name: "Reset Blending" });
+        buttonResetDataBlending.text = "Reset Blending (X)";
+        buttonResetDataBlending.preferredSize.width = 170;
+
+        //Save tif and jpg
+        var buttonSaveTif = group2.add("button", undefined, undefined, { name: "Hair Fly" });
+        buttonSaveTif.text = "Save tif and jpg (S)";
+        buttonSaveTif.preferredSize.width = 170;
+
+        //Reset Ram
+        var buttonResetram = group2.add("button", undefined, undefined, { name: "Reset ram" });
+        buttonResetram.text = "Reset Ram(P)";
+        buttonResetram.preferredSize.width = 170;
+        buttonResetram.helpTip = "Giải phóng bộ nhớ, giúp PTS hoạt động mượt hơn! \nPhím tắt: P";
+
+        //Logout
+        var buttonLogout = group2.add("button", undefined, undefined, { name: "Logout account" });
+        buttonLogout.text = "Logout Account";
+        buttonLogout.preferredSize.width = 170;
+
+        //update
+        var buttonUpdate = group2.add("button", undefined, undefined, { name: "Update code" });
+        buttonUpdate.text = "Update!";
+        buttonUpdate.preferredSize.width = 170;
+
+        //Close Frame.
+        var buttonClose = group2.add("button", undefined, undefined, { name: "Cancel" });
+        buttonClose.text = "Cancel";
+        buttonClose.preferredSize.width = 170;
+        buttonClose.active = true
+
+        // Hàm helper: chạy file jsx
+        function runScript(path) {
+            var targetScript = File(path);
+            if (targetScript.exists) {
+                $.evalFile(targetScript);
+            } else {
+                alert("❌ Không tìm thấy file: " + targetScript.fsName);
+            }
         }
-    }
 
-    // Hàm helper: gắn listener cho button chạy file
-    function bindBtn(btn, filePath) {
-        btn.addEventListener("click", function () {
+        // Hàm helper: gắn listener cho button chạy file
+        function bindBtn(btn, filePath) {
+            btn.addEventListener("click", function () {
+                dialog.close();
+                runScript(filePath);
+            });
+        }
+
+
+        // --- Map button ↔ file ---
+        bindBtn(buttonCopyExposure, currentFolder + "/copyToMerge.jsx");
+        bindBtn(buttonMergeExposure, currentFolder + "/mergeImage.jsx");
+        bindBtn(buttonMergeExposureFlash, currentFolder + "/mergeBWBD.jsx");
+        bindBtn(buttonFillCeilingMolding, currentFolder + "/Whitening.jsx");
+        bindBtn(buttonFillWall, currentFolder + "/wallColor.jsx");
+        bindBtn(buttonFillWall2, currentFolder + "/wallColor2.jsx");
+        bindBtn(buttonAddTV, currentFolder + "/InsertElectronic.jsx");
+        bindBtn(buttonAddGrass, currentFolder + "/insertGrass.jsx");
+        bindBtn(buttonWindow, currentFolder + "/insertWindow.jsx");
+        bindBtn(buttonSky, currentFolder + "/insertSky.jsx");
+        bindBtn(buttonAddSkyDTD, currentFolder + "/insertSkyDTD.jsx");
+        bindBtn(buttonAddLight, currentFolder + "/insertFlight.jsx");
+        bindBtn(buttonLoSuoi, currentFolder + "/insertFire.jsx");
+        bindBtn(buttonSaveTif, currentFolder + "/saveTifandJPG.jsx");
+        bindBtn(buttonResetram, currentFolder + "/resetRam.jsx");
+        bindBtn(buttonReplaceColor, currentFolder + "/replaceColor.jsx");
+        bindBtn(buttonHueSaturation, currentFolder + "/hueSaturation.jsx");
+        bindBtn(buttonColorAndVibrance, currentFolder + "/colorAndVibrance.jsx");
+        bindBtn(buttonColorBalance, currentFolder + "/colorBalance.jsx");
+        bindBtn(buttonSelectiveColor, currentFolder + "/selectiveColor.jsx");
+        bindBtn(buttonCameraRaw, currentFolder + "/cameraRaw.jsx");
+        bindBtn(buttonReduceHueSaturation, currentFolder + "/-hueSaturation.jsx");
+        bindBtn(buttonResetData, currentFolder + "/removeDataTxt.jsx");
+        bindBtn(buttonResetDataBlending, currentFolder + "/resetBlending.jsx");
+        bindBtn(buttonAddRed, currentFolder + "/+redYellow.jsx");
+        bindBtn(buttonResizeImage, currentFolder + "/resizeImage.jsx");
+        bindBtn(buttonSaveSelectionAllDetail, currentFolder + "/selectionDetails.jsx");
+        bindBtn(buttonCopyPath, currentFolder + "/copyPathTodocument.jsx");
+        bindBtn(buttonRunActionPath, currentFolder + "/autoAction.jsx");
+        bindBtn(buttonFinalize, currentFolder + "/finalize.jsx");
+        bindBtn(buttonUpdate, currentFolder + "/updateCode.jsx");
+        bindBtn(buttonIndor, currentFolder + "/mergeIndor.jsx");
+        bindBtn(outDor, currentFolder + "/mergeOutdor.jsx");
+        bindBtn(buttonLogout, scriptFolder + "/py/logout.jsx");
+
+        // --- Các button có xử lý đặc biệt ---
+        // Align + Merge Exposure
+        buttonAlign.addEventListener("click", function () {
             dialog.close();
-            runScript(filePath);
+            loadAction("ALign", "DataAction(HDR).atn");
+            runScript(currentFolder + "/mergeImage.jsx");
+            doc.layers[0].name = "Align";
         });
+
+        buttonAlignFlash.addEventListener("click", function () {
+            dialog.close();
+            loadAction("ALign", "DataAction(HDR).atn");
+            runScript(currentFolder + "/mergeBWBD.jsx");
+            doc.layers[0].name = "Align";
+        });
+
+        // Save Selection Detail
+        buttonSaveSelectionDetail.addEventListener("click", function () {
+            dialog.close();
+            loadAction("Selection Detail", "DataAction(HDR).atn");
+        });
+
+        // DTD
+        buttonDTD.addEventListener("click", function () {
+            dialog.close();
+            if (hasSelection()) {
+                loadAction("DTD", "DataAction(HDR).atn");
+            } else {
+                alert("Chon vung chon cua so");
+            }
+        });
+
+        // close form
+        buttonClose.addEventListener("click", function () {
+            dialog.close();
+        });
+        //Xử lý xự kiện bằng bàng phím
+        dialog.addEventListener("keydown", triggerBtnRun);
+        function triggerBtnRun(e) {
+            const actions = {
+                "F1": buttonCopyExposure,
+                "F2": buttonMergeExposure,
+                "0": buttonMergeExposureFlash,
+                "F3": buttonAlign,
+                "-": buttonAlignFlash,
+                "F4": buttonFillCeilingMolding,
+                "F5": buttonFillWall,
+                "F6": buttonFillWall2,
+                "F7": buttonDTD,
+                "F8": buttonAddSkyDTD,
+                "1": buttonIndor,
+                "2": outDor,
+                "3": buttonFinalize,
+                "4": buttonAddTV,
+                "5": buttonLoSuoi,
+                "6": buttonWindow,
+                "7": buttonSky,
+                "8": buttonAddGrass,
+                "9": buttonAddLight,
+                "Q": buttonReplaceColor,
+                "W": buttonSelectiveColor,
+                "E": buttonColorBalance,
+                "R": buttonCameraRaw,
+                "T": buttonReduceHueSaturation,
+                "U": buttonHueSaturation,
+                "Y": buttonColorAndVibrance,
+                "I": buttonResizeImage,
+                "P": buttonResetram,
+                "A": buttonCopyPath,
+                "S": buttonSaveTif,
+                "D": buttonSaveSelectionDetail,
+                "F": buttonSaveSelectionAllDetail,
+                "Z": buttonResetData,
+                "X": buttonResetDataBlending,
+                "C": buttonAddRed,
+                "F10": buttonRunActionPath,
+                "Escape": buttonClose
+            };
+
+            const btn = actions[e.keyName];
+            if (btn) {
+                btn.dispatchEvent(new Event("click"));
+            } else {
+                alert(e.keyName + " Input fail!!!!");
+            }
+        }
+        dialog.show();
+    }
+})();
+//processing
+
+
+function loginCheck() {
+    // alert("Checking login...");
+    // #target photoshop
+    var pathCurentFolder = File($.fileName).parent.fsName + "/py";
+    var pyFetch = pathCurentFolder + "/dist/fetch_passwords.exe";
+    var pyUpdate = pathCurentFolder + "/dist/update_status.exe";
+    var secret = "DucHiep@123"; // Biến secret dùng để tạo hash, không lưu hay truyền đi đâu cả, chỉ để làm cho hash khó đoán hơn
+    // alert(pyFetch)
+    var pyDecode = pathCurentFolder + "/py/dist/decode_pw.exe";
+
+    var appData = Folder(Folder.userData + "/MyPhotoshopApp");
+    if (!appData.exists) appData.create();
+
+    var localStatusFile = new File(appData + "/login_status.json");
+
+    var tempDir = Folder.temp.fsName;
+    var jsonFile = new File(tempDir + "/accounts.json");
+
+
+    // Nếu đã có login local
+    if (localStatusFile.exists) {
+        localStatusFile.open("r");
+        var localData = JSON.parse(localStatusFile.read());
+        localStatusFile.close();
+        var loginTime = localData.loginTime; // ví dụ "2025-09-02T17:53:18"
+        if (loginTime) {
+            // Kiểm tra hash code
+            var rawString = localData.loginTime + "|" + localData.makLastLogin + "|" + secret;
+            var newHash = sha256(rawString);
+
+            if (newHash !== localData.hashCode) {
+                alert("⚠️ Sai dữ liệu đăng nhập. Vui lòng đăng nhập lại.");
+                localStatusFile.remove();
+                return;
+            }
+            // daysBetween(loginTime);
+            // alert(daysBetween(loginTime))
+            if (daysBetween(loginTime) > localData.makLastLogin) {
+                alert("⚠️ Tài khoản hết hạn. Vui lòng liên hệ 0982858221 để được cấp.");
+                var scriptFolder = File($.fileName).parent;
+                var targetScript = File(scriptFolder + "/logout.jsx");
+                if (targetScript.exists) {
+                    $.evalFile(targetScript);
+                }
+                return;
+            } else {
+                return true; // vẫn còn hạn, tự động login
+            }
+        }
+    } else {//neu ko ton tai login local thi hien UI login
+        var credentials = showLoginUI();
+        if (credentials) {
+            var machineID = getMachineID();
+            // alert("Machine ID: " + machineID);
+        }
+        if (!machineID) return;
+
+        // Fetch accounts
+        try {
+            //run bang python
+            // app.system('python "' + pyFetch + '"');
+            //run bang exe
+            // app.system('"' + pyFetch + '"');
+            app.system('cmd /c start /wait "" "' + pyFetch + '"');
+        }
+        catch (e) { alert("⚠️ Không gọi được Python fetch: " + e); return; }
+
+        if (!jsonFile.exists) { alert("⚠️ Không tìm thấy accounts.json"); return; }
+        // Đọc file JSON
+        jsonFile.open("r");
+        var content = jsonFile.read();
+        jsonFile.close();
+        jsonFile.remove();
+        var data = JSON.parse(content);
+        var accounts = data.accounts;
+
+        if (!credentials) return; // cancel
+        var username = credentials.username;
+        var password = sha256(credentials.password);
+        var found = null;
+        for (var i = 0; i < accounts.length; i++) {
+            if (accounts[i].User === username) { found = accounts[i]; break; }
+        }
+        if (!found) { alert("❌ Sai tài khoản hoặc mật khẩu!"); return; }
+
+        // Kiểm tra hạn sử dụng dựa trên LastLogin từ JSON
+        var activationDate = found.ActivationDate;
+        if (activationDate) {
+            if (daysBetween(activationDate) > found.LastLogin) { // dùng LastLogin từ file fetch
+                alert("⚠️ Tài khoản hết hạn (>" + found.LastLogin + " ngày). Vui lòng liên hệ 0982858221 để được cấp.");
+                return;
+            }
+        }
+
+        // Decode password Base64
+        // var tmpPwFile = new File(pathCurentFolder + "/tmp_pw.txt");
+        //Run bang python
+        // var cmdDecode = 'python "' + pyDecode + '" "' + found.Passwork + '" "' + tmpPwFile.fsName + '"';
+        //Run bang Exe
+        // var cmdDecode = '"' + pyDecode + '" "' + found.Passwork + '" "' + tmpPwFile.fsName + '"';
+        var decodedPw = decodeBase64Manual(found.Passwork);
+        // app.system(cmdDecode);
+        // tmpPwFile.open("r");
+        // var decodedPw = tmpPwFile.read();
+        // alert(decodedPw)
+        // alert(password)
+        // tmpPwFile.close();
+        // tmpPwFile.remove();
+
+        if (decodedPw !== password) { alert("❌ Sai tài khoản hoặc mật khẩu!"); return; }
+
+        var sheetID = found.UserComputer ? String(found.UserComputer).replace(/\s/g, '') : '';
+
+        if (found.Status == 0 || (found.Status == 1 && sheetID === machineID)) {
+            try {
+                //Run bang python
+                // var cmdUpdate = 'python "' + pyUpdate + '" "' + username + '" 1';
+                //Run bang exe
+                var cmdUpdate = 'cmd /c start /wait "" "' + pyUpdate + '" "' + username + '" 1';
+                app.system(cmdUpdate);
+            } catch (e) { alert("⚠️ Không update được status: " + e); return; }
+
+            // Lưu login_status.json với thời gian login
+            if (activationDate == "") { activationDate = formatDateISO(new Date()) }
+            var loginTime = activationDate;
+            var loginData = { username: username, loginTime: loginTime, makLastLogin: found.LastLogin, machineIDCode: sha256(machineID + "|" + secret), hashCode: sha256(loginTime + "|" + found.LastLogin + "|" + secret) };
+            localStatusFile.open("w");
+            localStatusFile.write(JSON.stringify(loginData, null, 2));
+            localStatusFile.close();
+
+            alert("✅ Đăng nhập thành công!");
+            return true;
+        }
+        else if (found.Status == 1 && sheetID !== machineID) {
+            alert("⚠️ User đã đăng nhập trên máy khác! Vui lòng logout trên máy khác trước khi đăng nhập trên máy này.");
+            var result = showSelectLoginUserUI(sheetID);
+            if (result == 1) {
+                var cmd = 'cmd /c start /wait "" "' + pyUpdate + '" "' + username + '" 0';
+                // alert("cmd: " + cmd);
+                app.system(cmd);
+                // Xóa file login_status.json
+                alert("✅ Logout khoi tai khoan! tai may " + sheetID);
+            }
+        }
     }
 
-    // --- Map button ↔ file ---
-    bindBtn(buttonCopyExposure, currentFolder + "/copyToMerge.jsx");
-    bindBtn(buttonMergeExposure, currentFolder + "/mergeImage.jsx");
-    bindBtn(buttonMergeExposureFlash, currentFolder + "/mergeBWBD.jsx");
-    bindBtn(buttonFillCeilingMolding, currentFolder + "/Whitening.jsx");
-    bindBtn(buttonFillWall, currentFolder + "/wallColor.jsx");
-    bindBtn(buttonFillWall2, currentFolder + "/wallColor2.jsx");
-    bindBtn(buttonAddTV, currentFolder + "/InsertElectronic.jsx");
-    bindBtn(buttonAddGrass, currentFolder + "/insertGrass.jsx");
-    bindBtn(buttonWindow, currentFolder + "/insertWindow.jsx");
-    bindBtn(buttonSky, currentFolder + "/insertSky.jsx");
-    bindBtn(buttonAddSkyDTD, currentFolder + "/insertSkyDTD.jsx");
-    bindBtn(buttonAddLight, currentFolder + "/insertFlight.jsx");
-    bindBtn(buttonLoSuoi, currentFolder + "/insertFire.jsx");
-    bindBtn(buttonSaveTif, currentFolder + "/saveTifandJPG.jsx");
-    bindBtn(buttonResetram, currentFolder + "/resetRam.jsx");
-    bindBtn(buttonReplaceColor, currentFolder + "/replaceColor.jsx");
-    bindBtn(buttonHueSaturation, currentFolder + "/hueSaturation.jsx");
-    bindBtn(buttonColorAndVibrance, currentFolder + "/colorAndVibrance.jsx");
-    bindBtn(buttonColorBalance, currentFolder + "/colorBalance.jsx");
-    bindBtn(buttonSelectiveColor, currentFolder + "/selectiveColor.jsx");
-    bindBtn(buttonCameraRaw, currentFolder + "/cameraRaw.jsx");
-    bindBtn(buttonReduceHueSaturation, currentFolder + "/-hueSaturation.jsx");
-    bindBtn(buttonResetData, currentFolder + "/removeDataTxt.jsx");
-    bindBtn(buttonResetDataBlending, currentFolder + "/resetBlending.jsx");
-    bindBtn(buttonAddRed, currentFolder + "/+redYellow.jsx");
-    bindBtn(buttonResizeImage, currentFolder + "/resizeImage.jsx");
-    bindBtn(buttonSaveSelectionAllDetail, currentFolder + "/selectionDetails.jsx");
-    bindBtn(buttonCopyPath, currentFolder + "/copyPathTodocument.jsx");
-    bindBtn(buttonRunActionPath, currentFolder + "/autoAction.jsx");
-    bindBtn(buttonFinalize, currentFolder + "/finalize.jsx");
-    bindBtn(buttonUpdate, currentFolder + "/updateCode.jsx");
-    bindBtn(buttonIndor, currentFolder + "/mergeIndor.jsx");
-    bindBtn(outDor, currentFolder + "/mergeOutdor.jsx");
-    bindBtn(buttonLogout, scriptFolder + "/py/logout.jsx");
-
-    // --- Các button có xử lý đặc biệt ---
-    // Align + Merge Exposure
-    buttonAlign.addEventListener("click", function () {
-        dialog.close();
-        loadAction("ALign", "DataAction(HDR).atn");
-        runScript(currentFolder + "/mergeImage.jsx");
-        doc.layers[0].name = "Align";
-    });
-
-    buttonAlignFlash.addEventListener("click", function () {
-        dialog.close();
-        loadAction("ALign", "DataAction(HDR).atn");
-        runScript(currentFolder + "/mergeBWBD.jsx");
-        doc.layers[0].name = "Align";
-    });
-
-    // Save Selection Detail
-    buttonSaveSelectionDetail.addEventListener("click", function () {
-        dialog.close();
-        loadAction("Selection Detail", "DataAction(HDR).atn");
-    });
-
-    // DTD
-    buttonDTD.addEventListener("click", function () {
-        dialog.close();
-        if (hasSelection()) {
-            loadAction("DTD", "DataAction(HDR).atn");
-        } else {
-            alert("Chon vung chon cua so");
-        }
-    });
-
-    // close form
-    buttonClose.addEventListener("click", function () {
-        dialog.close();
-    });
-    //Xử lý xự kiện bằng bàng phím
-    dialog.addEventListener("keydown", triggerBtnRun);
-    function triggerBtnRun(e) {
-        const actions = {
-            "F1": buttonCopyExposure,
-            "F2": buttonMergeExposure,
-            "0": buttonMergeExposureFlash,
-            "F3": buttonAlign,
-            "-": buttonAlignFlash,
-            "F4": buttonFillCeilingMolding,
-            "F5": buttonFillWall,
-            "F6": buttonFillWall2,
-            "F7": buttonDTD,
-            "F8": buttonAddSkyDTD,
-            "1": buttonIndor,
-            "2": outDor,
-            "3": buttonFinalize,
-            "4": buttonAddTV,
-            "5": buttonLoSuoi,
-            "6": buttonWindow,
-            "7": buttonSky,
-            "8": buttonAddGrass,
-            "9": buttonAddLight,
-            "Q": buttonReplaceColor,
-            "W": buttonSelectiveColor,
-            "E": buttonColorBalance,
-            "R": buttonCameraRaw,
-            "T": buttonReduceHueSaturation,
-            "U": buttonHueSaturation,
-            "Y": buttonColorAndVibrance,
-            "I": buttonResizeImage,
-            "P": buttonResetram,
-            "A": buttonCopyPath,
-            "S": buttonSaveTif,
-            "D": buttonSaveSelectionDetail,
-            "F": buttonSaveSelectionAllDetail,
-            "Z": buttonResetData,
-            "X": buttonResetDataBlending,
-            "C": buttonAddRed,
-            "F10": buttonRunActionPath,
-            "Escape": buttonClose
-        };
-
-        const btn = actions[e.keyName];
-        if (btn) {
-            btn.dispatchEvent(new Event("click"));
-        } else {
-            alert(e.keyName + " Input fail!!!!");
-        }
+    // Hàm lấy machine ID từ Python
+    function getMachineIDi() {
+        var tmpFile = new File(pathCurentFolder + "/machine_id.txt");
+        try {
+            app.system('python -c "from uuid import getnode; f=open(\'' + tmpFile.fsName + '\',\'w\'); f.write(str(getnode()).strip()); f.close()"');
+            tmpFile.open("r");
+            var id = tmpFile.read();
+            tmpFile.close();
+            tmpFile.remove();
+            return id.replace(/\s/g, '');
+        } catch (e) { alert("⚠️ Lỗi lấy machine ID: " + e); return null; }
     }
-    dialog.show();
+
+    function getMachineID() {
+        var exePath = pathCurentFolder + "/dist/hash_machine.exe";
+        var tmpFile = new File(Folder.temp + "/machine_hash.txt");
+        app.system('cmd /c "' + exePath + '"');
+        var waited = 0;
+        while (!tmpFile.exists && waited < 5000) {
+            $.sleep(100);
+            waited += 100;
+        }
+        if (!tmpFile.exists) {
+            alert("Không tạo được file hash");
+            return "UNKNOWN";
+        }
+        tmpFile.open("r");
+        var hash = tmpFile.read().replace(/\s/g, "");
+        tmpFile.close();
+        tmpFile.remove();
+        return hash;
+    }
+
+    function makeHashFromJSX(inputString) {
+        var exePathHash = pathCurentFolder + "/dist/make_hash.exe";
+        var inputFile = new File(pathCurentFolder + "/dist/input.txt");
+        var outputFile = new File(pathCurentFolder + "/dist/hash_result.txt");
+
+        // ghi input
+        inputFile.open("w");
+        inputFile.write(inputString);
+        inputFile.close();
+
+        app.system('cmd /c "' + exePathHash + '"');
+
+        var waited = 0;
+        while (!outputFile.exists && waited < 5000) {
+            $.sleep(100);
+            waited += 100;
+        }
+
+        if (!outputFile.exists) {
+            alert("Không tạo được hash");
+            return "UNKNOWN";
+        }
+
+        outputFile.open("r");
+        var hash = outputFile.read().replace(/\s/g, "");
+        outputFile.close();
+        outputFile.remove();
+        inputFile.remove();
+
+        return hash;
+    }
+
+    /* ===== SHA256 PURE JSX ===== */
+    function sha256(ascii) {
+
+        function rightRotate(value, amount) {
+            return (value >>> amount) | (value << (32 - amount));
+        }
+
+        var mathPow = Math.pow;
+        var maxWord = mathPow(2, 32);
+        var lengthProperty = "length";
+        var i, j;
+        var result = "";
+
+        var words = [];
+        var asciiBitLength = ascii[lengthProperty] * 8;
+
+        var hash = sha256.h = sha256.h || [];
+        var k = sha256.k = sha256.k || [];
+        var primeCounter = k[lengthProperty];
+
+        var isComposite = {};
+        for (var candidate = 2; primeCounter < 64; candidate++) {
+            if (!isComposite[candidate]) {
+                for (i = 0; i < 313; i += candidate) {
+                    isComposite[i] = candidate;
+                }
+                hash[primeCounter] = (mathPow(candidate, .5) * maxWord) | 0;
+                k[primeCounter++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
+            }
+        }
+
+        ascii += "\x80";
+        while (ascii[lengthProperty] % 64 - 56)
+            ascii += "\x00";
+
+        for (i = 0; i < ascii[lengthProperty]; i++) {
+            j = ascii.charCodeAt(i);
+            words[i >> 2] |= j << ((3 - i) % 4) * 8;
+        }
+
+        words[words[lengthProperty]] = ((asciiBitLength / maxWord) | 0);
+        words[words[lengthProperty]] = (asciiBitLength);
+
+        for (j = 0; j < words[lengthProperty];) {
+
+            var w = words.slice(j, j += 16);
+            var oldHash = hash.slice(0);
+
+            for (i = 0; i < 64; i++) {
+
+                var w15 = w[i - 15], w2 = w[i - 2];
+
+                var a = hash[0], e = hash[4];
+
+                var temp1 = hash[7]
+                    + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+                    + ((e & hash[5]) ^ ((~e) & hash[6]))
+                    + k[i]
+                    + (w[i] = (i < 16) ? w[i] :
+                        (w[i - 16]
+                            + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3))
+                            + w[i - 7]
+                            + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10))
+                        ) | 0
+                    );
+
+                var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+                    + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+
+                hash = [(temp1 + temp2) | 0].concat(hash);
+                hash[4] = (hash[4] + temp1) | 0;
+                hash.pop();
+            }
+
+            for (i = 0; i < 8; i++)
+                hash[i] = (hash[i] + oldHash[i]) | 0;
+        }
+
+        for (i = 0; i < 8; i++)
+            for (j = 3; j + 1; j--) {
+                var b = (hash[i] >> (j * 8)) & 255;
+                result += ((b < 16) ? 0 : "") + b.toString(16);
+            }
+
+        return result;
+    }
+
+    // Hàm format date ISO (ExtendScript không hỗ trợ toISOString)
+    function formatDateISO(date) {
+        function pad(n) { return n < 10 ? '0' + n : n; }
+        return date.getFullYear() + '-'
+            + pad(date.getMonth() + 1) + '-'
+            + pad(date.getDate()) + 'T'
+            + pad(date.getHours()) + ':'
+            + pad(date.getMinutes()) + ':'
+            + pad(date.getSeconds());
+    }
+
+    // Hàm tính số ngày giữa 2 ngày (yyyy-MM-dd)
+    function daysBetween(dateStr) {
+        var datePart = dateStr.split("T")[0]; // "2025-09-02"
+        var parts = datePart.split('-');
+        var lastLoginDate = new Date(Date.UTC(parts[0], parts[1] - 1, parts[2])); // UTC
+        var today = new Date();
+        var todayUTC = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
+        var diffDays = Math.floor((todayUTC - lastLoginDate) / (1000 * 60 * 60 * 24));
+        return diffDays// số ngày
+    }
+
+    // UI login
+    function showLoginUI() {
+        var win = new Window("dialog", "Login Photoshop");
+        win.alignChildren = ["fill", "top"]; win.spacing = 5; win.margins = 5;
+
+        win.add("statictext", undefined, "User:");
+        var userInput = win.add("edittext", undefined, ""); userInput.characters = 10;
+        userInput.active = true;
+
+        win.add("statictext", undefined, "Password:");
+        var pwInput = win.add("edittext", undefined, ""); pwInput.characters = 10; pwInput.password = true;
+
+        var btnGroup = win.add("group"); btnGroup.alignment = "center";
+        btnGroup.add("button", undefined, "Login", { name: "ok" });
+        btnGroup.add("button", undefined, "Cancel", { name: "cancel" });
+
+        return (win.show() == 1) ? { username: userInput.text, password: pwInput.text } : null;
+    }
+
+    function showSelectLoginUserUI(nameComputer) {
+        var win = new Window("dialog", "Select User!");
+        win.alignChildren = ["fill", "top"]; win.spacing = 5; win.margins = 5;
+        win.add("statictext", undefined, "Bạn có muốn thoát tài khoản tại máy" + nameComputer);
+        var btnGroup = win.add("group"); btnGroup.alignment = "center"
+        btnGroup.add("button", undefined, "Yes", { name: "ok" });
+        btnGroup.add("button", undefined, "No", { name: "cancel" });
+        return (win.show() == 1) ? 1 : 0;
+    }
+
+    function decodeBase64Manual(base64Str) {
+        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        var output = "";
+        var buffer = 0, bits = 0;
+
+        for (var i = 0; i < base64Str.length; i++) {
+            var c = base64Str.charAt(i);
+            if (c === "=") break;
+            var val = chars.indexOf(c);
+            if (val < 0) continue;
+
+            buffer = (buffer << 6) | val;
+            bits += 6;
+
+            if (bits >= 8) {
+                bits -= 8;
+                output += String.fromCharCode((buffer >> bits) & 0xFF);
+            }
+        }
+        return output;
+    }
+    //
+
+
 }
 // purgeAll();
 function checkNameLayerToMger() {
@@ -439,6 +1014,98 @@ function checkNameLayerToMger() {
         doc.artLayers[doc.artLayers.length - 3].merge();
     }
 
+}
+// "WindowTemp"
+function createSolidWithColorPicker(flagLoadColor) {
+
+    // Hiện Color Picker
+    if (flagLoadColor == false) {
+        if (!app.showColorPicker()) return; // Cancel thì thoát
+    }
+    var fg = app.foregroundColor; // màu đã chọn
+
+    // ActionDescriptor để tạo Solid Fill
+    var desc = new ActionDescriptor();
+    var ref = new ActionReference();
+    ref.putClass(stringIDToTypeID("contentLayer"));
+    desc.putReference(stringIDToTypeID("null"), ref);
+
+    var solidDesc = new ActionDescriptor();
+    var colorDesc = new ActionDescriptor();
+    var rgbDesc = new ActionDescriptor();
+    rgbDesc.putDouble(stringIDToTypeID("red"), fg.rgb.red);
+    rgbDesc.putDouble(stringIDToTypeID("green"), fg.rgb.green);
+    rgbDesc.putDouble(stringIDToTypeID("blue"), fg.rgb.blue);
+    colorDesc.putObject(stringIDToTypeID("color"), stringIDToTypeID("RGBColor"), rgbDesc);
+
+    solidDesc.putObject(stringIDToTypeID("type"), stringIDToTypeID("solidColorLayer"), colorDesc);
+    desc.putObject(stringIDToTypeID("using"), stringIDToTypeID("contentLayer"), solidDesc);
+
+    executeAction(stringIDToTypeID("make"), desc, DialogModes.NO);
+
+    app.activeDocument.activeLayer.name = Math.round(fg.hsb.hue) + " " + Math.round(fg.hsb.saturation) + " " + Math.round(fg.hsb.brightness);
+}
+
+function addSwatch(name, h, s, b) {
+    // convert HSB -> RGB
+    var sc = new SolidColor();
+
+    sc.hsb.hue = h;
+    sc.hsb.saturation = s;
+    sc.hsb.brightness = b;
+
+    var r = sc.rgb.red;
+    var g = sc.rgb.green;
+    var bl = sc.rgb.blue;
+
+    var d = new ActionDescriptor();
+    var r1 = new ActionReference();
+
+    r1.putClass(charIDToTypeID("Clrs"));
+    d.putReference(charIDToTypeID("null"), r1);
+
+    var c = new ActionDescriptor();
+    c.putString(charIDToTypeID("Nm  "), name);
+
+    var rgb = new ActionDescriptor();
+
+    rgb.putDouble(charIDToTypeID("Rd  "), r);
+    rgb.putDouble(charIDToTypeID("Grn "), g);
+    rgb.putDouble(charIDToTypeID("Bl  "), bl);
+
+    c.putObject(
+        charIDToTypeID("Clr "),
+        charIDToTypeID("RGBC"),
+        rgb
+    );
+
+    d.putObject(
+        charIDToTypeID("Usng"),
+        charIDToTypeID("Clrs"),
+        c
+    );
+
+    d.putBoolean(
+        stringIDToTypeID("pushToDesignLibraries"),
+        false
+    );
+
+    executeAction(charIDToTypeID("Mk  "), d, DialogModes.NO);
+}
+
+function showLayerVisibele(params) {
+    var idShw = charIDToTypeID("Shw ");
+    var desc5439 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var list77 = new ActionList();
+    var ref154 = new ActionReference();
+    var idLyr = charIDToTypeID("Lyr ");
+    ref154.putName(idLyr, params);
+    list77.putReference(ref154);
+    desc5439.putList(idnull, list77);
+    var idTglO = charIDToTypeID("TglO");
+    desc5439.putBoolean(idTglO, true);
+    executeAction(idShw, desc5439, DialogModes.NO);
 }
 function selectChoseMultiLayer(nameOn, nameBottom) {
     function cID(s) { return charIDToTypeID(s); }
@@ -1542,218 +2209,6 @@ function hasLayerStyle(layer) {
     }
 }
 
-function processPreset(valuePreset, withDialog) {
-    switch (parseInt(valuePreset)) {
-        case 0:
-            // alert("Preset Indoor");
-            cameraRawIndor(withDialog);
-            break;
-        case 1:
-            // alert("Preset Indoor Trắng xám");
-            cameraRawIndorWhiteGray(withDialog);
-            break;
-        case 2:
-            // alert("Preset Indoor BWPD");
-            cameraRawIndorBWPD(withDialog);
-            break;
-        case 3:
-            // alert("Preset Outdoor");
-            cameraRawOutdoor(withDialog);
-            break;
-        case 4:
-            // alert("Preset Outdoor BWPD");
-            cameraRawOutdoorBWPD(withDialog);
-            break;
-        default:
-            break;
-    }
-}
-
-// Preset Indoor
-function cameraRawIndor(withDialog) {
-    try {
-        var a = new ActionDescriptor();
-        a.putInteger(charIDToTypeID('PrVN'), 6);// Process Version
-        a.putEnumerated(charIDToTypeID('WBal'), charIDToTypeID('WBal'), charIDToTypeID('Cst ')); // White Balance: Custom
-        a.putInteger(charIDToTypeID('Temp'), 0);//temp
-        a.putInteger(charIDToTypeID('Cr12'), 9);//contract
-        a.putInteger(charIDToTypeID('Hi12'), -4);//highlight
-        a.putInteger(charIDToTypeID('Sh12'), 5);//shadow
-        a.putInteger(charIDToTypeID('CrTx'), 15);//texture
-        a.putInteger(charIDToTypeID('Cl12'), 7);//Clarity
-        a.putInteger(charIDToTypeID('Dhze'), 7);//Dehaze
-        a.putInteger(charIDToTypeID('Shrp'), 0);//Sharpening
-        a.putDouble(charIDToTypeID('ShpR'), 0);//Radius
-        a.putInteger(charIDToTypeID('ShpD'), 0);//Detail
-        a.putInteger(charIDToTypeID('ShpM'), 0);//Masking
-        a.putInteger(charIDToTypeID('LNR '), 0);//Noise Reduction
-        a.putInteger(charIDToTypeID('LNRD'), 0);//Detail
-        a.putInteger(charIDToTypeID('LNRC'), 0);//Contract
-        a.putInteger(charIDToTypeID('DfPA'), 0);//Purple Amount
-        a.putInteger(charIDToTypeID('DPHL'), 30);//Purple Hue (in)
-        a.putInteger(charIDToTypeID('DPHH'), 70);//Purple Hue (out)
-        a.putInteger(charIDToTypeID('DfGA'), 0);//Green Amount
-        a.putInteger(charIDToTypeID('DPGL'), 40);//Green Hue (in)
-        a.putInteger(charIDToTypeID('DPGH'), 60);//Green Hue (out)
-        executeAction(stringIDToTypeID('Adobe Camera Raw Filter'), a, withDialog ? DialogModes.ALL : DialogModes.NO);
-    } catch (error) {
-        doc.activeLayer.remove();
-    }
-
-}
-
-// Preset Indoor trắng xám
-function cameraRawIndorWhiteGray(withDialog) {
-    try {
-        var a = new ActionDescriptor();
-        a.putInteger(charIDToTypeID('PrVN'), 6);// Process Version
-        a.putEnumerated(charIDToTypeID('WBal'), charIDToTypeID('WBal'), charIDToTypeID('Cst ')); // White Balance: Custom
-        a.putInteger(charIDToTypeID('Temp'), 0);//temp
-        a.putInteger(charIDToTypeID('Cr12'), 9);//contract
-        a.putInteger(charIDToTypeID('Hi12'), -4);//highlight
-        a.putInteger(charIDToTypeID('Sh12'), 5);//shadow
-        a.putInteger(charIDToTypeID('CrTx'), 15);//texture
-        a.putInteger(charIDToTypeID('Cl12'), 7);//Clarity
-        a.putInteger(charIDToTypeID('Dhze'), 7);//Dehaze
-        a.putInteger(charIDToTypeID('Shrp'), 0);//Sharpening
-        a.putDouble(charIDToTypeID('ShpR'), 0);//Radius
-        a.putInteger(charIDToTypeID('ShpD'), 0);//Detail
-        a.putInteger(charIDToTypeID('ShpM'), 0);//Masking
-        a.putInteger(charIDToTypeID('LNR '), 0);//Noise Reduction
-        a.putInteger(charIDToTypeID('LNRD'), 0);//Detail
-        a.putInteger(charIDToTypeID('LNRC'), 0);//Contract
-        a.putInteger(charIDToTypeID('DfPA'), 0);//Purple Amount
-        a.putInteger(charIDToTypeID('DPHL'), 30);//Purple Hue (in)
-        a.putInteger(charIDToTypeID('DPHH'), 70);//Purple Hue (out)
-        a.putInteger(charIDToTypeID('DfGA'), 0);//Green Amount
-        a.putInteger(charIDToTypeID('DPGL'), 40);//Green Hue (in)
-        a.putInteger(charIDToTypeID('DPGH'), 60);//Green Hue (out)
-        executeAction(stringIDToTypeID('Adobe Camera Raw Filter'), a, withDialog ? DialogModes.ALL : DialogModes.NO);
-    } catch (error) {
-        doc.activeLayer.remove();
-    }
-}
-
-// Preset Indoor BWPD
-function cameraRawIndorBWPD(withDialog) {
-    try {
-        var a = new ActionDescriptor();
-        a.putInteger(charIDToTypeID('PrVN'), 6);// Process Version
-        a.putEnumerated(charIDToTypeID('WBal'), charIDToTypeID('WBal'), charIDToTypeID('Cst ')); // White Balance: Custom
-        a.putInteger(charIDToTypeID('Temp'), 0);//temp
-        a.putInteger(charIDToTypeID('Cr12'), 9);//contract
-        a.putInteger(charIDToTypeID('Hi12'), -4);//highlight
-        a.putInteger(charIDToTypeID('Sh12'), 0);//shadow
-        a.putInteger(charIDToTypeID('Wh12'), 0);//white 
-        a.putInteger(charIDToTypeID('CrTx'), 0);//texture
-        a.putInteger(charIDToTypeID('Cl12'), 7);//Clarity
-        a.putInteger(charIDToTypeID('Dhze'), 7);//Dehaze
-        a.putInteger(charIDToTypeID('LNR '), 0);//Noise Reduction
-        a.putInteger(charIDToTypeID('LNRD'), 0);//Detail
-        a.putInteger(charIDToTypeID('LNRC'), 0);//Contract
-        a.putInteger(charIDToTypeID('DfPA'), 0);//Purple Amount
-        a.putInteger(charIDToTypeID('DPHL'), 30);//Purple Hue (in)
-        a.putInteger(charIDToTypeID('DPHH'), 70);//Purple Hue (out)
-        a.putInteger(charIDToTypeID('DfGA'), 0);//Green Amount
-        a.putInteger(charIDToTypeID('DPGL'), 40);//Green Hue (in)
-        a.putInteger(charIDToTypeID('DPGH'), 60);//Green Hue (out)
-        executeAction(stringIDToTypeID('Adobe Camera Raw Filter'), a, withDialog ? DialogModes.ALL : DialogModes.NO);
-    } catch (error) {
-        doc.activeLayer.remove();
-    }
-}
-
-// Preset Outdoor BWPD
-function cameraRawOutdoorBWPD(withDialog) {
-    try {
-        var a = new ActionDescriptor();
-        a.putInteger(charIDToTypeID('PrVN'), 6);// Process Version
-        a.putEnumerated(charIDToTypeID('WBal'), charIDToTypeID('WBal'), charIDToTypeID('Cst ')); // White Balance: Custom
-        a.putInteger(charIDToTypeID('Temp'), 0);//temp
-        a.putInteger(charIDToTypeID('tint'), -1);//tint
-        a.putInteger(charIDToTypeID('Cr12'), 5);//contract
-        a.putInteger(charIDToTypeID('Hi12'), -17);//highlight
-        a.putInteger(charIDToTypeID('Sh12'), +15);//shadow
-        a.putInteger(charIDToTypeID('CrTx'), -15);//texture
-        a.putInteger(charIDToTypeID('Cl12'), 2);//Clarity
-        a.putInteger(charIDToTypeID('Dhze'), 2);//Dehaze
-        a.putInteger(charIDToTypeID('LNR '), 12);//Noise Reduction
-        a.putInteger(charIDToTypeID('LNRD'), 50);//Detail
-        a.putInteger(charIDToTypeID('LNRC'), 0);//Contract
-        a.putInteger(charIDToTypeID('DfPA'), 0);//Purple Amount
-        a.putInteger(charIDToTypeID('DPHL'), 30);//Purple Hue (in)
-        a.putInteger(charIDToTypeID('DPHH'), 70);//Purple Hue (out)
-        a.putInteger(charIDToTypeID('DfGA'), 0);//Green Amount
-        a.putInteger(charIDToTypeID('DPGL'), 40);//Green Hue (in)
-        a.putInteger(charIDToTypeID('DPGH'), 60);//Green Hue (out)
-        executeAction(stringIDToTypeID('Adobe Camera Raw Filter'), a, withDialog ? DialogModes.ALL : DialogModes.NO);
-    } catch (error) {
-        doc.activeLayer.remove();
-    }
-}
-
-// Preset Outdoor
-function cameraRawOutdoor(temp, withDialog, vertical) {
-    try {
-        var a = new ActionDescriptor();
-        a.putInteger(charIDToTypeID('Cr12'), 5);//contract
-        a.putInteger(charIDToTypeID('Hi12'), -15);//highlight
-        a.putInteger(charIDToTypeID('Sh12'), 20);//shadow
-        a.putInteger(charIDToTypeID('Temp'), temp);//temp
-        a.putInteger(charIDToTypeID('Tint'), -1);
-        a.putInteger(charIDToTypeID('Cl12'), 4);//Clarity
-        a.putInteger(charIDToTypeID('Dhze'), 6);//Dehaze
-        a.putInteger(charIDToTypeID('LNR '), 12);//Noise Reduction
-        a.putInteger(charIDToTypeID('LNRD'), 50);//Detail Noise Reduction
-        a.putInteger(charIDToTypeID('LNRC'), 0);//Contract Noise Reduction
-
-        // 🔥 Auto Vertical
-        a.putInteger(charIDToTypeID('PerU'), vertical);
-        // 0 = Off
-        // 1 = Auto        // 🔥 tự động toàn diện (nên dùng)
-        // 2 = Level       // chỉ cân bằng ngang
-        // 3 = Vertical    // chỉ chỉnh dọc
-        // 4 = Full        // mạnh hơn Auto
-        executeAction(stringIDToTypeID('Adobe Camera Raw Filter'), a, withDialog ? DialogModes.ALL : DialogModes.NO);
-    } catch (error) {
-        doc.activeLayer.remove();
-    }
-}
-
-//Color -100 -> 100
-// HUE
-// a.putInteger(stringIDToTypeID('hueR'), 0);  // Reds
-// a.putInteger(stringIDToTypeID('hueO'), 0);  // Oranges
-// a.putInteger(stringIDToTypeID('hueY'), 0);  // Yellows
-// a.putInteger(stringIDToTypeID('hueG'), 0);  // Greens
-// a.putInteger(stringIDToTypeID('hueA'), 0);  // Aquas
-// a.putInteger(stringIDToTypeID('hueB'), 0);  // Blues
-// a.putInteger(stringIDToTypeID('hueP'), 0);  // Purples
-// a.putInteger(stringIDToTypeID('hueM'), 0);  // Magentas
-
-// SATURATION
-// a.putInteger(stringIDToTypeID('satR'), 0);  // Reds
-// a.putInteger(stringIDToTypeID('satO'), -23); // Oranges
-// a.putInteger(stringIDToTypeID('satY'), 0);  // Yellows
-// a.putInteger(stringIDToTypeID('satG'), 0);  // Greens
-// a.putInteger(stringIDToTypeID('satA'), 0);  // Aquas
-// a.putInteger(stringIDToTypeID('satB'), -21); // Blues
-// a.putInteger(stringIDToTypeID('satP'), 0);  // Purples
-// a.putInteger(stringIDToTypeID('satM'), 0);  // Magentas
-
-// LUMINANCE
-// a.putInteger(stringIDToTypeID('lumR'), 0);  // Reds
-// a.putInteger(stringIDToTypeID('lumO'), 0);  // Oranges
-// a.putInteger(stringIDToTypeID('lumY'), 0);  // Yellows
-// a.putInteger(stringIDToTypeID('lumG'), 0);  // Greens
-// a.putInteger(stringIDToTypeID('lumA'), 0);  // Aquas
-// a.putInteger(stringIDToTypeID('lumB'), 0);  // Blues
-// a.putInteger(stringIDToTypeID('lumP'), 0);  // Purples
-// a.putInteger(stringIDToTypeID('lumM'), 0);  // Magentas
-
-
-// #target photoshop
-
 function getPathPoints() {
     var doc = app.activeDocument;
     var path = doc.pathItems[0];
@@ -1820,7 +2275,6 @@ function transformLayer(points) {
 
 function loadAction(actionName, action) {
     //--------------------------------------------------------------------------------------------------------
-
     try {
         //code tim thu muc, khong can quan tam.
         if (typeof jamActions !== 'object') { var jamActions = {}; (function () { jamActions.isActionsFile = function (file) { return (file.type === '8BAC') || file.name.match(/\.atn$/i); }; jamActions.isActionsPalette = function (file) { return ((file.type === '8BPF') && file.name.match(/^Actions Palette$/i)) || file.name.match(/^Actions Palette.psp$/i); }; function readBEInt(file, byteCount) { var bytes = file.read(byteCount); var intValue = 0; for (var index = 0; index < byteCount; index++) { intValue = (intValue << 8) + bytes.charCodeAt(index); } return intValue; } function readBytes(file, byteCount) { return file.read(byteCount); } function readByteString(file) { var stringLength = readBEInt(file, 4); return readBytes(file, stringLength); } function readUnicodeString(file) { var unicodeString = ""; var unicodeLength = readBEInt(file, 4); for (var index = 0; index < unicodeLength; index++) { var unicodeChar = readBEInt(file, 2); if (unicodeChar !== 0) { unicodeString += String.fromCharCode(unicodeChar); } } return unicodeString; } function readEventId(file) { var eventId = 0; var eventType = readBytes(file, 4); switch (eventType) { case 'TEXT': eventId = app.stringIDToTypeID(readByteString(file)); break; case 'long': eventId = app.charIDToTypeID(readBytes(file, 4)); break; default: throw new Error("[jamActions readEventId] Unrecognized event type: '" + eventType + "'"); break; } return eventId; } function skipDouble(file) { file.seek(8, 1); } function skipDoubles(file, doubleCount) { file.seek(doubleCount * 8, 1); } function skipInt8(file) { file.seek(1, 1); } function skipInt16(file) { file.seek(2, 1); } function skipInt32(file) { file.seek(4, 1); } function skipInt64(file) { file.seek(8, 1); } function skipBytes(file, byteCount) { file.seek(byteCount, 1); } function skipByteString(file) { var stringLength = readBEInt(file, 4); skipBytes(file, stringLength); } function skipUnicodeString(file) { var unicodeLength = readBEInt(file, 4); skipBytes(file, unicodeLength * 2); } function skipId(file) { var idLength = readBEInt(file, 4); if (idLength) { skipBytes(file, idLength); } else { skipBytes(file, 4); } } function skipClass(file) { skipUnicodeString(file); skipId(file); } function skipObject(file) { skipClass(file); var itemCount = readBEInt(file, 4); for (var itemIndex = 0; itemIndex < itemCount; itemIndex++) { skipId(file); skipItem(file); } } function skipList(file) { var itemCount = readBEInt(file, 4); for (var itemIndex = 0; itemIndex < itemCount; itemIndex++) { skipItem(file); } } function skipItem(file) { var typeId = readBytes(file, 4); switch (typeId) { case 'obj ': skipReference(file); break; case 'Objc': case 'GlbO': skipObject(file); break; case 'type': case 'GlbC': skipClass(file); break; case 'VlLs': skipList(file); break; case 'doub': skipDouble(file); break; case 'UntF': skipBytes(file, 4); skipDouble(file); break; case 'TEXT': skipUnicodeString(file); break; case 'enum': skipId(file); skipId(file); break; case 'long': skipInt32(file); break; case 'comp': skipInt64(file); break; case 'bool': skipInt8(file); break; case 'alis': skipByteString(file); break; case 'Pth ': skipByteString(file); break; case 'tdta': skipByteString(file); break; case 'ObAr': var objCount = readBEInt(file, 4); skipClass(file); var itemCount = readBEInt(file, 4); for (var itemIndex = 0; itemIndex < itemCount; itemIndex++) { skipId(file); skipInt32(file); skipInt32(file); var doublesCount = readBEInt(file, 4); skipDoubles(file, doublesCount); } break; default: throw new Error("[jamActions skipItem] Unrecognized item type: '" + typeId + "'"); break; } } function skipReference(file) { var itemCount = readBEInt(file, 4); for (var itemIndex = 0; itemIndex < itemCount; itemIndex++) { var formId = readBytes(file, 4); skipClass(file); switch (formId) { case 'Clss': break; case 'prop': skipId(file); break; case 'Enmr': skipId(file); skipId(file); break; case 'rele': skipInt32(file); break; case 'Idnt': skipInt32(file); break; case 'indx': skipInt32(file); break; case 'name': skipUnicodeString(file); break; default: throw new Error("[jamActions skipReference] Unrecognized item form: '" + formId + "'"); break; } } } jamActions.readActionDescriptor = function (file, insertVersionPrefix) { var versionPrefix = "\x00\x00\x00\x10"; var start = file.tell(); if (!insertVersionPrefix) { if (file.read(4) === versionPrefix) { versionPrefix = ""; } else { throw new Error('[jamActions.readActionDescriptor] Unrecognized version prefix'); } } skipObject(file); var end = file.tell(); file.seek(start, 0); var stream = versionPrefix + file.read(end - start); var actionDescriptor = new ActionDescriptor(); actionDescriptor.fromStream(stream); return actionDescriptor; }; jamActions.dataFromActionsFile = function (actionsFile, isPalette) { var that = this; function parseActionSet(file) { var actionSet = {}; actionSet.name = localize(readUnicodeString(file)); actionSet.expanded = (readBEInt(file, 1) !== 0); var actionCount = readBEInt(file, 4); actionSet.actions = []; for (var actionIndex = 0; actionIndex < actionCount; actionIndex++) { var action = {}; action.functionKey = readBEInt(file, 2); action.shiftKey = (readBEInt(file, 1) !== 0); action.commandKey = (readBEInt(file, 1) !== 0); action.colorIndex = readBEInt(file, 2); action.name = localize(readUnicodeString(file)); action.expanded = (readBEInt(file, 1) !== 0); var commandCount = readBEInt(file, 4); action.commands = []; for (var commandIndex = 0; commandIndex < commandCount; commandIndex++) { var command = {}; command.expanded = (readBEInt(file, 1) !== 0); command.enabled = (readBEInt(file, 1) !== 0); command.withDialog = (readBEInt(file, 1) !== 0); command.dialogOptions = readBEInt(file, 1); command.eventId = readEventId(file); command.dictionaryName = readByteString(file); if (readBEInt(file, 4) !== 0) { command.actionDescriptor = that.readActionDescriptor(file, true); } action.commands.push(command); } actionSet.actions.push(action); } return actionSet; } var file; if (typeof actionsFile === 'string') { file = new File(actionsFile); } else if (actionsFile instanceof File) { file = actionsFile; } else { throw new Error('[jamActions.dataFromActionsFile] Invalid argument'); } var fileData; if (file.open("r")) { try { file.encoding = 'BINARY'; var fileVersion = readBEInt(file, 4); if (fileVersion === 16) { fileData = {}; fileData.version = fileVersion; if (isPalette) { fileData.actionSets = []; var actionSetCount = readBEInt(file, 4); for (var actionSetIndex = 0; actionSetIndex < actionSetCount; actionSetIndex++) { fileData.actionSets.push(parseActionSet(file)); } } else { fileData.actionSet = parseActionSet(file); } } else { fileData = "Unsupported actions file version: " + fileVersion; } } catch (e) { fileData = e.message; } finally { file.close(); } } else { fileData = "Cannot open file"; } return fileData; }; jamActions.isLocalPlayCommand = function (command, actionSetName) { var localPlayCommand = null; if (command.eventId === app.stringIDToTypeID("play")) { var targetId = app.stringIDToTypeID("target"); if (command.actionDescriptor.hasKey(targetId)) { var localReference = command.actionDescriptor.getReference(targetId); do { try { var desiredClassId = localReference.getDesiredClass(); } catch (e) { break; } switch (desiredClassId) { case app.stringIDToTypeID("command"): var localCommandIndex = localReference.getIndex() - 1; break; case app.stringIDToTypeID("action"): var localActionName = localReference.getName(); break; case app.stringIDToTypeID("actionSet"): var localActionSetName = localReference.getName(); break; } localReference = localReference.getContainer(); } while (localReference); } var continueId = app.stringIDToTypeID("continue"); if (command.actionDescriptor.hasKey(continueId)) { var localContinue = command.actionDescriptor.getBoolean(continueId); } if ((typeof localActionSetName !== 'undefined') && (localActionSetName === actionSetName)) { localPlayCommand = [localActionName, localCommandIndex, localContinue]; } } return localPlayCommand; }; jamActions.determineDialogMode = function (command) { var dialogMode; switch (command.dialogOptions) { case 0: dialogMode = command.withDialog ? DialogModes.ALL : DialogModes.NO; break; case 2: dialogMode = DialogModes.NO; break; case 1: case 3: dialogMode = DialogModes.ALL; break; } return dialogMode; }; var globalCommandHandler = null; jamActions.setCommandHandler = function (commandHandler) { globalCommandHandler = commandHandler; }; jamActions.traverseAction = function (actionSet, actionLocator, fromCommandIndex, continuePlay) { function handleCommands(commands) { var commandMax = (continuePlay) ? commands.length : fromCommandIndex + 1; for (var commandIndex = fromCommandIndex; commandIndex < commandMax; commandIndex++) { if (globalCommandHandler !== null) { globalCommandHandler(commands[commandIndex]); } } } if (typeof fromCommandIndex === 'undefined') { fromCommandIndex = 0; continuePlay = true; } var actions = actionSet.actions; if (typeof actionLocator === 'string') { var actionName = actionLocator; for (var actionIndex = 0; actionIndex < actions.length; actionIndex++) { var action = actions[actionIndex]; if (action.name === actionName) { handleCommands(action.commands); break; } } } else if (typeof actionLocator === 'number') { var actionIndex = actionLocator; if ((actionIndex >= 0) && (actionIndex < actions.length)) { handleCommands(actions[actionIndex].commands); } } }; }()); }

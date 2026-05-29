@@ -4,8 +4,9 @@ var nameFileJson = "/resizeImage.json";
     var jsonFile = new File(scriptFolder.fsName + "/Data" + nameFileJson);
     if (jsonFile.exists) {
         // alert("Resize về kích thước gốc!");
-        var flagResize = $.evalFile(currentFolder + "/resizeImage.jsx");
-        if (flagResize) {
+        var flagresize = false;
+        var flagFinalizeResize = $.evalFile(currentFolder + "/resizeImage.jsx");
+        if (flagFinalizeResize) {
             jsonFile.remove();
         } else {
             return;

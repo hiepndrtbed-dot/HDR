@@ -1,70 +1,8 @@
-var nameTxt = "/PresetO.txt";
+var nameTxtPreset = "/PresetO.txt";
 var valuePreset = null;
-var withDialog = false;
+var withDialog = true;
 (function main() {
-    var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
-    if (txtFile.exists) {
-        txtFile.encoding = "UTF8"; // hoặc "ASCII" nếu file không có dấu tiếng Việt
-        txtFile.open("r"); // "r" = read
-        var contentFile = txtFile.read();
-        txtFile.close();
-        valuePreset = contentFile;
-    } else {
-        // Tạo file TXT cùng thư mục
-        // Tạo một cửa sổ dialog
-        var dialog = new Window("dialog", "Chose Preset...");
-        dialog.alignChildren = "left";
-        dialog.orientation = "column";
-
-        // Panel chứa radio button
-        var radioGroup = dialog.add("panel", undefined, "Chọn Preset");
-        radioGroup.orientation = "column";
-        radioGroup.alignChildren = "left";
-
-        // Mảng các lựa chọn
-        var presets = [
-            "Preset Indoor",
-            "Preset Indoor Trắng xám",
-            "Preset Indoor BWPD",
-            "Preset Outdoor",
-            "Preset Outdoor BWPD",
-        ];
-
-        // Sinh radio button từ mảng
-        var radios = [];
-        for (var i = 0; i < presets.length; i++) {
-            radios[i] = radioGroup.add("radiobutton", undefined, presets[i]);
-        }
-
-        // Đặt mặc định chọn radio đầu tiên
-        radios[0].value = true;
-
-        // Nhóm nút OK/Cancel
-        var buttonGroup = dialog.add("group");
-        buttonGroup.alignment = "right";
-        var saveButton = buttonGroup.add("button", undefined, "OK");
-
-        // Xử lý khi nhấn OK
-        saveButton.onClick = function () {
-            dialog.close();
-            var chosenPreset = "";
-            for (var i = 0; i < radios.length; i++) {
-                if (radios[i].value) {
-                    chosenPreset = i;
-                    break;
-                }
-            }
-            // Lưu lựa chọn vào file TXT
-            valuePreset = chosenPreset;
-            var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
-            txtFile.encoding = "UTF8";
-            txtFile.open("w");
-            txtFile.write(chosenPreset.toString());
-            txtFile.close();
-        }
-        dialog.show();
-    }
-
+    $.evalFile(scriptFolder.fsName + "/jsx/editPreset.jsx");
     //process
     if (selectLayer("Align") == true) {
         flagMerge = true;
@@ -73,14 +11,13 @@ var withDialog = false;
     selectChoseMultiLayer(doc.layers[0].name, doc.layers[doc.layers.length - 1].name);
     doc.activeLayer.name = "MERGE 1";
     convertSmart();
-    alert("Check VERTICAL && CAMERA")
     if (flagMerge == true) {
         freeTransform(101);
         actionMenu("freeTransform");
     }
-    cameraRawOutdoor(1, true, 4);
+    processPreset(valuePreset, withDialog);
+    // cameraRawOutdoor(1, true, 4);
     shadowAndHighlight(0, 0);
-
     selecTool("penTool");
 })();
 

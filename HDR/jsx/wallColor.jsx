@@ -3,7 +3,6 @@ var feather = 1;
 const expandSelection = 1;
 const middleLevelsValue = 1.2;
 const nameChannel = "Wall";
-const nameSolid = "Wall Color ";
 var nameTxt = "/Blending.txt";
 var destWhiteMin = 180;
 (function main() {
@@ -50,6 +49,7 @@ var destWhiteMin = 180;
         }
         dialog.show();
     }
+    if (activeDocument.quickMaskMode == true) { activeDocument.quickMaskMode = false; }
     if (!hasSelection()) {
         alert("Chua co vung chon!");
     } else {
@@ -66,6 +66,7 @@ var destWhiteMin = 180;
                 doc.activeLayer.name = nameLayer + "X";
                 nameLayer = nameLayer + "X";
                 setColorLayer("Bl  ");
+
             } catch (error) {
                 makeLevelsAdjustment(middleLevelsValue);
                 doc.activeLayer.name = nameLayer;
@@ -79,11 +80,49 @@ var destWhiteMin = 180;
                 doc.activeLayer.move(doc.layers[0], ElementPlacement.PLACEBEFORE);
             } finally {
                 selectRGB();
-                var nameRandum = randomOneToTen();
-                createSolidWithColorPicker(nameSolid + nameRandum);
+                var nameJsonColor = "/color1.json";
+                var jsonFile = new File(scriptFolder.fsName + "/Data" + nameJsonColor);
+                var flagLoadColor = false;
+                var localColorData;
+                if (jsonFile.exists) {
+                    jsonFile.open("r");
+                    localColorData = JSON.parse(jsonFile.read());
+                    jsonFile.close();
+
+                    var c = new SolidColor();
+                    c.hsb.hue = localColorData.hue;
+                    c.hsb.saturation = localColorData.saturation;
+                    c.hsb.brightness = localColorData.brightness;
+                    app.foregroundColor = c;
+
+                    flagLoadColor = true;
+                    
+                } else {
+                    flagLoadColor = false;
+                }
+
+                doc.activeLayer.visible = false;
+                createSolidWithColorPicker(flagLoadColor);
+                doc.activeLayer.visible = true;
                 doc.activeLayer.blendMode = BlendMode.COLORBLEND;
                 doc.activeLayer.grouped = true;
                 doc.activeLayer = doc.layers[nameLayer];
+
+                if (flagLoadColor == false) {
+                    //Save màu vao json
+                    var fg = app.foregroundColor; // màu đã chọn
+                    var colorData = {
+                        hue: Math.round(fg.hsb.hue),
+                        saturation: Math.round(fg.hsb.saturation),
+                        brightness: Math.round(fg.hsb.brightness)
+                    };
+
+                    //save color for swatches
+                    addSwatch(Math.round(fg.hsb.hue) + " " + Math.round(fg.hsb.saturation) + " " + Math.round(fg.hsb.brightness), colorData.hue, colorData.saturation, colorData.brightness);
+                    jsonFile.open("w");
+                    jsonFile.write(JSON.stringify(colorData));
+                    jsonFile.close();
+                }
             }
 
         }
@@ -194,34 +233,6 @@ function setColorLayer(color) {
     desc.putObject(cTID("T   "), cTID("Lyr "), descClr);
 
     executeAction(cTID("setd"), desc, DialogModes.NO);
-}
-
-function createSolidWithColorPicker(layerName) {
-
-    // Hiện Color Picker
-    if (!app.showColorPicker()) return; // Cancel thì thoát
-    var fg = app.foregroundColor; // màu đã chọn
-
-    // ActionDescriptor để tạo Solid Fill
-    var desc = new ActionDescriptor();
-    var ref = new ActionReference();
-    ref.putClass(stringIDToTypeID("contentLayer"));
-    desc.putReference(stringIDToTypeID("null"), ref);
-
-    var solidDesc = new ActionDescriptor();
-    var colorDesc = new ActionDescriptor();
-    var rgbDesc = new ActionDescriptor();
-    rgbDesc.putDouble(stringIDToTypeID("red"), fg.rgb.red);
-    rgbDesc.putDouble(stringIDToTypeID("green"), fg.rgb.green);
-    rgbDesc.putDouble(stringIDToTypeID("blue"), fg.rgb.blue);
-    colorDesc.putObject(stringIDToTypeID("color"), stringIDToTypeID("RGBColor"), rgbDesc);
-
-    solidDesc.putObject(stringIDToTypeID("type"), stringIDToTypeID("solidColorLayer"), colorDesc);
-    desc.putObject(stringIDToTypeID("using"), stringIDToTypeID("contentLayer"), solidDesc);
-
-    executeAction(stringIDToTypeID("make"), desc, DialogModes.NO);
-
-    if (layerName) app.activeDocument.activeLayer.name = layerName;
 }
 
 function makeLevelsAdjustment(middle) {

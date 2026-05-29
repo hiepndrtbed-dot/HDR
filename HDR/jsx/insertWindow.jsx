@@ -1,4 +1,7 @@
 (function () {
+    if (doc.artLayers["MERGE 1"].visible == false) {
+        showLayerVisibele("WindowTemp");
+    }
     saveChannel("Window");
     if (layerExists("WindowTemp")) {
         doc.activeLayer = doc.artLayers.getByName("WindowTemp");
@@ -7,8 +10,11 @@
         addMask(); selectRGB();
         setFeatherMask(1);
         setLevels(0, 255, 0, 255);
+        selectMask();
         loadSelectionByMask(doc.activeLayer.id);
-        selecTool("lassoTool");
+        selecTool("eraserTool");
+        // doc.channels.getByName("Window").remove();
+        // selecTool("lassoTool");
     } else {
         doc.activeLayer = doc.layerSets[0].artLayers[0];
         doc.selection.expand(20);
