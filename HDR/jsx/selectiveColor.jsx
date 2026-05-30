@@ -11,83 +11,99 @@
         }
     }
     if (activeDocument.quickMaskMode == true) { activeDocument.quickMaskMode = false; }
-    makeSelectiveColor();
+    makeSelectiveColor("Remove Blue");
+    setSelectiveColor("Bls ", {
+        "Cyn ": -42,
+        "Ylw ": 100
+    });
+
     doc.activeLayer.move(doc.artLayers["Not delete"], ElementPlacement.PLACEAFTER);
+    makeSelectiveColor("Remove Cyan");
+    setSelectiveColor("Cyns", {
+        "Cyn ": -42,
+        "Ylw ": 100
+    });
+
+    doc.activeLayer.move(doc.artLayers["Not delete"], ElementPlacement.PLACEAFTER);
+    doc.activeLayer.grouped = true;
+    doc.activeLayer = doc.artLayers["Remove Blue"];
+
+    doc.activeLayer.invert();
+    selecTool("paintbrushTool");
+
 })();
 
-function layerViaCopy(nameLayer) {
-    var idCpTL = charIDToTypeID("CpTL");
-    executeAction(idCpTL, undefined, DialogModes.NO);
-    activeDocument.activeLayer.name = nameLayer;
-}
-function action(action) {
-    var idReplaceColor = stringIDToTypeID(action);
-    executeAction(idReplaceColor, undefined, DialogModes.ALL);
-}
+// Một số key thường dùng:
+// Cyn // Cyan
+// Mgnt // Magenta
+// Ylw // Yellow
+// Blck // Black
 
-function actionCharID(actionName) {
-    var id = charIDToTypeID(actionName);
-    executeAction(id, undefined, DialogModes.ALL);
+// Một số vùng màu:
+// "Rds " // Reds
+// "Ylws" // Yellows
+// "Grns" // Greens
+// "Cyns" // Cyans
+// "Bls " // Blues
+// "Mgnt" // Magentas
 
-}
-function mergeVisible(params) {
-    var idMrgV = charIDToTypeID("MrgV");
-    var desc25388 = new ActionDescriptor();
-    var idDplc = charIDToTypeID("Dplc");
-    desc25388.putBoolean(idDplc, true);
-    executeAction(idMrgV, desc25388, DialogModes.NO);
-}
+//exambles
+setSelectiveColor("Bls ", {
+    "Cyn ": -42,
+    "Ylw ": 100
+});
 
-function selectLayer(layerName) {
-    var result = false;
-    try {
-        var idslct = charIDToTypeID("slct");
-        var desc19 = new ActionDescriptor();
-        var idnull = charIDToTypeID("null");
-        var ref1 = new ActionReference();
-        var idLyr = charIDToTypeID("Lyr ");
-        ref1.putName(idLyr, layerName);
-        desc19.putReference(idnull, ref1);
-        var idMkVs = charIDToTypeID("MkVs");
-        desc19.putBoolean(idMkVs, false);
-        var idLyrI = charIDToTypeID("LyrI");
-        var list2 = new ActionList();
-        list2.putInteger(10);
-        desc19.putList(idLyrI, list2);
-        executeAction(idslct, desc19, DialogModes.NO);
-        result = true;
-    } catch (error) {
-        result = false;
-    }
-    return result;
-}
-//add mask
-function addMask() {
-    var idMk = charIDToTypeID("Mk  ");
-    var desc358 = new ActionDescriptor();
-    var idNw = charIDToTypeID("Nw  ");
-    var idChnl = charIDToTypeID("Chnl");
-    desc358.putClass(idNw, idChnl);
-    var idAt = charIDToTypeID("At  ");
-    var ref208 = new ActionReference();
-    var idChnl = charIDToTypeID("Chnl");
-    var idChnl = charIDToTypeID("Chnl");
-    var idMsk = charIDToTypeID("Msk ");
-    ref208.putEnumerated(idChnl, idChnl, idMsk);
-    desc358.putReference(idAt, ref208);
-    var idUsng = charIDToTypeID("Usng");
-    var idUsrM = charIDToTypeID("UsrM");
-    var idRvlS = charIDToTypeID("RvlS");
-    desc358.putEnumerated(idUsng, idUsrM, idRvlS);
-    executeAction(idMk, desc358, DialogModes.NO);
-}
+function setSelectiveColor(colorRange, values) {
 
-function hasSelection() {
-    var hasSelection = false;
+    var desc = new ActionDescriptor();
     var ref = new ActionReference();
-    ref.putProperty(stringIDToTypeID("property"), stringIDToTypeID("selection"));
-    ref.putEnumerated(stringIDToTypeID("document"), stringIDToTypeID("ordinal"), stringIDToTypeID("targetEnum"));
-    var desc = executeActionGet(ref);
-    if (desc.count) hasSelection = true;
-    return hasSelection;
+
+    ref.putEnumerated(
+        charIDToTypeID("AdjL"),
+        charIDToTypeID("Ordn"),
+        charIDToTypeID("Trgt")
+    );
+
+    desc.putReference(charIDToTypeID("null"), ref);
+
+    var toDesc = new ActionDescriptor();
+
+    var list = new ActionList();
+    var colorDesc = new ActionDescriptor();
+
+    colorDesc.putEnumerated(
+        charIDToTypeID("Clrs"),
+        charIDToTypeID("Clrs"),
+        charIDToTypeID(colorRange)
+    );
+
+    for (var key in values) {
+
+        if (values[key] != null) {
+
+            colorDesc.putUnitDouble(
+                charIDToTypeID(key),
+                charIDToTypeID("#Prc"),
+                values[key]
+            );
+
+        }
+    }
+
+    list.putObject(charIDToTypeID("ClrC"), colorDesc);
+
+    toDesc.putList(charIDToTypeID("ClrC"), list);
+
+    desc.putObject(
+        charIDToTypeID("T   "),
+        charIDToTypeID("SlcC"),
+        toDesc
+    );
+
+    executeAction(
+        charIDToTypeID("setd"),
+        desc,
+        DialogModes.NO
+    );
 }
+

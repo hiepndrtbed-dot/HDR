@@ -8,7 +8,7 @@ var flagresize = true;
 (function () {
     #include "json/json2.js";
     //$.evalFile(File(new File($.fileName).parent + "/json/json2.js"));
-    var currentFolder = scriptFolder.fsName + "/jsx";
+    var currentFolder = scriptFolder.fsName + "/jsxbin";
     $.evalFile(currentFolder + "/dataPreset.jsx");
     var flagMerge = false;
     if (loginCheck() == true) {
@@ -2014,7 +2014,7 @@ function makeHue(hue, saturation, lightness) {
     desc262.putObject(idT, idHStr, desc263);
     executeAction(idsetd, desc262, DialogModes.NO);
 }
-function makeSelectiveColor() {
+function makeSelectiveColor(name) {
     var idTrnf = charIDToTypeID("Trnf");
     var idMk = charIDToTypeID("Mk  ");
     var desc63948 = new ActionDescriptor();
@@ -2036,6 +2036,7 @@ function makeSelectiveColor() {
     var idAdjL = charIDToTypeID("AdjL");
     desc63948.putObject(idUsng, idAdjL, desc63949);
     executeAction(idMk, desc63948, DialogModes.NO);
+    doc.activeLayer.name = name;
 }
 function makeColorBalance() {
     var idMk = charIDToTypeID("Mk  ");
