@@ -8,7 +8,7 @@ var flagresize = true;
 (function () {
     #include "json/json2.js";
     //$.evalFile(File(new File($.fileName).parent + "/json/json2.js"));
-    var currentFolder = scriptFolder.fsName + "/jsxbin";
+    var currentFolder = scriptFolder.fsName + "/jsx";
     $.evalFile(currentFolder + "/dataPreset.jsx");
     var flagMerge = false;
     if (loginCheck() == true) {
@@ -535,7 +535,7 @@ var flagresize = true;
         bindBtn(buttonCopyPath, currentFolder + "/copyPathTodocument.jsx");
         bindBtn(buttonRunActionPath, currentFolder + "/autoAction.jsx");
         bindBtn(buttonFinalize, currentFolder + "/finalize.jsx");
-        bindBtn(buttonUpdate, currentFolder + "/updateCode.jsx");
+        bindBtn(buttonUpdate, scriptFolder.fsName + "/py/updateCode.jsx");
         bindBtn(buttonIndor, currentFolder + "/mergeIndor.jsx");
         bindBtn(outDor, currentFolder + "/mergeOutdor.jsx");
         bindBtn(buttonLogout, scriptFolder + "/py/logout.jsx");

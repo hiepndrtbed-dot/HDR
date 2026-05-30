@@ -1,61 +1,74 @@
+// Một số key thường dùng:
+// Cyn // Cyan
+// Mgnt // Magenta
+// Ylw // Yellow
+// Blck // Black
 
-var idsetd = charIDToTypeID( "setd" );
-    var desc19434 = new ActionDescriptor();
-    var idnull = charIDToTypeID( "null" );
-        var ref464 = new ActionReference();
-        var idAdjL = charIDToTypeID( "AdjL" );
-        var idOrdn = charIDToTypeID( "Ordn" );
-        var idTrgt = charIDToTypeID( "Trgt" );
-        ref464.putEnumerated( idAdjL, idOrdn, idTrgt );
-    desc19434.putReference( idnull, ref464 );
-    var idT = charIDToTypeID( "T   " );
-        var desc19435 = new ActionDescriptor();
-        var idpresetKind = stringIDToTypeID( "presetKind" );
-        var idpresetKindType = stringIDToTypeID( "presetKindType" );
-        var idpresetKindCustom = stringIDToTypeID( "presetKindCustom" );
-        desc19435.putEnumerated( idpresetKind, idpresetKindType, idpresetKindCustom );
-        var idClrC = charIDToTypeID( "ClrC" );
-            var list286 = new ActionList();
-                var desc19436 = new ActionDescriptor();
-                var idClrs = charIDToTypeID( "Clrs" );
-                var idClrs = charIDToTypeID( "Clrs" );
-                var idBls = charIDToTypeID( "Bls " );
-                desc19436.putEnumerated( idClrs, idClrs, idBls );
-                var idCyn = charIDToTypeID( "Cyn " );
-                var idPrc = charIDToTypeID( "#Prc" );
-                desc19436.putUnitDouble( idCyn, idPrc, -42.000000 );
-            var idClrC = charIDToTypeID( "ClrC" );
-            list286.putObject( idClrC, desc19436 );
-        desc19435.putList( idClrC, list286 );
-    var idSlcC = charIDToTypeID( "SlcC" );
-    desc19434.putObject( idT, idSlcC, desc19435 );
-executeAction( idsetd, desc19434, DialogModes.NO );
+// Một số vùng màu:
+// "Rds " // Reds
+// "Ylws" // Yellows
+// "Grns" // Greens
+// "Cyns" // Cyans
+// "Bls " // Blues
+// "Mgnt" // Magentas
 
-var idsetd = charIDToTypeID( "setd" );
-    var desc19446 = new ActionDescriptor();
-    var idnull = charIDToTypeID( "null" );
-        var ref465 = new ActionReference();
-        var idAdjL = charIDToTypeID( "AdjL" );
-        var idOrdn = charIDToTypeID( "Ordn" );
-        var idTrgt = charIDToTypeID( "Trgt" );
-        ref465.putEnumerated( idAdjL, idOrdn, idTrgt );
-    desc19446.putReference( idnull, ref465 );
-    var idT = charIDToTypeID( "T   " );
-        var desc19447 = new ActionDescriptor();
-        var idClrC = charIDToTypeID( "ClrC" );
-            var list287 = new ActionList();
-                var desc19448 = new ActionDescriptor();
-                var idClrs = charIDToTypeID( "Clrs" );
-                var idClrs = charIDToTypeID( "Clrs" );
-                var idBls = charIDToTypeID( "Bls " );
-                desc19448.putEnumerated( idClrs, idClrs, idBls );
-                var idYlw = charIDToTypeID( "Ylw " );
-                var idPrc = charIDToTypeID( "#Prc" );
-                desc19448.putUnitDouble( idYlw, idPrc, 100.000000 );
-            var idClrC = charIDToTypeID( "ClrC" );
-            list287.putObject( idClrC, desc19448 );
-        desc19447.putList( idClrC, list287 );
-    var idSlcC = charIDToTypeID( "SlcC" );
-    desc19446.putObject( idT, idSlcC, desc19447 );
-executeAction( idsetd, desc19446, DialogModes.NO );
+//exambles
+setSelectiveColor("Bls ", {
+    "Cyn ": -42,
+    "Ylw ": 100
+});
+
+function setSelectiveColor(colorRange, values) {
+
+    var desc = new ActionDescriptor();
+    var ref = new ActionReference();
+
+    ref.putEnumerated(
+        charIDToTypeID("AdjL"),
+        charIDToTypeID("Ordn"),
+        charIDToTypeID("Trgt")
+    );
+
+    desc.putReference(charIDToTypeID("null"), ref);
+
+    var toDesc = new ActionDescriptor();
+
+    var list = new ActionList();
+    var colorDesc = new ActionDescriptor();
+
+    colorDesc.putEnumerated(
+        charIDToTypeID("Clrs"),
+        charIDToTypeID("Clrs"),
+        charIDToTypeID(colorRange)
+    );
+
+    for (var key in values) {
+
+        if (values[key] != null) {
+
+            colorDesc.putUnitDouble(
+                charIDToTypeID(key),
+                charIDToTypeID("#Prc"),
+                values[key]
+            );
+
+        }
+    }
+
+    list.putObject(charIDToTypeID("ClrC"), colorDesc);
+
+    toDesc.putList(charIDToTypeID("ClrC"), list);
+
+    desc.putObject(
+        charIDToTypeID("T   "),
+        charIDToTypeID("SlcC"),
+        toDesc
+    );
+
+    executeAction(
+        charIDToTypeID("setd"),
+        desc,
+        DialogModes.NO
+    );
+}
 

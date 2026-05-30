@@ -28,7 +28,7 @@ const doc = activeDocument;
     // mergeVisible();
     // addMask(); applyMask();
     // hueSaturation(0, -80, 0);
-
+1
     // hueSaturation(-10, 0, 0);
     // cameraRawFilter(3, 0);
 })();
