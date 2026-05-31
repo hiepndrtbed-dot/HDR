@@ -67,7 +67,7 @@ EXTRACT_DIR = os.path.join(TEMP_DIR, "extract")
 
 LOCAL_VERSION_FILE = os.path.join(
     ROOT_DIR,
-    "version.json"
+    "local_version.json"
 )
 
 # ==================================================
@@ -168,17 +168,43 @@ def copy_folder_contents(src, dst):
 
 def replace():
 
+    # =========================
+    # 1. REPLACE FOLDERS
+    # =========================
+
     for item in REPLACE_ITEMS:
 
         src = os.path.join(EXTRACT_DIR, item)
         dst = os.path.join(ROOT_DIR, item)
 
-        log("Replace: " + item)
+        if not os.path.exists(src):
+            log("Skip folder: " + item)
+            continue
+
+        log("Replace folder: " + item)
 
         if os.path.exists(dst):
             shutil.rmtree(dst)
 
         copy_folder_contents(src, dst)
+
+    # =========================
+    # 2. REPLACE ROOT FILES
+    # =========================
+
+    for item in os.listdir(EXTRACT_DIR):
+
+        src = os.path.join(EXTRACT_DIR, item)
+
+        # bỏ qua thư mục
+        if os.path.isdir(src):
+            continue
+
+        dst = os.path.join(ROOT_DIR, item)
+
+        log("Replace file: " + item)
+
+        shutil.copy2(src, dst)
 
 # ==================================================
 # MAIN
@@ -265,10 +291,19 @@ def main():
     # update version
     # -------------------------
 
-    shutil.copy2(
-        os.path.join(EXTRACT_DIR, "version.json"),
-        LOCAL_VERSION_FILE
-    )
+    with open(
+        LOCAL_VERSION_FILE,
+        "w",
+        encoding="utf-8"
+    ) as f:
+
+        json.dump(
+            {
+                "version": remote_version
+            },
+            f,
+            indent=4
+        )
 
     log("Update Success")
 
