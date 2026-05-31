@@ -536,7 +536,7 @@ var flagresize = true;
         bindBtn(buttonRunActionPath, currentFolder + "/autoAction.jsx");
         bindBtn(buttonFinalize, currentFolder + "/finalize.jsx");
         bindBtn(buttonUpdate, scriptFolder.fsName + "/py/updateCode.jsx");
-        bindBtn(buttonIndor, currentFolder + "/mergeIndor.jsx");
+        bindBtn(buttonIndor, currentFolder + "/mergeIndor.jsx"); 3
         bindBtn(outDor, currentFolder + "/mergeOutdor.jsx");
         bindBtn(buttonLogout, scriptFolder + "/py/logout.jsx");
 
