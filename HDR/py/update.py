@@ -10,7 +10,7 @@ import requests
 # CONFIG
 # ==================================================
 
-VERSION_URL = "https://raw.githubusercontent.com/hiepndrtbed-dot/HDR/main/HDR/version.json"
+VERSION_URL = "https://raw.githubusercontent.com/hiepndrtbed-dot/HDR/main/HDR/update/version.json"
 
 REPLACE_ITEMS = [
     "Action",

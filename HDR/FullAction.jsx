@@ -1,5 +1,4 @@
 //By Duc Hiep - Acad DN Version 1.0 -- HDR
-const versionTo = " By Duc Hiep (Version -- 1.0.2 --) ";
 preferences.rulerUnits = Units.PIXELS;
 const doc = activeDocument;
 var scriptFolder = new File($.fileName).parent;
@@ -7,6 +6,14 @@ var thePathActions = scriptFolder.fsName + "/Action";
 var flagresize = true;
 (function () {
     #include "json/json2.js";
+
+    var fileVersion = new File(scriptFolder + "/local_version.json");
+    if (fileVersion.exists) {
+        fileVersion.open("r");
+        const versionTo = JSON.parse(fileVersion.read()).version;
+        fileVersion.close();
+    }
+    
     //$.evalFile(File(new File($.fileName).parent + "/json/json2.js"));
     var currentFolder = scriptFolder.fsName + "/jsx";
     $.evalFile(currentFolder + "/dataPreset.jsx");
