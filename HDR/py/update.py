@@ -10,9 +10,9 @@ import requests
 # CONFIG
 # ==================================================
 
-VERSION_URL = "https://raw.githubusercontent.com/hiepndrtbed-dot/HDR/main/HDR/update/version.json"
+VERSION_URL = "https://raw.githubusercontent.com/hiepndrtbed-dot/HDR/main/HDR/version.json"
 
-REPLACE_FOLDERS = [
+REPLACE_ITEMS = [
     "Action",
     "Data",
     "json",
@@ -20,26 +20,29 @@ REPLACE_FOLDERS = [
 ]
 
 # ==================================================
-# ROOT DETECTION (VERY IMPORTANT)
+# ROOT DETECTION (IMPORTANT FIX)
 # ==================================================
 
 def find_root():
 
+    # path của file đang chạy
     if getattr(sys, "frozen", False):
-        base = os.path.dirname(sys.executable)
+        # chạy EXE
+        base_path = os.path.dirname(sys.executable)
     else:
-        base = os.path.dirname(os.path.abspath(__file__))
+        # chạy PY
+        base_path = os.path.dirname(os.path.abspath(__file__))
 
-    current = base
+    # nếu đang ở dist hoặc py → đi lên tìm HDR
+    current = base_path
 
-    for _ in range(6):
+    for _ in range(5):
 
         if (
             os.path.exists(os.path.join(current, "Action")) and
             os.path.exists(os.path.join(current, "Data")) and
             os.path.exists(os.path.join(current, "json")) and
-            os.path.exists(os.path.join(current, "jsxbin")) and
-            os.path.exists(os.path.join(current, "update"))
+            os.path.exists(os.path.join(current, "jsxbin"))
         ):
             return current
 
@@ -51,7 +54,7 @@ def find_root():
 ROOT_DIR = find_root()
 
 # ==================================================
-# TEMP PATHS
+# PATHS
 # ==================================================
 
 TEMP_DIR = os.path.join(
@@ -62,7 +65,10 @@ TEMP_DIR = os.path.join(
 ZIP_PATH = os.path.join(TEMP_DIR, "update.zip")
 EXTRACT_DIR = os.path.join(TEMP_DIR, "extract")
 
-LOCAL_VERSION_FILE = os.path.join(ROOT_DIR, "update", "version.json")
+LOCAL_VERSION_FILE = os.path.join(
+    ROOT_DIR,
+    "version.json"
+)
 
 # ==================================================
 # LOG
@@ -80,6 +86,9 @@ def version_tuple(v):
 
 
 def load_local_version():
+
+    if not os.path.exists(LOCAL_VERSION_FILE):
+        return "0.0.0"
 
     try:
         with open(LOCAL_VERSION_FILE, "r", encoding="utf-8") as f:
@@ -106,7 +115,29 @@ def download_file(url, path):
                 f.write(chunk)
 
 # ==================================================
-# COPY SAFE (NO NEST BUG)
+# BACKUP
+# ==================================================
+
+def backup():
+
+    backup_dir = os.path.join(TEMP_DIR, "backup")
+
+    if os.path.exists(backup_dir):
+        shutil.rmtree(backup_dir)
+
+    os.makedirs(backup_dir, exist_ok=True)
+
+    for item in REPLACE_ITEMS:
+
+        src = os.path.join(ROOT_DIR, item)
+        dst = os.path.join(backup_dir, item)
+
+        if os.path.exists(src):
+            log("Backup: " + item)
+            shutil.copytree(src, dst)
+
+# ==================================================
+# COPY FIX (NO NEST FOLDER BUG)
 # ==================================================
 
 def copy_folder_contents(src, dst):
@@ -132,67 +163,22 @@ def copy_folder_contents(src, dst):
             shutil.copy2(s, d)
 
 # ==================================================
-# BACKUP
-# ==================================================
-
-def backup():
-
-    backup_dir = os.path.join(TEMP_DIR, "backup")
-
-    if os.path.exists(backup_dir):
-        shutil.rmtree(backup_dir)
-
-    os.makedirs(backup_dir, exist_ok=True)
-
-    for item in REPLACE_FOLDERS:
-
-        src = os.path.join(ROOT_DIR, item)
-        dst = os.path.join(backup_dir, item)
-
-        if os.path.exists(src):
-            log("Backup: " + item)
-            shutil.copytree(src, dst)
-
-# ==================================================
-# REPLACE (FOLDER + FILE LẺ)
+# REPLACE
 # ==================================================
 
 def replace():
 
-    # =========================
-    # 1. FOLDERS
-    # =========================
-
-    for item in REPLACE_FOLDERS:
+    for item in REPLACE_ITEMS:
 
         src = os.path.join(EXTRACT_DIR, item)
         dst = os.path.join(ROOT_DIR, item)
 
-        log("Replace folder: " + item)
+        log("Replace: " + item)
 
         if os.path.exists(dst):
             shutil.rmtree(dst)
 
         copy_folder_contents(src, dst)
-
-    # =========================
-    # 2. FILES (ROOT LEVEL AUTO)
-    # =========================
-
-    for item in os.listdir(EXTRACT_DIR):
-
-        src = os.path.join(EXTRACT_DIR, item)
-        dst = os.path.join(ROOT_DIR, item)
-
-        if os.path.isdir(src):
-            continue
-
-        if item in REPLACE_FOLDERS:
-            continue
-
-        log("Replace file: " + item)
-
-        shutil.copy2(src, dst)
 
 # ==================================================
 # MAIN
@@ -233,7 +219,7 @@ def main():
         return
 
     # -------------------------
-    # download zip
+    # download
     # -------------------------
 
     log("Download ZIP...")
