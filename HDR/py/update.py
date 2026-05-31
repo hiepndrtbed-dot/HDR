@@ -38,7 +38,8 @@ def find_root():
             os.path.exists(os.path.join(current, "Action")) and
             os.path.exists(os.path.join(current, "Data")) and
             os.path.exists(os.path.join(current, "json")) and
-            os.path.exists(os.path.join(current, "jsxbin"))
+            os.path.exists(os.path.join(current, "jsxbin")) and
+            os.path.exists(os.path.join(current, "update"))
         ):
             return current
 

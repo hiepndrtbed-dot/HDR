@@ -1,5 +1,5 @@
 #target photoshop
-alert("update code");
+// alert("update code");
 var currentFolder = File($.fileName).parent;
 var exe = File(
     currentFolder.fsName +
