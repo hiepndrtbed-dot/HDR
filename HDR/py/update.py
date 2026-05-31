@@ -269,13 +269,6 @@ def main():
     log("Extract done")
 
     # -------------------------
-    # verify
-    # -------------------------
-
-    if not os.path.exists(os.path.join(EXTRACT_DIR, "version.json")):
-        raise Exception("version.json missing in ZIP")
-
-    # -------------------------
     # backup
     # -------------------------
 
