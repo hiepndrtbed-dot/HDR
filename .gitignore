@@ -3,4 +3,5 @@
 
 # Bỏ qua thư mục
 HDR/Library PE/
+HDR/py/build/
 # HDR/update/
