@@ -13,7 +13,7 @@ var flagresize = true;
         const versionTo = JSON.parse(fileVersion.read()).version;
         fileVersion.close();
     }
-    
+
     //$.evalFile(File(new File($.fileName).parent + "/json/json2.js"));
     var currentFolder = scriptFolder.fsName + "/jsx";
     $.evalFile(currentFolder + "/dataPreset.jsx");
@@ -24,473 +24,190 @@ var flagresize = true;
     } else { alert("⚠️ Vui lòng đăng nhập để sử dụng action!"); }
 
     function runabcedfasddfashiepnguyenduc() {
-        // // DIALOG
-        // // DIALOG
-        // var dialog = new Window("dialog");
-        // dialog.text = "ACTION HDR(Cubicasa) - " + versionTo;
-        // dialog.orientation = "row";
-        // dialog.alignChildren = ["fill", "top"];
-        // dialog.spacing = 3;
-        // dialog.margins = 10;
-
-        // // GROUP
-        // function createGroup(name) {
-        //     var g = dialog.add("group", undefined, { name: name });
-        //     g.orientation = "column";
-        //     g.alignChildren = ["fill", "top"];
-        //     // g.preferredSize = [170, 28];
-        //     // g.size = [170, 28];
-        //     g.spacing = 3;
-        //     g.margins = 1;
-        //     return g;
-        // }
-
-        // var group1 = createGroup("group1");
-        // var group2 = createGroup("group2");
-        // var group3 = createGroup("group3");
-        // var group4 = createGroup("group4");
-        // var group5 = createGroup("group5");
-
-        // // BUTTON
-        // function createButton(group, name, text, tip) {
-        //     var btn = group.add("button", undefined, text, { name: name });
-        //     btn.alignment = ["left", "center"];
-        //     btn.preferredSize.width = 170;
-
-        //     if (tip) btn.helpTip = tip;
-
-        //     return btn;
-        // }
-
-        // // ===== GROUP 1 =====
-        // var buttonCopyExposure = createButton(
-        //     group1,
-        //     "Copy Exposure",
-        //     "Copy Exposure (F1)",
-        //     "Copy các document (#Untitled-1) về một document có độ sáng cao nhất, sắp xếp các document theo các Layer có độ sáng thấp dần (Background sáng nhất), \nPhím tắt là F1"
-        // );
-
-        // var buttonMergeExposure = createButton(
-        //     group1,
-        //     "Merge Exposure",
-        //     "Merge Exposure (F2)",
-        //     "Merge các Layer có các độ sáng khác nhau! \nPhím tắt F2"
-        // );
-
-        // var buttonAlign = createButton(
-        //     group1,
-        //     "Align and merge Exposure",
-        //     "ALign and Merge Exposure (F3)",
-        //     "Align Layer có độ rung, sau đó Merge các Layer có các độ sáng khác nhau! \nPhím tắt: F3"
-        // );
-
-        // var buttonAlignFlash = createButton(
-        //     group1,
-        //     "Align and merge Exposure",
-        //     "ALignMergeExFlash",
-        //     "Align Layer có độ rung, sau đó Merge các Layer có các độ sáng khác nhau!"
-        // );
-
-        // var buttonMergeExposureFlash = createButton(
-        //     group1,
-        //     "Merge Exposure",
-        //     "Merge Exposure Flash",
-        //     "MergeFlash các Layer có các độ sáng khác nhau!"
-        // );
-
-        // var buttonFillCeilingMolding = createButton(
-        //     group1,
-        //     "Ceiling, molding",
-        //     "Fill white Ceiling, molding (F4)",
-        //     "Fill trắng tường trần! Có thể fill nhiều lần không tạo thêm layer. \nPhím tắt: F4"
-        // );
-
-        // var buttonFillWall = createButton(
-        //     group1,
-        //     "Wall color 1",
-        //     "Wall color - LV 1.2 (F5)",
-        //     "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới Levels mặc định (1.2). \nPhím tắt: F5"
-        // );
-
-        // var buttonFillWall2 = createButton(
-        //     group1,
-        //     "Wall color 2",
-        //     "Wall color - LV ~ (F6)",
-        //     "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới.\nLevels được lưu trước đó hoặc tùy chọn mới (Xóa dữ liệu cũ ở nút Reset Data). \nPhím tắt: F6"
-        // );
-
-        // var buttonDTD = createButton(
-        //     group1,
-        //     "DTD",
-        //     "DTD (F7)",
-        //     "Tạo ảnh tối! Chọn vùng chọn cửa trước khi chạy. \nPhím tắt: F7"
-        // );
-
-        // var buttonAddSkyDTD = createButton(
-        //     group2,
-        //     "Add sky (2)",
-        //     "Add Sky(DTD)(F8)",
-        //     "Thêm trời DTD. Lưu ý phải sử dụng action add trời và tạo ảnh tối(DTD) trước. \nPhím tắt: F8"
-        // );
-
-        // var buttonAddTV = createButton(
-        //     group2,
-        //     "Camera Raw",
-        //     "Add Television (4)",
-        //     "Fill ti vi. Lấy vùng chọn TV trước khi chạy action. \nPhím tắt: 4"
-        // );
-
-        // var buttonLoSuoi = createButton(
-        //     group2,
-        //     "Dust",
-        //     "Add Fire (5)",
-        //     "Fill lò sưởi. Lấy vùng chọn lò sưởi trước khi chạy action. \nPhím tắt: 5"
-        // );
-
-        // var buttonWindow = createButton(
-        //     group2,
-        //     "Copy Sill (2)",
-        //     "Add Window(6)",
-        //     "Thay cửa sổ. Lấy vùng chọn Cửa sổ trước khi chạy action. \nPhím tắt: 6"
-        // );
-
-        // var buttonSky = createButton(
-        //     group2,
-        //     "Line_War_Background (l)",
-        //     "Add Sky(7)",
-        //     "Thay trời. Khoanh vùng vùng chọn trời trước khi chạy action. \nPhím tắt: 7"
-        // );
-
-        // var buttonAddGrass = createButton(
-        //     group2,
-        //     "Camera Raw",
-        //     "Add Grass (8)"
-        // );
-
-        // var buttonAddLight = createButton(
-        //     group2,
-        //     "Add sky (2)",
-        //     "Add Light(9)",
-        //     "Truy cập folder chứa Light, add light cho DTD! \nPhím tắt: L"
-        // );
-
-        // var buttonReplaceColor = createButton(group2, "Replace Color", "Replace Color(Q)");
-        // var buttonSelectiveColor = createButton(group2, "Selective Color", "Selective Color(W)");
-        // var buttonColorBalance = createButton(group3, "ColorBalance", "ColorBalance(E)");
-        // var buttonCameraRaw = createButton(group3, "CameraRaw", "CameraRaw(R)");
-
-        // // ===== GROUP 2 =====
-        // var buttonReduceHueSaturation = createButton(group3, "Carpet synchronization", "Carpet synchronization(T)");
-        // var buttonHueSaturation = createButton(group3, "Hue Color", "Hue Saturation(U)");
-        // var buttonColorAndVibrance = createButton(group3, "Hue Color", "ColorAndVibrance(Y)");
-        // var buttonCopyPath = createButton(group3, "Flip_Canvas_Product_White", "Copy Path (A)");
-        // var buttonSaveSelectionDetail = createButton(group3, "Flip_Canvas_Product_White", "Save Selection Detail (D)");
-        // var buttonSaveSelectionAllDetail = createButton(group3, "Flip_Canvas_Product_White", "Save Selection All Detail (F)");
-        // var buttonAddRed = createButton(group3, "deleteSetAction 75%", "Create Layer Blending Color (C)");
-        // var buttonRunActionPath = createButton(group4, "Run action path", "Run action Path (F10)");
-        // var buttonIndor = createButton(group4, "INDOR", "MERGE (INDOR) (1)");
-        // var outDor = createButton(group4, "OUTDOR", "MERGE (OUTDOR) (2)");
-        // var buttonFinalize = createButton(group4, "FINALIZE", "MERGE (FINALIZE) (3)");
-        // var buttonResetData = createButton(group4, "Reset Data", "Reset Data (Z)");
-        // var buttonResizeImage = createButton(group4, "Resize Image", "Resize and UnResize (I)");
-        // var buttonResetDataBlending = createButton(group4, "Reset Blending", "Reset Blending (X)");
-        // var buttonSaveTif = createButton(group4, "Hair Fly", "Save tif and jpg (S)");
-
-        // var buttonResetram = createButton(
-        //     group4,
-        //     "Reset ram",
-        //     "Reset Ram(P)",
-        //     "Giải phóng bộ nhớ, giúp PTS hoạt động mượt hơn! \nPhím tắt: P"
-        // );
-
-        // var buttonLogout = createButton(group5, "Logout account", "Logout Account");
-        // var buttonUpdate = createButton(group5, "Update code", "Update!");
-
-        // var buttonClose = createButton(group5, "Cancel", "Cancel");
-        // // buttonClose.active = true;
-
-        // // Hàm helper: chạy file jsx
-        // function runScript(path) {
-        //     var targetScript = File(path);
-        //     if (targetScript.exists) {
-        //         $.evalFile(targetScript);
-        //     } else {
-        //         alert("❌ Không tìm thấy file: " + targetScript.fsName);
-        //     }
-        // }
-
-        // // Hàm helper: gắn listener cho button chạy file
-        // function bindBtn(btn, filePath) {
-        //     btn.addEventListener("click", function () {
-        //         dialog.close();
-        //         runScript(filePath);
-        //     });
-        // }
-
         // DIALOG
-        var dialog = new Window("dialog")
+        // DIALOGcdc
+        var dialog = new Window("dialog");
         dialog.text = "ACTION HDR(Cubicasa) - " + versionTo;
         dialog.orientation = "row";
-        dialog.alignChildren = ["center", "top"];
+        dialog.alignChildren = ["fill", "top"];
         dialog.spacing = 3;
         dialog.margins = 10;
-        // dialog.active = true;
 
-        // GROUP1
-        // ======
-        var group1 = dialog.add("group", undefined, { name: "group1" });
-        group1.orientation = "column";
-        group1.alignment = ["left", "center"];
-        group1.spacing = 3;
-        group1.margins = 1;
+        // GROUP
+        function createGroup(name) {
+            var g = dialog.add("group", undefined, { name: name });
+            g.orientation = "column";
+            g.alignChildren = ["fill", "top"];
+            // g.preferredSize = [170, 28];
+            // g.size = [170, 28];
+            g.spacing = 3;
+            g.margins = 1;
+            return g;
+        }
 
-        //Copy
-        var buttonCopyExposure = group1.add("button", undefined, undefined, { name: "Copy Exposure (1)" });
-        buttonCopyExposure.text = "Copy Exposure (F1)";
-        buttonCopyExposure.alignment = ["left", "center"];
-        buttonCopyExposure.preferredSize.width = 170;
-        buttonCopyExposure.helpTip = "Copy các document (#Untitled-1) về một document có độ sáng cao nhất, sắp xếp các document theo các Layer có độ sáng thấp dần (Background sáng nhất), \nPhím tắt là F1";
-        buttonCopyExposure.helpTip.foregroundColor = buttonCopyExposure.graphics.newPen(buttonCopyExposure.graphics.PenType.SOLID_COLOR, [0, 0, 1], 1);
+        var group1 = createGroup("group1");
+        var group2 = createGroup("group2");
+        var group3 = createGroup("group3");
+        var group4 = createGroup("group4");
+        var group5 = createGroup("group5");
 
-        //Merge Exposure
-        var buttonMergeExposure = group1.add("button", undefined, undefined, { name: "Merge Exposure" });
-        buttonMergeExposure.text = "Merge Exposure (F2)";
-        buttonMergeExposure.alignment = ["left", "center"];
-        buttonMergeExposure.preferredSize.width = 170;
-        buttonMergeExposure.helpTip = "Merge các Layer có các độ sáng khác nhau! \nPhím tắt F2";
+        // BUTTON
+        function createButton(group, name, text, tip) {
+            var btn = group.add("button", undefined, text, { name: name });
+            btn.alignment = ["left", "center"];
+            btn.preferredSize.width = 170;
 
-        //Align and merge Exposure
-        var buttonAlign = group1.add("button", undefined, undefined, { name: "Align and merge Exposure" });
-        buttonAlign.text = "ALign and Merge Exposure (F3)";
-        buttonAlign.alignment = ["left", "center"];
-        buttonAlign.preferredSize.width = 170;
-        buttonAlign.helpTip = "Align Layer có độ rung, sau đó Merge các Layer có các độ sáng khác nhau! \nPhím tắt: F3";
+            if (tip) btn.helpTip = tip;
 
-        //Align and merge Exposure
-        var buttonAlignFlash = group1.add("button", undefined, undefined, { name: "Align and merge Exposure" });
-        buttonAlignFlash.text = "ALignMergeExFlash";
-        buttonAlignFlash.alignment = ["left", "center"];
-        buttonAlignFlash.preferredSize.width = 170;
-        buttonAlignFlash.helpTip = "Align Layer có độ rung, sau đó Merge các Layer có các độ sáng khác nhau! ";
+            return btn;
+        }
 
-        //Merge Exposure Flash
-        var buttonMergeExposureFlash = group1.add("button", undefined, undefined, { name: "Merge Exposure" });
-        buttonMergeExposureFlash.text = "Merge Exposure Flash";
-        buttonMergeExposureFlash.alignment = ["left", "center"];
-        buttonMergeExposureFlash.preferredSize.width = 170;
-        buttonMergeExposureFlash.helpTip = "MergeFlash các Layer có các độ sáng khác nhau!";
+        // ===== GROUP 1 =====
+        var buttonCopyExposure = createButton(
+            group1,
+            "Copy Exposure",
+            "Copy Exposure (F1)",
+            "Copy các document (#Untitled-1) về một document có độ sáng cao nhất, sắp xếp các document theo các Layer có độ sáng thấp dần (Background sáng nhất), \nPhím tắt là F1"
+        );
 
-        //Fill white Ceiling, molding
-        var buttonFillCeilingMolding = group1.add("button", undefined, undefined, { name: "Ceiling, molding" });
-        buttonFillCeilingMolding.text = "Fill white Ceiling, molding (F4)";
-        buttonFillCeilingMolding.alignment = ["left", "center"];
-        buttonFillCeilingMolding.preferredSize.width = 170;
-        buttonFillCeilingMolding.helpTip = "Fill trắng tường trần! Có thể fill nhiều lần không tạo thêm layer. \nPhím tắt: F4";
+        var buttonMergeExposure = createButton(
+            group1,
+            "Merge Exposure",
+            "Merge Exposure (F2)",
+            "Merge các Layer có các độ sáng khác nhau! \nPhím tắt F2"
+        );
 
+        var buttonAlign = createButton(
+            group1,
+            "Align and merge Exposure",
+            "ALign and Merge Exposure (F3)",
+            "Align Layer có độ rung, sau đó Merge các Layer có các độ sáng khác nhau! \nPhím tắt: F3"
+        );
 
-        //Fill color Wall
-        var buttonFillWall = group1.add("button", undefined, undefined, { name: "Wall color 1" });
-        buttonFillWall.text = "Wall color - LV 1.2 (F5)";
-        buttonFillWall.alignment = ["left", "center"];
-        buttonFillWall.preferredSize.width = 170;
-        buttonFillWall.helpTip = "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới Levels mặc định (1.2). \nPhím tắt: F5";
+        var buttonAlignFlash = createButton(
+            group1,
+            "Align and merge Exposure",
+            "ALignMergeExFlash",
+            "Align Layer có độ rung, sau đó Merge các Layer có các độ sáng khác nhau!"
+        );
 
-        //Wall coloring 2
-        var buttonFillWall2 = group1.add("button", undefined, undefined, { name: "Wall color 2" });
-        buttonFillWall2.text = "Wall color - LV ~ (F6)"
-        buttonFillWall2.alignment = ["left", "center"]
-        buttonFillWall2.preferredSize.width = 170
-        buttonFillWall2.helpTip = "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới.\nLevels được lưu trước đó hoặc tùy chọn mới (Xóa dữ liệu cũ ở nút Reset Data). \nPhím tắt: F6";
+        var buttonMergeExposureFlash = createButton(
+            group1,
+            "Merge Exposure",
+            "Merge Exposure Flash",
+            "MergeFlash các Layer có các độ sáng khác nhau!"
+        );
 
-        //DTD
-        var buttonDTD = group1.add("button", undefined, undefined, { name: "DTD" });
-        buttonDTD.text = "DTD (F7)";
-        buttonDTD.preferredSize.width = 170;
-        buttonDTD.helpTip = "Tạo ảnh tối! Chọn vùng chọn cửa trước khi chạy. \nPhím tắt: F7";
+        var buttonFillCeilingMolding = createButton(
+            group1,
+            "Ceiling, molding",
+            "Fill white Ceiling, molding (F4)",
+            "Fill trắng tường trần! Có thể fill nhiều lần không tạo thêm layer. \nPhím tắt: F4"
+        );
 
-        //Fill Sky DTD
-        var buttonAddSkyDTD = group1.add("button", undefined, undefined, { name: "Add sky (2)" });
-        buttonAddSkyDTD.text = "Add Sky(DTD)(F8)";
-        buttonAddSkyDTD.alignment = ["left", "center"];
-        buttonAddSkyDTD.preferredSize.width = 170;
-        buttonAddSkyDTD.helpTip = "Thêm trời DTD. Lưu ý phải sử dụng action add trời và tạo ảnh tối(DTD) trước. \nPhím tắt: F8";
+        var buttonFillWall = createButton(
+            group1,
+            "Wall color 1",
+            "Wall color - LV 1.2 (F5)",
+            "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới Levels mặc định (1.2). \nPhím tắt: F5"
+        );
 
-        //Add TV
-        var buttonAddTV = group1.add("button", undefined, undefined, { name: "Camera Raw" });
-        buttonAddTV.text = "Add Television (4)";
-        buttonAddTV.alignment = ["left", "center"];
-        buttonAddTV.preferredSize.width = 170;
-        buttonAddTV.helpTip = "Fill ti vi. Lấy vùng chọn TV trước khi chạy action. \nPhím tắt: 4";
+        var buttonFillWall2 = createButton(
+            group1,
+            "Wall color 2",
+            "Wall color - LV ~ (F6)",
+            "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới.\nLevels được lưu trước đó hoặc tùy chọn mới (Xóa dữ liệu cũ ở nút Reset Data). \nPhím tắt: F6"
+        );
 
+        var buttonDTD = createButton(
+            group1,
+            "DTD",
+            "DTD (F7)",
+            "Tạo ảnh tối! Chọn vùng chọn cửa trước khi chạy. \nPhím tắt: F7"
+        );
 
-        //Lo Fire
-        var buttonLoSuoi = group1.add("button", undefined, undefined, { name: "Dust" });
-        buttonLoSuoi.text = "Add Fire (5)";
-        buttonLoSuoi.alignment = ["left", "center"];
-        buttonLoSuoi.preferredSize.width = 170;
-        buttonLoSuoi.helpTip = "Fill lò sưởi. Lấy vùng chọn lò sưởi trước khi chạy action. \nPhím tắt: 5";
+        var buttonAddSkyDTD = createButton(
+            group2,
+            "Add sky (2)",
+            "Add Sky(DTD)(F8)",
+            "Thêm trời DTD. Lưu ý phải sử dụng action add trời và tạo ảnh tối(DTD) trước. \nPhím tắt: F8"
+        );
 
+        var buttonAddTV = createButton(
+            group2,
+            "Camera Raw",
+            "Add Television (4)",
+            "Fill ti vi. Lấy vùng chọn TV trước khi chạy action. \nPhím tắt: 4"
+        );
 
-        //Fill window
-        var buttonWindow = group1.add("button", undefined, undefined, { name: "Copy Sill (2)" });
-        buttonWindow.text = "Add Window(6)";
-        buttonWindow.alignment = ["left", "center"];
-        buttonWindow.preferredSize.width = 170;
-        buttonWindow.helpTip = "Thay cửa sổ. Lấy vùng chọn Cửa sổ trước khi chạy action. \nPhím tắt: 6";
+        var buttonLoSuoi = createButton(
+            group2,
+            "Dust",
+            "Add Fire (5)",
+            "Fill lò sưởi. Lấy vùng chọn lò sưởi trước khi chạy action. \nPhím tắt: 5"
+        );
 
-        //Fill Sky
-        var buttonSky = group1.add("button", undefined, undefined, { name: "Line_War_Background (l)" });
-        buttonSky.text = "Add Sky(7)";
-        buttonSky.preferredSize.width = 170;
-        buttonSky.helpTip = "Thêm trời! \nPhím tắt: 4";
-        buttonWindow.helpTip = "Thay trời. Khoanh vùng vùng chọn trời trước khi chạy action. \nPhím tắt: 7";
+        var buttonWindow = createButton(
+            group2,
+            "Copy Sill (2)",
+            "Add Window(6)",
+            "Thay cửa sổ. Lấy vùng chọn Cửa sổ trước khi chạy action. \nPhím tắt: 6"
+        );
 
+        var buttonSky = createButton(
+            group2,
+            "Line_War_Background (l)",
+            "Add Sky(7)",
+            "Thay trời. Khoanh vùng vùng chọn trời trước khi chạy action. \nPhím tắt: 7"
+        );
 
-        //Add Grass
-        var buttonAddGrass = group1.add("button", undefined, undefined, { name: "Camera Raw" });
-        buttonAddGrass.text = "Add Grass (8)";
-        buttonAddGrass.alignment = ["left", "center"];
-        buttonAddGrass.preferredSize.width = 170;
+        var buttonAddGrass = createButton(
+            group2,
+            "Camera Raw",
+            "Add Grass (8)"
+        );
 
-        //Add light
-        var buttonAddLight = group1.add("button", undefined, undefined, { name: "Add sky (2)" });
-        buttonAddLight.text = "Add Light(9)";
-        buttonAddLight.alignment = ["left", "center"];
-        buttonAddLight.preferredSize.width = 170;
-        buttonAddLight.helpTip = "Truy cập folder chứa Light, add light cho DTD! \nPhím tắt: L";
+        var buttonAddLight = createButton(
+            group2,
+            "Add sky (2)",
+            "Add Light(9)",
+            "Truy cập folder chứa Light, add light cho DTD! \nPhím tắt: L"
+        );
 
+        var buttonReplaceColor = createButton(group2, "Replace Color", "Replace Color(Q)");
+        var buttonSelectiveColor = createButton(group2, "Selective Color", "Selective Color(W)");
+        var buttonColorBalance = createButton(group3, "ColorBalance", "ColorBalance(E)");
+        var buttonCameraRaw = createButton(group3, "CameraRaw", "CameraRaw(R)");
 
-        //Replace Color
-        var buttonReplaceColor = group1.add("button", undefined, undefined, { name: "Replace Color" });
-        buttonReplaceColor.text = "Replace Color(Q)";
-        buttonReplaceColor.preferredSize.width = 170;
+        // ===== GROUP 2 =====
+        var buttonReduceHueSaturation = createButton(group3, "Carpet synchronization", "Carpet synchronization(T)");
+        var buttonHueSaturation = createButton(group3, "Hue Color", "Hue Saturation(U)");
+        var buttonColorAndVibrance = createButton(group3, "Hue Color", "ColorAndVibrance(Y)");
+        var buttonCopyPath = createButton(group3, "Flip_Canvas_Product_White", "Copy Path (A)");
+        var buttonSaveSelectionDetail = createButton(group3, "Flip_Canvas_Product_White", "Save Selection Detail (D)");
+        var buttonSaveSelectionAllDetail = createButton(group3, "Flip_Canvas_Product_White", "Save Selection All Detail (F)");
+        var buttonAddRed = createButton(group3, "deleteSetAction 75%", "Create Layer Blending Color (C)");
+        var buttonRunActionPath = createButton(group4, "Run action path", "Run action Path (F10)");
+        var buttonIndor = createButton(group4, "INDOR", "MERGE (INDOR) (1)");
+        var outDor = createButton(group4, "OUTDOR", "MERGE (OUTDOR) (2)");
+        var buttonFinalize = createButton(group4, "FINALIZE", "MERGE (FINALIZE) (3)");
+        var buttonResetData = createButton(group4, "Reset Data", "Reset Data (Z)");
+        var buttonResizeImage = createButton(group4, "Resize Image", "Resize and UnResize (I)");
+        var buttonResetDataBlending = createButton(group4, "Reset Blending", "Reset Blending (X)");
+        var buttonSaveTif = createButton(group4, "Hair Fly", "Save tif and jpg (S)");
 
-        //Selective Color
-        var buttonSelectiveColor = group1.add("button", undefined, undefined, { name: "Selective Color" });
-        buttonSelectiveColor.text = "Selective Color(W)";
-        buttonSelectiveColor.preferredSize.width = 170;
+        var buttonResetram = createButton(
+            group4,
+            "Reset ram",
+            "Reset Ram(P)",
+            "Giải phóng bộ nhớ, giúp PTS hoạt động mượt hơn! \nPhím tắt: P"
+        );
 
-        //ColorBalance
-        var buttonColorBalance = group1.add("button", undefined, undefined, { name: "ColorBalance" });
-        buttonColorBalance.text = "ColorBalance(E)";
-        buttonColorBalance.preferredSize.width = 170;
+        var buttonLogout = createButton(group5, "Logout account", "Logout Account");
+        var buttonUpdate = createButton(group5, "Update code", "Update!");
 
-        //CameraRaw
-        var buttonCameraRaw = group1.add("button", undefined, undefined, { name: "CameraRaw" });
-        buttonCameraRaw.text = "CameraRaw(R)";
-        buttonCameraRaw.preferredSize.width = 170;
-
-
-        //GROUP 2
-        var group2 = dialog.add("group", undefined, { name: "Group 2" });
-        group2.orientation = "column";
-        group2.alignChildren = ["left", "center"];
-        group2.spacing = 3;
-        group2.margins = 1;
-
-        //Carpet synchronization
-        var buttonReduceHueSaturation = group2.add("button", undefined, undefined, { name: "Carpet synchronization" });
-        buttonReduceHueSaturation.text = "Carpet synchronization(T)";
-        buttonReduceHueSaturation.preferredSize.width = 170;
-
-        //Hue saturation
-        var buttonHueSaturation = group2.add("button", undefined, undefined, { name: "Hue Color" });
-        buttonHueSaturation.text = "Hue Saturation(U)";
-        buttonHueSaturation.preferredSize.width = 170;
-
-        //Color and vibrance
-        var buttonColorAndVibrance = group2.add("button", undefined, undefined, { name: "Hue Color" });
-        buttonColorAndVibrance.text = "ColorAndVibrance(Y)";
-        buttonColorAndVibrance.preferredSize.width = 170;
-
-
-        //Copy Path
-        var buttonCopyPath = group2.add("button", undefined, undefined, { name: "Flip_Canvas_Product_White" });
-        buttonCopyPath.text = "Copy Path (A)";
-        buttonCopyPath.preferredSize.width = 170;
-
-        //Save selection detail
-        var buttonSaveSelectionDetail = group2.add("button", undefined, undefined, { name: "Flip_Canvas_Product_White" });
-        buttonSaveSelectionDetail.text = "Save Selection Detail (D)";
-        buttonSaveSelectionDetail.preferredSize.width = 170;
-
-        //Save selection detail
-        var buttonSaveSelectionAllDetail = group2.add("button", undefined, undefined, { name: "Flip_Canvas_Product_White" });
-        buttonSaveSelectionAllDetail.text = "Save Selection All Detail (F)";
-        buttonSaveSelectionAllDetail.preferredSize.width = 170;
-
-        //Replace color Red + yellow
-        var buttonAddRed = group2.add("button", undefined, undefined, { name: "deleteSetAction 75%" });
-        buttonAddRed.text = "Create Layer Blending Color (C)";
-        buttonAddRed.preferredSize.width = 170;
-
-
-        //Copy Path
-        var buttonRunActionPath = group2.add("button", undefined, undefined, { name: "Run action path" });
-        buttonRunActionPath.text = "Run action Path (F10)";
-        buttonRunActionPath.preferredSize.width = 170;
-
-        // //Merge All layer to one Layer
-        // var buttonMerge = group2.add("button", undefined, undefined, { name: "buttonMerge" });
-        // buttonMerge.text = "MERGE LAYER (1)";
-        // buttonMerge.preferredSize.width = 170;
-
-        //Merge images indor
-        var buttonIndor = group2.add("button", undefined, undefined, { name: "INDOR" });
-        buttonIndor.text = "MERGE (INDOR) (1)"
-        buttonIndor.preferredSize.width = 170;
-
-        //Merge OutDor
-        var outDor = group2.add("button", undefined, undefined, { name: "OUTDOR" });
-        outDor.text = "MERGE (OUTDOR) (2)";
-        outDor.preferredSize.width = 170;
-
-        //FINALIZE
-        var buttonFinalize = group2.add("button", undefined, undefined, { name: "FINALIZE" });
-        buttonFinalize.text = "MERGE (FINALIZE) (3)";
-        buttonFinalize.preferredSize.width = 170;
-
-        //RESET ALL DATA
-        var buttonResetData = group2.add("button", undefined, undefined, { name: "Reset Data" });
-        buttonResetData.text = "Reset Data (Z)";
-        buttonResetData.preferredSize.width = 170;
-
-        //RESET DATA blending
-        var buttonResizeImage = group2.add("button", undefined, undefined, { name: "Resize Image" });
-        buttonResizeImage.text = "Resize and UnResize (I)";
-        buttonResizeImage.preferredSize.width = 170;
-
-        //RESET DATA blending
-        var buttonResetDataBlending = group2.add("button", undefined, undefined, { name: "Reset Blending" });
-        buttonResetDataBlending.text = "Reset Blending (X)";
-        buttonResetDataBlending.preferredSize.width = 170;
-
-        //Save tif and jpg
-        var buttonSaveTif = group2.add("button", undefined, undefined, { name: "Hair Fly" });
-        buttonSaveTif.text = "Save tif and jpg (S)";
-        buttonSaveTif.preferredSize.width = 170;
-
-        //Reset Ram
-        var buttonResetram = group2.add("button", undefined, undefined, { name: "Reset ram" });
-        buttonResetram.text = "Reset Ram(P)";
-        buttonResetram.preferredSize.width = 170;
-        buttonResetram.helpTip = "Giải phóng bộ nhớ, giúp PTS hoạt động mượt hơn! \nPhím tắt: P";
-
-        //Logout
-        var buttonLogout = group2.add("button", undefined, undefined, { name: "Logout account" });
-        buttonLogout.text = "Logout Account";
-        buttonLogout.preferredSize.width = 170;
-
-        //update
-        var buttonUpdate = group2.add("button", undefined, undefined, { name: "Update code" });
-        buttonUpdate.text = "Update!";
-        buttonUpdate.preferredSize.width = 170;
-
-        //Close Frame.
-        var buttonClose = group2.add("button", undefined, undefined, { name: "Cancel" });
-        buttonClose.text = "Cancel";
-        buttonClose.preferredSize.width = 170;
-        buttonClose.active = true
+        var buttonClose = createButton(group5, "Cancel", "Cancel");
+        // buttonClose.active = true;
 
         // Hàm helper: chạy file jsx
         function runScript(path) {
@@ -510,6 +227,289 @@ var flagresize = true;
             });
         }
 
+        /* // DIALOG OLD
+        // var dialog = new Window("dialog")
+        // dialog.text = "ACTION HDR(Cubicasa) - " + versionTo;
+        // dialog.orientation = "row";
+        // dialog.alignChildren = ["center", "top"];
+        // dialog.spacing = 3;
+        // dialog.margins = 10;
+        // // dialog.active = true;
+
+        // // GROUP1
+        // // ======
+        // var group1 = dialog.add("group", undefined, { name: "group1" });
+        // group1.orientation = "column";
+        // group1.alignment = ["left", "center"];
+        // group1.spacing = 3;
+        // group1.margins = 1;
+
+        // //Copy
+        // var buttonCopyExposure = group1.add("button", undefined, undefined, { name: "Copy Exposure (1)" });
+        // buttonCopyExposure.text = "Copy Exposure (F1)";
+        // buttonCopyExposure.alignment = ["left", "center"];
+        // buttonCopyExposure.preferredSize.width = 170;
+        // buttonCopyExposure.helpTip = "Copy các document (#Untitled-1) về một document có độ sáng cao nhất, sắp xếp các document theo các Layer có độ sáng thấp dần (Background sáng nhất), \nPhím tắt là F1";
+        // buttonCopyExposure.helpTip.foregroundColor = buttonCopyExposure.graphics.newPen(buttonCopyExposure.graphics.PenType.SOLID_COLOR, [0, 0, 1], 1);
+
+        // //Merge Exposure
+        // var buttonMergeExposure = group1.add("button", undefined, undefined, { name: "Merge Exposure" });
+        // buttonMergeExposure.text = "Merge Exposure (F2)";
+        // buttonMergeExposure.alignment = ["left", "center"];
+        // buttonMergeExposure.preferredSize.width = 170;
+        // buttonMergeExposure.helpTip = "Merge các Layer có các độ sáng khác nhau! \nPhím tắt F2";
+
+        // //Align and merge Exposure
+        // var buttonAlign = group1.add("button", undefined, undefined, { name: "Align and merge Exposure" });
+        // buttonAlign.text = "ALign and Merge Exposure (F3)";
+        // buttonAlign.alignment = ["left", "center"];
+        // buttonAlign.preferredSize.width = 170;
+        // buttonAlign.helpTip = "Align Layer có độ rung, sau đó Merge các Layer có các độ sáng khác nhau! \nPhím tắt: F3";
+
+        // //Align and merge Exposure
+        // var buttonAlignFlash = group1.add("button", undefined, undefined, { name: "Align and merge Exposure" });
+        // buttonAlignFlash.text = "ALignMergeExFlash";
+        // buttonAlignFlash.alignment = ["left", "center"];
+        // buttonAlignFlash.preferredSize.width = 170;
+        // buttonAlignFlash.helpTip = "Align Layer có độ rung, sau đó Merge các Layer có các độ sáng khác nhau! ";
+
+        // //Merge Exposure Flash
+        // var buttonMergeExposureFlash = group1.add("button", undefined, undefined, { name: "Merge Exposure" });
+        // buttonMergeExposureFlash.text = "Merge Exposure Flash";
+        // buttonMergeExposureFlash.alignment = ["left", "center"];
+        // buttonMergeExposureFlash.preferredSize.width = 170;
+        // buttonMergeExposureFlash.helpTip = "MergeFlash các Layer có các độ sáng khác nhau!";
+
+        // //Fill white Ceiling, molding
+        // var buttonFillCeilingMolding = group1.add("button", undefined, undefined, { name: "Ceiling, molding" });
+        // buttonFillCeilingMolding.text = "Fill white Ceiling, molding (F4)";
+        // buttonFillCeilingMolding.alignment = ["left", "center"];
+        // buttonFillCeilingMolding.preferredSize.width = 170;
+        // buttonFillCeilingMolding.helpTip = "Fill trắng tường trần! Có thể fill nhiều lần không tạo thêm layer. \nPhím tắt: F4";
+
+
+        // //Fill color Wall
+        // var buttonFillWall = group1.add("button", undefined, undefined, { name: "Wall color 1" });
+        // buttonFillWall.text = "Wall color - LV 1.2 (F5)";
+        // buttonFillWall.alignment = ["left", "center"];
+        // buttonFillWall.preferredSize.width = 170;
+        // buttonFillWall.helpTip = "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới Levels mặc định (1.2). \nPhím tắt: F5";
+
+        // //Wall coloring 2
+        // var buttonFillWall2 = group1.add("button", undefined, undefined, { name: "Wall color 2" });
+        // buttonFillWall2.text = "Wall color - LV ~ (F6)"
+        // buttonFillWall2.alignment = ["left", "center"]
+        // buttonFillWall2.preferredSize.width = 170
+        // buttonFillWall2.helpTip = "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới.\nLevels được lưu trước đó hoặc tùy chọn mới (Xóa dữ liệu cũ ở nút Reset Data). \nPhím tắt: F6";
+
+        // //DTD
+        // var buttonDTD = group1.add("button", undefined, undefined, { name: "DTD" });
+        // buttonDTD.text = "DTD (F7)";
+        // buttonDTD.preferredSize.width = 170;
+        // buttonDTD.helpTip = "Tạo ảnh tối! Chọn vùng chọn cửa trước khi chạy. \nPhím tắt: F7";
+
+        // //Fill Sky DTD
+        // var buttonAddSkyDTD = group1.add("button", undefined, undefined, { name: "Add sky (2)" });
+        // buttonAddSkyDTD.text = "Add Sky(DTD)(F8)";
+        // buttonAddSkyDTD.alignment = ["left", "center"];
+        // buttonAddSkyDTD.preferredSize.width = 170;
+        // buttonAddSkyDTD.helpTip = "Thêm trời DTD. Lưu ý phải sử dụng action add trời và tạo ảnh tối(DTD) trước. \nPhím tắt: F8";
+
+        // //Add TV
+        // var buttonAddTV = group1.add("button", undefined, undefined, { name: "Camera Raw" });
+        // buttonAddTV.text = "Add Television (4)";
+        // buttonAddTV.alignment = ["left", "center"];
+        // buttonAddTV.preferredSize.width = 170;
+        // buttonAddTV.helpTip = "Fill ti vi. Lấy vùng chọn TV trước khi chạy action. \nPhím tắt: 4";
+
+
+        // //Lo Fire
+        // var buttonLoSuoi = group1.add("button", undefined, undefined, { name: "Dust" });
+        // buttonLoSuoi.text = "Add Fire (5)";
+        // buttonLoSuoi.alignment = ["left", "center"];
+        // buttonLoSuoi.preferredSize.width = 170;
+        // buttonLoSuoi.helpTip = "Fill lò sưởi. Lấy vùng chọn lò sưởi trước khi chạy action. \nPhím tắt: 5";
+
+
+        // //Fill window
+        // var buttonWindow = group1.add("button", undefined, undefined, { name: "Copy Sill (2)" });
+        // buttonWindow.text = "Add Window(6)";
+        // buttonWindow.alignment = ["left", "center"];
+        // buttonWindow.preferredSize.width = 170;
+        // buttonWindow.helpTip = "Thay cửa sổ. Lấy vùng chọn Cửa sổ trước khi chạy action. \nPhím tắt: 6";
+
+        // //Fill Sky
+        // var buttonSky = group1.add("button", undefined, undefined, { name: "Line_War_Background (l)" });
+        // buttonSky.text = "Add Sky(7)";
+        // buttonSky.preferredSize.width = 170;
+        // buttonSky.helpTip = "Thêm trời! \nPhím tắt: 4";
+        // buttonWindow.helpTip = "Thay trời. Khoanh vùng vùng chọn trời trước khi chạy action. \nPhím tắt: 7";
+
+
+        // //Add Grass
+        // var buttonAddGrass = group1.add("button", undefined, undefined, { name: "Camera Raw" });
+        // buttonAddGrass.text = "Add Grass (8)";
+        // buttonAddGrass.alignment = ["left", "center"];
+        // buttonAddGrass.preferredSize.width = 170;
+
+        // //Add light
+        // var buttonAddLight = group1.add("button", undefined, undefined, { name: "Add sky (2)" });
+        // buttonAddLight.text = "Add Light(9)";
+        // buttonAddLight.alignment = ["left", "center"];
+        // buttonAddLight.preferredSize.width = 170;
+        // buttonAddLight.helpTip = "Truy cập folder chứa Light, add light cho DTD! \nPhím tắt: L";
+
+
+        // //Replace Color
+        // var buttonReplaceColor = group1.add("button", undefined, undefined, { name: "Replace Color" });
+        // buttonReplaceColor.text = "Replace Color(Q)";
+        // buttonReplaceColor.preferredSize.width = 170;
+
+        // //Selective Color
+        // var buttonSelectiveColor = group1.add("button", undefined, undefined, { name: "Selective Color" });
+        // buttonSelectiveColor.text = "Selective Color(W)";
+        // buttonSelectiveColor.preferredSize.width = 170;
+
+        // //ColorBalance
+        // var buttonColorBalance = group1.add("button", undefined, undefined, { name: "ColorBalance" });
+        // buttonColorBalance.text = "ColorBalance(E)";
+        // buttonColorBalance.preferredSize.width = 170;
+
+        // //CameraRaw
+        // var buttonCameraRaw = group1.add("button", undefined, undefined, { name: "CameraRaw" });
+        // buttonCameraRaw.text = "CameraRaw(R)";
+        // buttonCameraRaw.preferredSize.width = 170;
+
+
+        // //GROUP 2
+        // var group2 = dialog.add("group", undefined, { name: "Group 2" });
+        // group2.orientation = "column";
+        // group2.alignChildren = ["left", "center"];
+        // group2.spacing = 3;
+        // group2.margins = 1;
+
+        // //Carpet synchronization
+        // var buttonReduceHueSaturation = group2.add("button", undefined, undefined, { name: "Carpet synchronization" });
+        // buttonReduceHueSaturation.text = "Carpet synchronization(T)";
+        // buttonReduceHueSaturation.preferredSize.width = 170;
+
+        // //Hue saturation
+        // var buttonHueSaturation = group2.add("button", undefined, undefined, { name: "Hue Color" });
+        // buttonHueSaturation.text = "Hue Saturation(U)";
+        // buttonHueSaturation.preferredSize.width = 170;
+
+        // //Color and vibrance
+        // var buttonColorAndVibrance = group2.add("button", undefined, undefined, { name: "Hue Color" });
+        // buttonColorAndVibrance.text = "ColorAndVibrance(Y)";
+        // buttonColorAndVibrance.preferredSize.width = 170;
+
+
+        // //Copy Path
+        // var buttonCopyPath = group2.add("button", undefined, undefined, { name: "Flip_Canvas_Product_White" });
+        // buttonCopyPath.text = "Copy Path (A)";
+        // buttonCopyPath.preferredSize.width = 170;
+
+        // //Save selection detail
+        // var buttonSaveSelectionDetail = group2.add("button", undefined, undefined, { name: "Flip_Canvas_Product_White" });
+        // buttonSaveSelectionDetail.text = "Save Selection Detail (D)";
+        // buttonSaveSelectionDetail.preferredSize.width = 170;
+
+        // //Save selection detail
+        // var buttonSaveSelectionAllDetail = group2.add("button", undefined, undefined, { name: "Flip_Canvas_Product_White" });
+        // buttonSaveSelectionAllDetail.text = "Save Selection All Detail (F)";
+        // buttonSaveSelectionAllDetail.preferredSize.width = 170;
+
+        // //Replace color Red + yellow
+        // var buttonAddRed = group2.add("button", undefined, undefined, { name: "deleteSetAction 75%" });
+        // buttonAddRed.text = "Create Layer Blending Color (C)";
+        // buttonAddRed.preferredSize.width = 170;
+
+
+        // //Copy Path
+        // var buttonRunActionPath = group2.add("button", undefined, undefined, { name: "Run action path" });
+        // buttonRunActionPath.text = "Run action Path (F10)";
+        // buttonRunActionPath.preferredSize.width = 170;
+
+        // // //Merge All layer to one Layer
+        // // var buttonMerge = group2.add("button", undefined, undefined, { name: "buttonMerge" });
+        // // buttonMerge.text = "MERGE LAYER (1)";
+        // // buttonMerge.preferredSize.width = 170;
+
+        // //Merge images indor
+        // var buttonIndor = group2.add("button", undefined, undefined, { name: "INDOR" });
+        // buttonIndor.text = "MERGE (INDOR) (1)"
+        // buttonIndor.preferredSize.width = 170;
+
+        // //Merge OutDor
+        // var outDor = group2.add("button", undefined, undefined, { name: "OUTDOR" });
+        // outDor.text = "MERGE (OUTDOR) (2)";
+        // outDor.preferredSize.width = 170;
+
+        // //FINALIZE
+        // var buttonFinalize = group2.add("button", undefined, undefined, { name: "FINALIZE" });
+        // buttonFinalize.text = "MERGE (FINALIZE) (3)";
+        // buttonFinalize.preferredSize.width = 170;
+
+        // //RESET ALL DATA
+        // var buttonResetData = group2.add("button", undefined, undefined, { name: "Reset Data" });
+        // buttonResetData.text = "Reset Data (Z)";
+        // buttonResetData.preferredSize.width = 170;
+
+        // //RESET DATA blending
+        // var buttonResizeImage = group2.add("button", undefined, undefined, { name: "Resize Image" });
+        // buttonResizeImage.text = "Resize and UnResize (I)";
+        // buttonResizeImage.preferredSize.width = 170;
+
+        // //RESET DATA blending
+        // var buttonResetDataBlending = group2.add("button", undefined, undefined, { name: "Reset Blending" });
+        // buttonResetDataBlending.text = "Reset Blending (X)";
+        // buttonResetDataBlending.preferredSize.width = 170;
+
+        // //Save tif and jpg
+        // var buttonSaveTif = group2.add("button", undefined, undefined, { name: "Hair Fly" });
+        // buttonSaveTif.text = "Save tif and jpg (S)";
+        // buttonSaveTif.preferredSize.width = 170;
+
+        // //Reset Ram
+        // var buttonResetram = group2.add("button", undefined, undefined, { name: "Reset ram" });
+        // buttonResetram.text = "Reset Ram(P)";
+        // buttonResetram.preferredSize.width = 170;
+        // buttonResetram.helpTip = "Giải phóng bộ nhớ, giúp PTS hoạt động mượt hơn! \nPhím tắt: P";
+
+        // //Logout
+        // var buttonLogout = group2.add("button", undefined, undefined, { name: "Logout account" });
+        // buttonLogout.text = "Logout Account";
+        // buttonLogout.preferredSize.width = 170;
+
+        // //update
+        // var buttonUpdate = group2.add("button", undefined, undefined, { name: "Update code" });
+        // buttonUpdate.text = "Update!";
+        // buttonUpdate.preferredSize.width = 170;
+
+        // //Close Frame.
+        // var buttonClose = group2.add("button", undefined, undefined, { name: "Cancel" });
+        // buttonClose.text = "Cancel";
+        // buttonClose.preferredSize.width = 170;
+        // buttonClose.active = true
+
+        // // Hàm helper: chạy file jsx
+        // function runScript(path) {
+        //     var targetScript = File(path);
+        //     if (targetScript.exists) {
+        //         $.evalFile(targetScript);
+        //     } else {
+        //         alert("❌ Không tìm thấy file: " + targetScript.fsName);
+        //     }
+        // }
+
+        // // Hàm helper: gắn listener cho button chạy file
+        // function bindBtn(btn, filePath) {
+        //     btn.addEventListener("click", function () {
+        //         dialog.close();
+        //         runScript(filePath);
+        //     });
+        // }
+        */
 
         // --- Map button ↔ file ---
         bindBtn(buttonCopyExposure, currentFolder + "/copyToMerge.jsx");
@@ -584,6 +584,7 @@ var flagresize = true;
             dialog.close();
         });
         //Xử lý xự kiện bằng bàng phím
+        buttonCopyExposure.active = true;
         dialog.addEventListener("keydown", triggerBtnRun);
         function triggerBtnRun(e) {
             const actions = {
