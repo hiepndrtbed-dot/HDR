@@ -5,6 +5,7 @@ var temp = 0;
 var value = 33;
 var jsonFile = new File(scriptFolder.fsName + "/Data" + nameJson);
 (function main() {
+    // if (doc.width <= 3000) return;
     purgeAll();
     if (jsonFile.exists) {
         jsonFile.open("r");

@@ -86,6 +86,7 @@ if (!hasSelection()) {
             } else {
                 doc.activeLayer.visible = false;
             }
+            doc.activeLayer = doc.artLayers[nameLayer];
         } else {
             addSelectionToChannelName(nameChannel);
             doc.activeLayer = doc.artLayers[nameLayer];

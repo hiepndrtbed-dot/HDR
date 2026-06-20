@@ -1,6 +1,6 @@
 var gaussianBlur = 50;
 try {
-    makeHistory("Struct" + randomOneToTen());
+    makeHistory("Struct" + Math.floor(Math.random() * 10) + 1);
 } catch (error) {
 }
 

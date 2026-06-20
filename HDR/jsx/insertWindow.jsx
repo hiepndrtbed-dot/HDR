@@ -10,8 +10,11 @@
         addMask(); selectRGB();
         setFeatherMask(1);
         setLevels(0, 255, 0, 255);
-        selectMask();
+        makeColorAndVibrane(0, 0);
+        doc.activeLayer.grouped = true;
+        doc.activeLayer = doc.artLayers["Window"];
         loadSelectionByMask(doc.activeLayer.id);
+        selectMask();
         selecTool("eraserTool");
         // doc.channels.getByName("Window").remove();
         // selecTool("lassoTool");

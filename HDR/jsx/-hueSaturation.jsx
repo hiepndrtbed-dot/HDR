@@ -6,6 +6,7 @@ app.preferences.typeunits = TypeUnits.PIXELS
 const doc = activeDocument;
 
 (function main() {
+    if (activeDocument.quickMaskMode == true) { activeDocument.quickMaskMode = false; }
     if (!hasSelection()) { alert("Chua co vung chon!"); return; }
     if (!selectLayer("Not delete")) {
         var newLayer = doc.artLayers.add();

@@ -70,18 +70,39 @@ var flagresize = true;
             "Copy các document (#Untitled-1) về một document có độ sáng cao nhất, sắp xếp các document theo các Layer có độ sáng thấp dần (Background sáng nhất), \nPhím tắt là F1"
         );
 
-        var buttonMergeExposure = createButton(
+        var buttonFillWall = createButton(
             group1,
-            "Merge Exposure",
-            "Merge Exposure (F2)",
-            "Merge các Layer có các độ sáng khác nhau! \nPhím tắt F2"
+            "Wall color 1",
+            "Wall color 1 - LV 1.2 (F2)",
+            "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới Levels mặc định (1.2). \nPhím tắt: F2"
         );
 
-        var buttonAlign = createButton(
+        var buttonFillWall1 = createButton(
             group1,
-            "Align and merge Exposure",
-            "ALign and Merge Exposure (F3)",
-            "Align Layer có độ rung, sau đó Merge các Layer có các độ sáng khác nhau! \nPhím tắt: F3"
+            "Wall color 2",
+            "Wall color 2 - LV ~ (F3)",
+            "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới Levels tùy chọn. \nPhím tắt: F3"
+        );
+
+        var buttonFillWall2 = createButton(
+            group1,
+            "Wall color 3",
+            "Wall color 3 - LV ~ (F4)",
+            "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới.\nLevels được lưu trước đó hoặc tùy chọn mới (Xóa dữ liệu cũ ở nút Reset Data). \nPhím tắt: F4"
+        );
+
+        var buttonFillWall3 = createButton(
+            group1,
+            "Wall color 4",
+            "Wall color 4 - LV ~ (F5)",
+            "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới Levels tùy chọn. \nPhím tắt: F5"
+        );
+
+        var buttonFillCeilingMolding = createButton(
+            group1,
+            "Ceiling, molding",
+            "Fill white Ceiling, molding (F6)",
+            "Fill trắng tường trần! Có thể fill nhiều lần không tạo thêm layer. \nPhím tắt: F6"
         );
 
         var buttonAlignFlash = createButton(
@@ -98,26 +119,9 @@ var flagresize = true;
             "MergeFlash các Layer có các độ sáng khác nhau!"
         );
 
-        var buttonFillCeilingMolding = createButton(
-            group1,
-            "Ceiling, molding",
-            "Fill white Ceiling, molding (F4)",
-            "Fill trắng tường trần! Có thể fill nhiều lần không tạo thêm layer. \nPhím tắt: F4"
-        );
 
-        var buttonFillWall = createButton(
-            group1,
-            "Wall color 1",
-            "Wall color - LV 1.2 (F5)",
-            "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới Levels mặc định (1.2). \nPhím tắt: F5"
-        );
 
-        var buttonFillWall2 = createButton(
-            group1,
-            "Wall color 2",
-            "Wall color - LV ~ (F6)",
-            "Fill tường trần có màu! Mỗi lần fill tạo thêm layer mới.\nLevels được lưu trước đó hoặc tùy chọn mới (Xóa dữ liệu cũ ở nút Reset Data). \nPhím tắt: F6"
-        );
+
 
         var buttonDTD = createButton(
             group1,
@@ -513,11 +517,12 @@ var flagresize = true;
 
         // --- Map button ↔ file ---
         bindBtn(buttonCopyExposure, currentFolder + "/copyToMerge.jsx");
-        bindBtn(buttonMergeExposure, currentFolder + "/mergeImage.jsx");
         bindBtn(buttonMergeExposureFlash, currentFolder + "/mergeBWBD.jsx");
         bindBtn(buttonFillCeilingMolding, currentFolder + "/Whitening.jsx");
         bindBtn(buttonFillWall, currentFolder + "/wallColor.jsx");
-        bindBtn(buttonFillWall2, currentFolder + "/wallColor2.jsx");
+        bindBtn(buttonFillWall1, currentFolder + "/wallColor2.jsx");
+        bindBtn(buttonFillWall2, currentFolder + "/wallColor3.jsx");
+        bindBtn(buttonFillWall3, currentFolder + "/wallColor4.jsx");
         bindBtn(buttonAddTV, currentFolder + "/InsertElectronic.jsx");
         bindBtn(buttonAddGrass, currentFolder + "/insertGrass.jsx");
         bindBtn(buttonWindow, currentFolder + "/insertWindow.jsx");
@@ -548,14 +553,6 @@ var flagresize = true;
         bindBtn(buttonLogout, scriptFolder + "/py/logout.jsx");
 
         // --- Các button có xử lý đặc biệt ---
-        // Align + Merge Exposure
-        buttonAlign.addEventListener("click", function () {
-            dialog.close();
-            loadAction("ALign", "DataAction(HDR).atn");
-            runScript(currentFolder + "/mergeImage.jsx");
-            doc.layers[0].name = "Align";
-        });
-
         buttonAlignFlash.addEventListener("click", function () {
             dialog.close();
             loadAction("ALign", "DataAction(HDR).atn");
@@ -589,15 +586,14 @@ var flagresize = true;
         function triggerBtnRun(e) {
             const actions = {
                 "F1": buttonCopyExposure,
-                "F2": buttonMergeExposure,
-                "0": buttonMergeExposureFlash,
-                "F3": buttonAlign,
-                "-": buttonAlignFlash,
-                "F4": buttonFillCeilingMolding,
-                "F5": buttonFillWall,
-                "F6": buttonFillWall2,
+                "F2": buttonFillWall,
+                "F3": buttonFillWall1,
+                "F4": buttonFillWall2,
+                "F5": buttonFillWall3,
+                "F6": buttonFillCeilingMolding,
                 "F7": buttonDTD,
                 "F8": buttonAddSkyDTD,
+                "0": buttonMergeExposureFlash,
                 "1": buttonIndor,
                 "2": outDor,
                 "3": buttonFinalize,
@@ -607,6 +603,7 @@ var flagresize = true;
                 "7": buttonSky,
                 "8": buttonAddGrass,
                 "9": buttonAddLight,
+                "-": buttonAlignFlash,
                 "Q": buttonReplaceColor,
                 "W": buttonSelectiveColor,
                 "E": buttonColorBalance,
@@ -1925,6 +1922,33 @@ function slectionSky() {
         desc.putReference(cTID('With'), ref2);
         executeAction(cTID('Intr'), desc, DialogModes.NO);
     }
+
+    function prepareSelection(expand, featherVal) {
+        doc.selection.expand(expand);
+        doc.selection.feather(featherVal);
+    }
+
+    //Group layer
+    function setFeatherMask(userMaskFeather) {
+        var c2t = function (s) {
+            return app.charIDToTypeID(s);
+        };
+
+        var s2t = function (s) {
+            return app.stringIDToTypeID(s);
+        };
+
+        var descriptor = new ActionDescriptor();
+        var descriptor2 = new ActionDescriptor();
+        var reference = new ActionReference();
+
+        reference.putEnumerated(s2t("layer"), s2t("ordinal"), s2t("targetEnum"));
+        descriptor.putReference(c2t("null"), reference);
+        descriptor2.putUnitDouble(s2t("userMaskFeather"), s2t("pixelsUnit"), userMaskFeather);
+        descriptor.putObject(s2t("to"), s2t("layer"), descriptor2);
+        executeAction(s2t("set"), descriptor, DialogModes.NO);
+    }
+
 
     function setSelection() {
         var desc = new ActionDescriptor();

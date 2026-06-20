@@ -3,7 +3,7 @@ var feather = 1;
 const expandSelection = 1;
 const nameChannel = "Wall";
 var nameTxt = "/Blending.txt";
-var nameTxtLV = "/levelColor2.txt";
+var nameTxtLV = "/levelColor4.txt";
 const opacityValue = 100;
 var middleLevelsValue = 1;
 var destWhiteMin = 180;
@@ -132,7 +132,7 @@ var destWhiteMin = 180;
                 doc.activeLayer.move(doc.layers[0], ElementPlacement.PLACEBEFORE);
             } finally {
                 selectRGB();
-                var nameJsonColor = "/color2.json";
+                var nameJsonColor = "/color4.json";
                 var jsonFile = new File(scriptFolder.fsName + "/Data" + nameJsonColor);
                 var flagLoadColor = false;
                 var localColorData;

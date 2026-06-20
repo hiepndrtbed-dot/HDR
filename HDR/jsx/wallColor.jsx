@@ -5,6 +5,7 @@ const middleLevelsValue = 1.2;
 const nameChannel = "Wall";
 var nameTxt = "/Blending.txt";
 var destWhiteMin = 180;
+var flagLoadColor = false;
 (function main() {
     var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
     if (txtFile.exists) {
@@ -60,7 +61,7 @@ var destWhiteMin = 180;
         } finally {
             //kiem tra co luu vung chon truoc do chua.
             checkSelectionName(nameChannel) ? addSelectionToChannelName(nameChannel) : saveAlphaChnl(nameChannel);
-            prepareSelection(expandSelection, feather);
+            doc.selection.expand(expandSelection);
             try {
                 makeLevelsAdjustment(middleLevelsValue);
                 doc.activeLayer.name = nameLayer + "X";
@@ -72,6 +73,7 @@ var destWhiteMin = 180;
                 doc.activeLayer.name = nameLayer;
                 setColorLayer("Ylw ");
             }
+            setFeatherMask(feather);
             blendingOptions(0, 0, 255, 255, 0, 0, destWhiteMin, 255);// blendingOptions(0, 47, 189, 255, 0, 36, 233, 255);
             try {
                 //Di chuyen xuogn duoi layer den trang;
@@ -82,7 +84,6 @@ var destWhiteMin = 180;
                 selectRGB();
                 var nameJsonColor = "/color1.json";
                 var jsonFile = new File(scriptFolder.fsName + "/Data" + nameJsonColor);
-                var flagLoadColor = false;
                 var localColorData;
                 if (jsonFile.exists) {
                     jsonFile.open("r");
@@ -94,9 +95,8 @@ var destWhiteMin = 180;
                     c.hsb.saturation = localColorData.saturation;
                     c.hsb.brightness = localColorData.brightness;
                     app.foregroundColor = c;
-
                     flagLoadColor = true;
-                    
+
                 } else {
                     flagLoadColor = false;
                 }
@@ -129,10 +129,6 @@ var destWhiteMin = 180;
     }
 })();
 
-function randomOneToTen() {
-    return Math.floor(Math.random() * 10) + 1;
-}
-
 function loadSelectionByMask(id) {
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -156,6 +152,27 @@ function hasSelection() {
     return desc.count > 0;
 }
 
+
+//Group layer
+function setFeatherMask(userMaskFeather) {
+    var c2t = function (s) {
+        return app.charIDToTypeID(s);
+    };
+
+    var s2t = function (s) {
+        return app.stringIDToTypeID(s);
+    };
+
+    var descriptor = new ActionDescriptor();
+    var descriptor2 = new ActionDescriptor();
+    var reference = new ActionReference();
+
+    reference.putEnumerated(s2t("layer"), s2t("ordinal"), s2t("targetEnum"));
+    descriptor.putReference(c2t("null"), reference);
+    descriptor2.putUnitDouble(s2t("userMaskFeather"), s2t("pixelsUnit"), userMaskFeather);
+    descriptor.putObject(s2t("to"), s2t("layer"), descriptor2);
+    executeAction(s2t("set"), descriptor, DialogModes.NO);
+}
 
 function hasChannel(name) {
     var chs = app.activeDocument.channels;
