@@ -385,7 +385,7 @@ def main():
             "Cannot find HDR folder in ZIP"
         )
 
-    log("SOURCE = " + SOURCE_DIR)
+    # log("SOURCE = " + SOURCE_DIR)
 
     # --------------------------------
     # Backup
@@ -422,7 +422,6 @@ def main():
 # ==================================================
 # START
 # ==================================================
-
 if __name__ == "__main__":
 
     try:
@@ -438,5 +437,15 @@ if __name__ == "__main__":
         print("\nUPDATE FAILED")
 
         traceback.print_exc()
+
+    finally:
+
+        try:
+
+            if os.path.exists(TEMP_DIR):
+                shutil.rmtree(TEMP_DIR)
+
+        except:
+            pass
 
     input("\nPress Enter...")
