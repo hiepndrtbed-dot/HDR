@@ -91,7 +91,7 @@ if (!hasSelection()) {
             addSelectionToChannelName(nameChannel);
             doc.activeLayer = doc.artLayers[nameLayer];
             selectMask();
-            fillColor(228, 228, 228);
+            fillColor(255, 255, 255);
             doc.selection.deselect();
         }
     }

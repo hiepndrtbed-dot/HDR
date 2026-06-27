@@ -7,6 +7,7 @@ try {
 var lengthArtLayers = doc.artLayers.length;
 for (var i = 0; i < lengthArtLayers - 1; i++) {
     doc.activeLayer = doc.artLayers[0];
+    doc.activeLayer.visible = true;
     loadSelectionChannel();
     addMask();
     doc.activeLayer.applyGaussianBlur(gaussianBlur);
@@ -144,26 +145,6 @@ function addMask() {
     executeAction(idMk, desc358, DialogModes.NO);
 }
 
-function makeGroup(name2) {
-    var c2t = function (s) {
-        return app.charIDToTypeID(s);
-    };
-
-    var s2t = function (s) {
-        return app.stringIDToTypeID(s);
-    };
-
-    var descriptor = new ActionDescriptor();
-    var reference = new ActionReference();
-    var reference2 = new ActionReference();
-
-    reference.putClass(s2t("layerSection"));
-    descriptor.putReference(c2t("null"), reference);
-    reference2.putEnumerated(s2t("layer"), s2t("ordinal"), s2t("targetEnum"));
-    descriptor.putReference(s2t("from"), reference2);
-    executeAction(s2t("make"), descriptor, DialogModes.NO);
-    doc.activeLayer.name = name2
-}
 
 //Save History
 function makeHistory(name2) {

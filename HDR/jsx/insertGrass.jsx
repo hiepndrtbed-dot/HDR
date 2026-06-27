@@ -2,7 +2,15 @@ var nameTxt = "/Grass.txt"
 var path = "/Library PE/Library/Grass/";
 
 (function main() {
-    if (!hasSelection()) { alert("Chua co vung chon Grass!"); return; }
+    if (!hasSelection()) {
+        // alert("Chua co vung chon Grass!");
+        $.evalFile(currentFolder + "/+redYellow.jsx");
+        makeGroup("Grass");
+        var newLayer1 = doc.artLayers.add();
+        newLayer1.name = "RetouchGrass";
+        newLayer1.move(doc.layers["Grass"].artLayers["Color"], ElementPlacement.PLACEAFTER);
+        return;
+    }
     var widthSelection = doc.selection.bounds[2] - doc.selection.bounds[0];
     var heightSelection = doc.selection.bounds[3] - doc.selection.bounds[1];
     saveAlphaChnl("Grass");
@@ -54,6 +62,9 @@ var path = "/Library PE/Library/Grass/";
         selecTool("paintbrushTool");
     } catch (error) { }
 })();
+
+
+
 
 function selectMask() {
     var idslct = charIDToTypeID("slct");

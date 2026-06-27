@@ -51,11 +51,13 @@ function saveResize(percentResize) {
     var valueSizeImages = { width: parseInt(doc.width), height: parseInt(doc.height), nameDocument: doc.name };
     if (hasSelection()) {
         saveAlphaChnl("SelectionTemp");
-        resizeImagePercent(percentResize);
+        doc.resizeImage(UnitValue(1500, "px"), UnitValue(1300, "px"), null, ResampleMethod.BICUBIC);
+        // resizeImagePercent(percentResize);
         doc.selection.load(doc.channels.getByName("SelectionTemp"));
         doc.channels.getByName("SelectionTemp").remove();
     } else {
-        resizeImagePercent(percentResize);
+        doc.resizeImage(UnitValue(1500, "px"), UnitValue(1300, "px"), null, ResampleMethod.BICUBIC);
+        // resizeImagePercent(percentResize);
     }
     jsonFile.encoding = "UTF8";
     jsonFile.open("w");

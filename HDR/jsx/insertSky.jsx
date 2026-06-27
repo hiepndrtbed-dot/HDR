@@ -22,7 +22,6 @@ var nameFileJson = "/resizeImage.json";
     }
     //Lay thu muc hien tao
     var folderImage = scriptFolder.fsName + path;
-
     var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
 
     if (txtFile.exists) {

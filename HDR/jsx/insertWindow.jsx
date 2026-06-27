@@ -10,7 +10,7 @@
         addMask(); selectRGB();
         setFeatherMask(1);
         setLevels(0, 255, 0, 255);
-        makeColorAndVibrane(0, 0);
+        makeColorAndVibrane(7, 5);
         doc.activeLayer.grouped = true;
         doc.activeLayer = doc.artLayers["Window"];
         loadSelectionByMask(doc.activeLayer.id);

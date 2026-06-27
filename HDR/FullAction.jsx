@@ -1770,6 +1770,14 @@ function resizeImage(width, height) {
 
 }
 
+function resizeLayer(width, height) {
+    var bounds = activeDocument.activeLayer.bounds;
+    var layerWidth = bounds[2].as('px') - bounds[0].as('px');
+    var layerHeight = bounds[3].as('px') - bounds[1].as('px');
+    var scaleX = (width / layerWidth) * 100;
+    var scaleY = (height / layerHeight) * 100;
+    activeDocument.activeLayer.resize(scaleX, scaleY, AnchorPosition.MIDDLECENTER);
+}
 //add mask
 function addMask() {
     var idMk = charIDToTypeID("Mk  ");
@@ -2180,6 +2188,47 @@ function selectLayer(layerName) {
     }
 
     return result;
+}
+
+function belowLayer() {
+    var idslct = charIDToTypeID("slct");
+    var desc15622 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref474 = new ActionReference();
+    var idLyr = charIDToTypeID("Lyr ");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idBckw = charIDToTypeID("Bckw");
+    ref474.putEnumerated(idLyr, idOrdn, idBckw);
+    desc15622.putReference(idnull, ref474);
+    var idMkVs = charIDToTypeID("MkVs");
+    desc15622.putBoolean(idMkVs, false);
+    var idLyrI = charIDToTypeID("LyrI");
+    var list249 = new ActionList();
+    list249.putInteger(8);
+    desc15622.putList(idLyrI, list249);
+    executeAction(idslct, desc15622, DialogModes.NO);
+}
+
+
+function makeGroup(name2) {
+    var c2t = function (s) {
+        return app.charIDToTypeID(s);
+    };
+
+    var s2t = function (s) {
+        return app.stringIDToTypeID(s);
+    };
+
+    var descriptor = new ActionDescriptor();
+    var reference = new ActionReference();
+    var reference2 = new ActionReference();
+
+    reference.putClass(s2t("layerSection"));
+    descriptor.putReference(c2t("null"), reference);
+    reference2.putEnumerated(s2t("layer"), s2t("ordinal"), s2t("targetEnum"));
+    descriptor.putReference(s2t("from"), reference2);
+    executeAction(s2t("make"), descriptor, DialogModes.NO);
+    doc.activeLayer.name = name2
 }
 
 function layerExists(layerName) {
