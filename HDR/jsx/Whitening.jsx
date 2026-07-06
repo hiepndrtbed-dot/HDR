@@ -5,61 +5,19 @@ app.preferences.typeunits = TypeUnits.PIXELS;
 var nameLayer = "BLACK && WHITE";
 var feather = 1;
 var hueValue = 100;
+var expandSelection = null;
 var middleLevelsValue = 1.2;
 var nameChannel = "Tran_ChiPhao";
-var nameTxt = "/Blending.txt";
 var nameTxtPreset = "/PresetI.txt";
 var destWhiteMin = 180;
 //kiem tra blending;
-var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
-if (txtFile.exists) {
-    txtFile.encoding = "UTF8"; // hoặc "ASCII" nếu file không có dấu tiếng Việt
-    txtFile.open("r"); // "r" = read
-    var contentFile = txtFile.read();
-    txtFile.close();
-    destWhiteMin = contentFile;
-} else {
-    // Tạo file TXT cùng thư mục
-    // Tạo một cửa sổ dialog
-    var dialog = new Window("dialog", "Change Blending ...");
-    dialog.alignChildren = "left";
-    dialog.orientation = "column";
+$.evalFile(currentFolder + "/checkBlending.jsx");
 
-    //Custom name
-    var customName = dialog.add("group");
-    customName.add("statictext", undefined, "Add Blending: ");
-    var inputCustomName = customName.add("edittext", undefined, "", { multiline: false });
-    inputCustomName.preferredSize.width = 100;
-    inputCustomName.text = destWhiteMin;
-
-    var buttonGroup = dialog.add("group");
-    buttonGroup.alignment = "right";
-    var cancelButton = buttonGroup.add("button", undefined, "Cancel");
-
-    cancelButton.onClick = function () {
-        dialog.close();
-    };
-
-    var saveButton = buttonGroup.add("button", undefined, "Process");
-
-    saveButton.onClick = function () {
-        dialog.close();
-        var nameCustom = inputCustomName.text;
-        destWhiteMin = nameCustom;
-        var txtFile = new File(scriptFolder.fsName + "/Data" + nameTxt);
-        txtFile.encoding = "UTF8";
-        txtFile.open("w");
-        alert("Blending: " + nameCustom);
-        var xx = txtFile.write(decodeURI(nameCustom));
-        txtFile.close();
-    }
-    dialog.show();
-}
 if (activeDocument.quickMaskMode == true) { activeDocument.quickMaskMode = false; }
 if (!hasSelection()) {
     alert("Chua co vung chon!");
 } else {
-    $.evalFile(scriptFolder.fsName + "/jsx/editPreset.jsx");
+    $.evalFile(currentFolder + "/editPreset.jsx");
     try {
         doc.activeLayer = doc.artLayers["MERGE 1"];
     } catch (error) {
@@ -68,6 +26,7 @@ if (!hasSelection()) {
         // cach moi giu mask cho may khoe
         if (!checkSelectionName(nameChannel)) {
             saveAlphaChnl(nameChannel);
+            if (expandSelection != null) doc.selection.expand(expandSelection);
             makeLevelsAdjustment(middleLevelsValue); setFeatherMask(feather);
             doc.activeLayer.move(doc.artLayers[0], ElementPlacement.PLACEBEFORE);
             doc.activeLayer.name = nameLayer;
@@ -89,6 +48,7 @@ if (!hasSelection()) {
             doc.activeLayer = doc.artLayers[nameLayer];
         } else {
             addSelectionToChannelName(nameChannel);
+            if (expandSelection != null) doc.selection.expand(expandSelection);
             doc.activeLayer = doc.artLayers[nameLayer];
             selectMask();
             fillColor(255, 255, 255);
@@ -241,4 +201,5 @@ function makeSolidColor(red, Grn, blue) {
     descriptor.putObject(s2t("using"), s2t("contentLayer"), descriptor2)
     executeAction(s2t("make"), descriptor, DialogModes.NO)
 }
+
 

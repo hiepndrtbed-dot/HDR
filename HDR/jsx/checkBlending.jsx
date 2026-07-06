@@ -19,7 +19,6 @@ if (txtFile.exists) {
     var inputCustomName = customName.add("edittext", undefined, "", { multiline: false });
     inputCustomName.preferredSize.width = 100;
     inputCustomName.text = destWhiteMin;
-
     var buttonGroup = dialog.add("group");
     buttonGroup.alignment = "right";
     var cancelButton = buttonGroup.add("button", undefined, "Cancel");

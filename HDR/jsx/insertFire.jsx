@@ -39,7 +39,7 @@
         doc.activeLayer.name = "Fire";
         doc.activeLayer.blendMode = BlendMode.SCREEN;
         doc.activeLayer.move(doc.layers[0], ElementPlacement.PLACEBEFORE);
-        resizeImage2(widthSelection, heightSelection);
+        resizeLayer(widthSelection, heightSelection);
         doc.selection.load(doc.channels.getByName("Fire"));
         doc.channels.getByName("Fire").remove();
         Algn("ADSCentersH");//"ADSCentersV" Doc;
@@ -49,6 +49,8 @@
         setMaskLink(false);
         selectRGB();
         try { actionMenu("freeTransform"); } catch (error) { }
+        selectMask();
+        selecTool("paintbrushTool");
     } catch (error) { }
 })();
 

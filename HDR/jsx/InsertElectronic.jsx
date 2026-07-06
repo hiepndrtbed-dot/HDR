@@ -41,7 +41,7 @@
     try {
         doc.activeLayer.name = "TV";
         doc.activeLayer.move(doc.layers[0], ElementPlacement.PLACEBEFORE);
-        resizeImage2(widthSelection, heightSelection);
+        resizeLayer(widthSelection, heightSelection);
         doc.selection.load(doc.channels.getByName("TV"));
         doc.channels.getByName("TV").remove();
         Algn("ADSCentersH");//"ADSCentersV" Doc;

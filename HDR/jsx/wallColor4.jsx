@@ -1,6 +1,5 @@
 var nameLayer = "WALL4";
 var feather = 1;
-const expandSelection = 1;
 const nameChannel = "Wall";
 var nameTxtLV = "/levelColor4.txt";
 const opacityValue = 100;

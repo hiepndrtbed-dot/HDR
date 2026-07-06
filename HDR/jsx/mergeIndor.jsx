@@ -3,9 +3,9 @@ var nameTxtPreset = "/PresetI.txt";
 var valuePreset = null;
 var withDialog = false;
 (function main() {
-    $.evalFile(scriptFolder.fsName + "/jsx/editPreset.jsx");
+    $.evalFile(currentFolder + "/editPreset.jsx");
     //process
-    if(selectLayer("Align") == true){
+    if (selectLayer("Align") == true) {
         flagMerge = true;
     }
     //process
@@ -25,10 +25,11 @@ var withDialog = false;
         doc.activeLayer.move(doc.artLayers["MERGE 1"], ElementPlacement.PLACEAFTER);
         convertSmart();
     } catch (error) {
-        doc.activeLayer.name = "MERGE 1";
-        convertSmart();
-        processPreset(valuePreset, withDialog);
-        convertSmart();
+        return;
+        // doc.activeLayer.name = "MERGE 1";
+        // convertSmart();
+        // processPreset(valuePreset, withDialog);
+        // convertSmart();
     } finally {
         if (flagMerge == true) {
             selectChoseMultiLayer(doc.layers[0].name, doc.layers[doc.layers.length - 1].name);
@@ -39,10 +40,7 @@ var withDialog = false;
         showCurves();
         shadowAndHighlight(0, 0);
         selecTool("penTool");
-
     }
-
-
 })();
 
 

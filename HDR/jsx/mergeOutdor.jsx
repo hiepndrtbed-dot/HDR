@@ -2,7 +2,7 @@ var nameTxtPreset = "/PresetO.txt";
 var valuePreset = null;
 var withDialog = true;
 (function main() {
-    $.evalFile(scriptFolder.fsName + "/jsx/editPreset.jsx");
+    $.evalFile(currentFolder + "/editPreset.jsx");
     //process
     if (selectLayer("Align") == true) {
         flagMerge = true;
@@ -42,6 +42,3 @@ function openCameraRaw() {
     executeAction(idCameraRaw, desc, DialogModes.ALL);
 }
 
-
-
-cameraRawFilterALL

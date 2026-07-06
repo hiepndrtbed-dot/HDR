@@ -1,5 +1,5 @@
-
 (function main() {
+    var expandSelection = 1;
     //Kiem tra blending;
     $.evalFile(currentFolder + "/checkBlending.jsx");
     //Kiem tra levels;
@@ -7,19 +7,19 @@
 
     //kiem tra color;
     var jsonFile = new File(scriptFolder.fsName + "/Data" + nameJsonColor);
+    // alert("Đang load màu từ file: " + jsonFile.fsName);
     var flagLoadColor = false;
     var localColorData;
     if (jsonFile.exists) {
         jsonFile.open("r");
         localColorData = JSON.parse(jsonFile.read());
         jsonFile.close();
-
+        selectRGB();
         var c = new SolidColor();
         c.hsb.hue = localColorData.hue;
         c.hsb.saturation = localColorData.saturation;
         c.hsb.brightness = localColorData.brightness;
         app.foregroundColor = c;
-
         flagLoadColor = true;
     } else {
         flagLoadColor = false;
@@ -56,8 +56,7 @@
         } finally {
             //kiem tra co luu vung chon truoc do chua.
             checkSelectionName(nameChannel) ? addSelectionToChannelName(nameChannel) : saveAlphaChnl(nameChannel);
-            doc.selection.expand(expandSelection);
-
+            if (expandSelection != null) doc.selection.expand(expandSelection);
             makeLevelsAdjustment(middleLevelsValue);
             doc.activeLayer.name = nameLayer;
             setColorLayer("Bl  ");
