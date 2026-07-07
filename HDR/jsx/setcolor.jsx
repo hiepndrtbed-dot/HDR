@@ -1,5 +1,5 @@
 (function main() {
-    var expandSelection = 1;
+    var expandSelection = null;
     //Kiem tra blending;
     $.evalFile(currentFolder + "/checkBlending.jsx");
     //Kiem tra levels;
