@@ -3,22 +3,13 @@ var valueHue = -50; // Giá trị Hue
     //check layer tren layer replaceColor
     // checkNameLayerToMger();
     // === Thông số chỉnh màu ===
-    if (!selectLayer("Not delete")) {
-        var newLayer = doc.artLayers.add();
-        newLayer.name = "Not delete";
-        try {
-            newLayer.move(doc.artLayers["MERGE 1"], ElementPlacement.PLACEBEFORE);
-        } catch (error) {
-            newLayer.move(doc.artLayers["Background"], ElementPlacement.PLACEBEFORE);
-        } finally {
-            doc.activeLayer.allLocked = true;
-        }
-    }
+    $.evalFile(currentFolder + "/flagLayer.jsx");
+
     if (activeDocument.quickMaskMode == true) { activeDocument.quickMaskMode = false; }
     if (selectLayer("Color")) { selecTool("paintbrushTool"); return; }
     var newLayer1 = doc.artLayers.add();
     newLayer1.name = "Color";
-    newLayer1.move(doc.artLayers["Not delete"], ElementPlacement.PLACEBEFORE);
+    newLayer1.move(doc.layerSets["GroupEdit"].artLayers["Not delete"], ElementPlacement.PLACEBEFORE);
     doc.activeLayer.blendMode = BlendMode.COLORBLEND;
 
 

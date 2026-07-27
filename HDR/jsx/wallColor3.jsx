@@ -1,3 +1,4 @@
+var fixColor = false;
 var nameLayer = "WALL3";
 var feather = 1;
 const nameChannel = "Wall";

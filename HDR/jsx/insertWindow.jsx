@@ -1,19 +1,21 @@
 (function () {
+    var featherMask = 1;
     if (doc.artLayers["MERGE 1"].visible == false) {
         showLayerVisibele("WindowTemp");
     }
     saveChannel("Window");
     if (layerExists("WindowTemp")) {
+        $.evalFile(currentFolder + "/flagLayer.jsx");
         doc.activeLayer = doc.artLayers.getByName("WindowTemp");
-        doc.activeLayer.move(doc.layers[0], ElementPlacement.PLACEBEFORE);
+        doc.activeLayer.move(doc.layerSets["GroupEdit"], ElementPlacement.INSIDE);
         doc.activeLayer.name = "Window";
         addMask(); selectRGB();
-        setFeatherMask(1);
+        setFeatherMask(featherMask);
         setLevels(0, 255, 0, 255);
         makeColorAndVibrane(7, 5);
         doc.activeLayer.grouped = true;
-        doc.activeLayer = doc.artLayers["Window"];
-        loadSelectionByMask(doc.activeLayer.id);
+        doc.activeLayer = doc.layerSets["GroupEdit"].artLayers["Window"];
+        // loadSelectionByMask(doc.activeLayer.id);
         selectMask();
         selecTool("eraserTool");
         // doc.channels.getByName("Window").remove();
@@ -40,7 +42,7 @@
         // actionCharID("Lvls");
         setLevels(0, 255, 0, 255);
         selectMask();
-        loadSelectionByMask(doc.activeLayer.id);
+        // loadSelectionByMask(doc.activeLayer.id);
         selecTool("paintbrushTool");
     }
 })();

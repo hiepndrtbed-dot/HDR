@@ -9,55 +9,24 @@ var copiedLayers = [];
 var lengthDoc = app.documents.length;
 
 // Copy và đổi tên các layer từ các document khác
-for (var i = 0; i < lengthDoc; i++) {
-    var sourceDoc = app.documents[i];
-    if (sourceDoc.name !== targetName) {
-        app.activeDocument = sourceDoc;
-        var layer = sourceDoc.activeLayer;
-        // Copy sang document đích
-        if (app.activeDocument.name.replace(/\.[^\.]+$/, '') != "Untitled-1") {
-            var copiedLayer = layer.duplicate(targetDoc, ElementPlacement.PLACEATEND);
-            sourceDoc.close(SaveOptions.DONOTSAVECHANGES);
-            lengthDoc--;
-            i--;
-            copiedLayers.push(copiedLayer);
-            layerCount++;
+if (app.activeDocument.layers.length < 2) {
+    for (var i = 0; i < lengthDoc; i++) {
+        var sourceDoc = app.documents[i];
+        if (sourceDoc.name !== targetName) {
+            app.activeDocument = sourceDoc;
+            var layer = sourceDoc.activeLayer;
+            // Copy sang document đích
+            if (app.activeDocument.name.replace(/\.[^\.]+$/, '') != "Untitled-1") {
+                var copiedLayer = layer.duplicate(targetDoc, ElementPlacement.PLACEATEND);
+                sourceDoc.close(SaveOptions.DONOTSAVECHANGES);
+                lengthDoc--;
+                i--;
+                copiedLayers.push(copiedLayer);
+                layerCount++;
+            }
         }
     }
-}
-
-// Hàm đo độ sáng tại tâm layer (chỉ khi layer đó hiển thị)
-function getPointBrightnessExclusive(layer) {
-    var doc = app.activeDocument;
-
-    // Lưu trạng thái hiển thị ban đầu
-    var originalVisibility = [];
-    for (var i = 0; i < doc.layers.length; i++) {
-        originalVisibility.push(doc.layers[i].visible);
-        doc.layers[i].visible = false;
-    }
-
-    // Hiển thị layer cần đo
-    layer.visible = true;
-    doc.activeLayer = layer;
-
-    // Lấy tâm layer
-    var center = [doc.height / 2, doc.width / 2];
-
-    // Đo độ sáng tại điểm
-    doc.colorSamplers.removeAll();
-    var sampler = doc.colorSamplers.add(center);
-    var rgb = sampler.color.rgb;
-    var brightness = (rgb.red + rgb.green + rgb.blue) / 3;
-    sampler.remove();
-
-    // Khôi phục trạng thái hiển thị
-    for (var i = 0; i < doc.layers.length; i++) {
-        doc.layers[i].visible = originalVisibility[i];
-    }
-
-    return brightness;
-}
+}//End if
 
 // Đo độ sáng cho từng layer
 var brightnessValues = [];
@@ -173,3 +142,35 @@ function triggerBtnRun(e) {
 dialog1.show();
 
 
+// Hàm đo độ sáng tại tâm layer (chỉ khi layer đó hiển thị)
+function getPointBrightnessExclusive(layer) {
+    var doc = app.activeDocument;
+
+    // Lưu trạng thái hiển thị ban đầu
+    var originalVisibility = [];
+    for (var i = 0; i < doc.layers.length; i++) {
+        originalVisibility.push(doc.layers[i].visible);
+        doc.layers[i].visible = false;
+    }
+
+    // Hiển thị layer cần đo
+    layer.visible = true;
+    doc.activeLayer = layer;
+
+    // Lấy tâm layer
+    var center = [doc.height / 2, doc.width / 2];
+
+    // Đo độ sáng tại điểm
+    doc.colorSamplers.removeAll();
+    var sampler = doc.colorSamplers.add(center);
+    var rgb = sampler.color.rgb;
+    var brightness = (rgb.red + rgb.green + rgb.blue) / 3;
+    sampler.remove();
+
+    // Khôi phục trạng thái hiển thị
+    for (var i = 0; i < doc.layers.length; i++) {
+        doc.layers[i].visible = originalVisibility[i];
+    }
+
+    return brightness;
+}

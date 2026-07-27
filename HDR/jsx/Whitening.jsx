@@ -5,7 +5,7 @@ app.preferences.typeunits = TypeUnits.PIXELS;
 var nameLayer = "BLACK && WHITE";
 var feather = 1;
 var hueValue = 100;
-var expandSelection = null;
+var expandSelection = 1;
 var middleLevelsValue = 1.2;
 var nameChannel = "Tran_ChiPhao";
 var nameTxtPreset = "/PresetI.txt";
@@ -18,6 +18,7 @@ if (!hasSelection()) {
     alert("Chua co vung chon!");
 } else {
     $.evalFile(currentFolder + "/editPreset.jsx");
+    $.evalFile(currentFolder + "/flagLayer.jsx");
     try {
         doc.activeLayer = doc.artLayers["MERGE 1"];
     } catch (error) {
@@ -28,28 +29,35 @@ if (!hasSelection()) {
             saveAlphaChnl(nameChannel);
             if (expandSelection != null) doc.selection.expand(expandSelection);
             makeLevelsAdjustment(middleLevelsValue); setFeatherMask(feather);
-            doc.activeLayer.move(doc.artLayers[0], ElementPlacement.PLACEBEFORE);
+            try {
+                doc.activeLayer.move(doc.layerSets["GroupEdit"].artLayers["Not delete"], ElementPlacement.PLACEBEFORE);
+            } catch (error) {
+                doc.activeLayer.move(doc.artLayers["MERGE 1"], ElementPlacement.PLACEBEFORE);
+            }
             doc.activeLayer.name = nameLayer;
             setColorLayer("Rd  ");
             blendingOptions(0, 0, 255, 255, 0, 0, destWhiteMin, 255);// blendingOptions(0, 47, 189, 255, 0, 36, 233, 255);
             doc.activeLayer.opacity = hueValue;
             makeHue(0, -90, 0);
             doc.activeLayer.grouped = true;
+            deleteMask();
             makeSolidColor(255, 255, 255);
             doc.activeLayer.blendMode = BlendMode.COLORBLEND;
             doc.activeLayer.grouped = true;
+            deleteMask();
             makeColorAndVibrane(2, 0);
             doc.activeLayer.grouped = true;
+            deleteMask();
             if (valuePreset == 1 || valuePreset == 7) { // kiem tra neu la preset trang xam
                 doc.activeLayer.visible = true;
             } else {
                 doc.activeLayer.visible = false;
             }
-            doc.activeLayer = doc.artLayers[nameLayer];
+            doc.activeLayer = doc.layerSets["GroupEdit"].artLayers[nameLayer];
         } else {
             addSelectionToChannelName(nameChannel);
             if (expandSelection != null) doc.selection.expand(expandSelection);
-            doc.activeLayer = doc.artLayers[nameLayer];
+            doc.activeLayer = doc.layerSets["GroupEdit"].artLayers[nameLayer];
             selectMask();
             fillColor(255, 255, 255);
             doc.selection.deselect();
@@ -57,8 +65,6 @@ if (!hasSelection()) {
     }
 
 }
-
-
 
 function selectMask() {
     var idslct = charIDToTypeID("slct");

@@ -8,28 +8,18 @@ const doc = activeDocument;
 (function main() {
     if (activeDocument.quickMaskMode == true) { activeDocument.quickMaskMode = false; }
     if (!hasSelection()) { alert("Chua co vung chon!"); return; }
-    if (!selectLayer("Not delete")) {
-        var newLayer = doc.artLayers.add();
-        newLayer.name = "Not delete";
-        try {
-            newLayer.move(doc.artLayers["MERGE 1"], ElementPlacement.PLACEBEFORE);
-        } catch (error) {
-            newLayer.move(doc.artLayers["Background"], ElementPlacement.PLACEBEFORE);
-        } finally {
-            doc.activeLayer.allLocked = true;
-        }
-    }
+    $.evalFile(currentFolder + "/flagLayer.jsx");
     if (activeDocument.quickMaskMode == true) { activeDocument.quickMaskMode = false; }
     // var newLayer1 = doc.artLayers.add();
     makeHue(0, -80, 0);
     doc.activeLayer.name = "Dong bo tham";
-    doc.activeLayer.move(doc.artLayers["Not delete"], ElementPlacement.PLACEAFTER);
+    doc.activeLayer.move(doc.layerSets["GroupEdit"].artLayers["Not delete"], ElementPlacement.PLACEAFTER);
     makeColorAndVibrane(6, 3);
     doc.activeLayer.grouped = true;
     // mergeVisible();
     // addMask(); applyMask();
     // hueSaturation(0, -80, 0);
-1
+    1
     // hueSaturation(-10, 0, 0);
     // cameraRawFilter(3, 0);
 })();

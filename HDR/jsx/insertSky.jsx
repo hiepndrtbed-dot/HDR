@@ -3,6 +3,7 @@ var path = "/Library PE/Library/Sky/Exterior/";
 var nameFileJson = "/resizeImage.json";
 (function main() {
     var jsonFile = new File(scriptFolder.fsName + "/Data" + nameFileJson);
+    $.evalFile(currentFolder + "/flagLayer.jsx");
     if (jsonFile.exists) {
         // alert("Resize về kích thước gốc!");
         var plagResizeFinalize = true;
@@ -13,7 +14,15 @@ var nameFileJson = "/resizeImage.json";
     } catch (error) {
     }
     try {
-        slectionSky();
+        if (layerExists("Window")) {
+            intersectSelectionWithMask("Window");
+            doc.selection.expand(2);
+            disableMask("Window");
+            slectionSky();
+            enableMask("Window");
+        } else {
+            slectionSky();
+        }
         var widthSelection = doc.selection.bounds[2] - doc.selection.bounds[0];
         var heightSelection = doc.selection.bounds[3] - doc.selection.bounds[1];
         saveAlphaChnl("Sky");
@@ -52,7 +61,7 @@ var nameFileJson = "/resizeImage.json";
 
     try {
         doc.activeLayer.name = "Sky";
-        doc.activeLayer.move(doc.layers[0], ElementPlacement.PLACEBEFORE);
+        doc.activeLayer.move(doc.layerSets["GroupEdit"], ElementPlacement.INSIDE);
         resizeImage2(widthSelection, heightSelection);
         doc.selection.load(doc.channels.getByName("Sky"));
         doc.channels.getByName("Sky").remove();

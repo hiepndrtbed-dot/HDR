@@ -1,21 +1,19 @@
 //By Duc Hiep - Acad DN Version 1.0 -- HDR
+#include "json/json2.js";
 preferences.rulerUnits = Units.PIXELS;
 const doc = activeDocument;
 var scriptFolder = new File($.fileName).parent;
 var thePathActions = scriptFolder.fsName + "/Action";
 var flagresize = true;
 (function () {
-    #include "json/json2.js";
-
     var fileVersion = new File(scriptFolder + "/local_version.json");
     if (fileVersion.exists) {
         fileVersion.open("r");
         const versionTo = JSON.parse(fileVersion.read()).version;
         fileVersion.close();
     }
-
-    //$.evalFile(File(new File($.fileName).parent + "/json/json2.js"));
-    var currentFolder = scriptFolder.fsName + "/jsx";
+    var currentFolder = scriptFolder.fsName + "/jsxbin";
+    $.evalFile(currentFolder + "/resetStruck.jsx");
     $.evalFile(currentFolder + "/dataPreset.jsx");
     var flagMerge = false;
     if (loginCheck() == true) {
@@ -1022,7 +1020,7 @@ function checkNameLayerToMger() {
 }
 // "WindowTemp"
 function createSolidWithColorPicker(flagLoadColor) {
-
+    // alert("Chọn màu để tạo Solid Fill");
     // Hiện Color Picker
     if (flagLoadColor == false) {
         if (!app.showColorPicker()) return; // Cancel thì thoát
@@ -1049,6 +1047,7 @@ function createSolidWithColorPicker(flagLoadColor) {
     executeAction(stringIDToTypeID("make"), desc, DialogModes.NO);
 
     app.activeDocument.activeLayer.name = Math.round(fg.hsb.hue) + " " + Math.round(fg.hsb.saturation) + " " + Math.round(fg.hsb.brightness);
+    deleteMask();
 }
 
 function addSwatch(name, h, s, b) {
@@ -1233,6 +1232,19 @@ function selectMask() {
     executeAction(idslct, desc444, DialogModes.NO);
 }
 
+function deleteMask() {
+    var idDlt = charIDToTypeID("Dlt ");
+    var desc445 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref249 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idChnl = charIDToTypeID("Chnl");
+    var idMsk = charIDToTypeID("Msk ");
+    ref249.putEnumerated(idChnl, idChnl, idMsk);
+    desc445.putReference(idnull, ref249);
+    executeAction(idDlt, desc445, DialogModes.NO);
+}
+
 function purgeAll() {
     var idPrge = charIDToTypeID("Prge");
     var desc7726 = new ActionDescriptor();
@@ -1252,6 +1264,26 @@ function purgeHistory() {
     executeAction(idPrge, desc8090, DialogModes.NO);
 }
 
+function intersectSelectionWithMask(nameLayerMask) {
+    var idIntr = charIDToTypeID("Intr");
+    var desc14696 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref718 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idChnl = charIDToTypeID("Chnl");
+    var idMsk = charIDToTypeID("Msk ");
+    ref718.putEnumerated(idChnl, idChnl, idMsk);
+    var idLyr = charIDToTypeID("Lyr ");
+    ref718.putName(idLyr, nameLayerMask);
+    desc14696.putReference(idnull, ref718);
+    var idWith = charIDToTypeID("With");
+    var ref719 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idfsel = charIDToTypeID("fsel");
+    ref719.putProperty(idChnl, idfsel);
+    desc14696.putReference(idWith, ref719);
+    executeAction(idIntr, desc14696, DialogModes.NO);
+}
 
 function subtractSelecTion(nameSlection) {
     var idSbtr = charIDToTypeID("Sbtr");
@@ -1799,6 +1831,26 @@ function addMask() {
     executeAction(idMk, desc358, DialogModes.NO);
 }
 
+//add mask group
+function addMaskGroup() {
+    var idMk = charIDToTypeID("Mk  ");
+    var desc199659 = new ActionDescriptor();
+    var idNw = charIDToTypeID("Nw  ");
+    var idChnl = charIDToTypeID("Chnl");
+    desc199659.putClass(idNw, idChnl);
+    var idAt = charIDToTypeID("At  ");
+    var ref3943 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idChnl = charIDToTypeID("Chnl");
+    var idMsk = charIDToTypeID("Msk ");
+    ref3943.putEnumerated(idChnl, idChnl, idMsk);
+    desc199659.putReference(idAt, ref3943);
+    var idUsng = charIDToTypeID("Usng");
+    var idUsrM = charIDToTypeID("UsrM");
+    var idRvlA = charIDToTypeID("RvlA");
+    desc199659.putEnumerated(idUsng, idUsrM, idRvlA);
+    executeAction(idMk, desc199659, DialogModes.NO);
+}
 function applyMask() {
     var c2t = function (s) {
         return app.charIDToTypeID(s);
@@ -1818,7 +1870,7 @@ function applyMask() {
 }
 // --- Gọi thử ---
 
-//Gry "Vlt "Bl  "Grn "Ylw "Orng" 
+//Gry "Vlt "Bl  "Grn "Ylw "Orng" "Rd  "
 function setColorLayer(color) {
     var idsetd = charIDToTypeID("setd");
     var desc18 = new ActionDescriptor();
@@ -1930,6 +1982,7 @@ function slectionSky() {
         desc.putReference(cTID('With'), ref2);
         executeAction(cTID('Intr'), desc, DialogModes.NO);
     }
+
 
     function prepareSelection(expand, featherVal) {
         doc.selection.expand(expand);
@@ -2275,6 +2328,39 @@ function blendingOptions(srcBlackMin, srcBlackMax, srcWhiteMin, srcWhiteMax, des
     descriptor2.putList(s2t("blendRange"), list);
     descriptor.putObject(s2t("to"), s2t("layer"), descriptor2);
     executeAction(s2t("set"), descriptor, DialogModes.NO);
+}
+
+function disableMask(layerName) {
+    var idsetd = charIDToTypeID("setd");
+    var desc15928 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref695 = new ActionReference();
+    var idLyr = charIDToTypeID("Lyr ");
+    ref695.putName(idLyr, layerName);
+    desc15928.putReference(idnull, ref695);
+    var idT = charIDToTypeID("T   ");
+    var desc15929 = new ActionDescriptor();
+    var idUsrM = charIDToTypeID("UsrM");
+    desc15929.putBoolean(idUsrM, false);
+    var idLyr = charIDToTypeID("Lyr ");
+    desc15928.putObject(idT, idLyr, desc15929);
+    executeAction(idsetd, desc15928, DialogModes.NO);
+}
+function enableMask(layerName) {
+    var idsetd = charIDToTypeID("setd");
+    var desc15928 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref695 = new ActionReference();
+    var idLyr = charIDToTypeID("Lyr ");
+    ref695.putName(idLyr, layerName);
+    desc15928.putReference(idnull, ref695);
+    var idT = charIDToTypeID("T   ");
+    var desc15929 = new ActionDescriptor();
+    var idUsrM = charIDToTypeID("UsrM");
+    desc15929.putBoolean(idUsrM, true);
+    var idLyr = charIDToTypeID("Lyr ");
+    desc15928.putObject(idT, idLyr, desc15929);
+    executeAction(idsetd, desc15928, DialogModes.NO);
 }
 
 

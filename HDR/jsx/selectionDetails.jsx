@@ -4,7 +4,8 @@ maskall();
 // createAlphaChannelBlack("Details");
 // selectRGB();
 var lengthGroup = doc.layerSets.length;
-for (var i = 0; i < lengthGroup; i++) {
+if (layerExists("GroupEdit")) { var i = 1; } else { var i = 0; }
+for (i; i < lengthGroup; i++) {
     if (!hasSelection()) {
         loadSelectionByMask(doc.layerSets[i].id);
     } else {
@@ -14,6 +15,14 @@ for (var i = 0; i < lengthGroup; i++) {
         saveAlphaChnl("Details")
     }
     if (lengthGroup == 1) {
+        loadSelectionByMask(doc.layerSets[i].id);
+        saveAlphaChnl("San");
+        doc.layerSets[i].remove();
+        doc.selection.deselect();
+        selecTool("quickSelectTool");
+        break;
+    }
+     if (lengthGroup == 2 && layerExists("GroupEdit")) {
         loadSelectionByMask(doc.layerSets[i].id);
         saveAlphaChnl("San");
         doc.layerSets[i].remove();

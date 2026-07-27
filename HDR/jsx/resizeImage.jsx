@@ -46,17 +46,19 @@ var jsonFile = new File(scriptFolder.fsName + "/Data" + nameJson);
 })();
 
 function saveResize(percentResize) {
+    var sizeWidth = 2000;
+    var sizeHeight = null;
     // Lưu lựa chọn vào file Json
     // alert(parseInt(doc.width));
     var valueSizeImages = { width: parseInt(doc.width), height: parseInt(doc.height), nameDocument: doc.name };
     if (hasSelection()) {
         saveAlphaChnl("SelectionTemp");
-        doc.resizeImage(UnitValue(1500, "px"), UnitValue(1300, "px"), null, ResampleMethod.BICUBIC);
+        doc.resizeImage(UnitValue(sizeWidth, "px"), null, null, ResampleMethod.BICUBIC);
         // resizeImagePercent(percentResize);
         doc.selection.load(doc.channels.getByName("SelectionTemp"));
         doc.channels.getByName("SelectionTemp").remove();
     } else {
-        doc.resizeImage(UnitValue(1500, "px"), UnitValue(1300, "px"), null, ResampleMethod.BICUBIC);
+        doc.resizeImage(UnitValue(sizeWidth, "px"), null, null, ResampleMethod.BICUBIC);
         // resizeImagePercent(percentResize);
     }
     jsonFile.encoding = "UTF8";

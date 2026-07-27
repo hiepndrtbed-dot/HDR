@@ -4,11 +4,12 @@ var path = "/Library PE/Library/Grass/";
 (function main() {
     if (!hasSelection()) {
         // alert("Chua co vung chon Grass!");
-        $.evalFile(currentFolder + "/+redYellow.jsx");
-        makeGroup("Grass");
-        var newLayer1 = doc.artLayers.add();
-        newLayer1.name = "RetouchGrass";
-        newLayer1.move(doc.layers["Grass"].artLayers["Color"], ElementPlacement.PLACEAFTER);
+        var group = doc.layerSets.add();
+        group.name = "Grass";
+        var newLayer = doc.artLayers.add();
+        newLayer.name = "RetouchGrass";
+        doc.activeLayer.blendMode = BlendMode.COLORBLEND;
+        newLayer.move(doc.layers["Grass"], ElementPlacement.INSIDE);
         return;
     }
     var widthSelection = doc.selection.bounds[2] - doc.selection.bounds[0];

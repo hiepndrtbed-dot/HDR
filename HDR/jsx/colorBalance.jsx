@@ -1,19 +1,9 @@
 (function main() {
-    if (!selectLayer("Not delete")) {
-        var newLayer = doc.artLayers.add();
-        newLayer.name = "Not delete";
-        try {
-            newLayer.move(doc.artLayers["MERGE 1"], ElementPlacement.PLACEBEFORE);
-        } catch (error) {
-            newLayer.move(doc.artLayers["Background"], ElementPlacement.PLACEBEFORE);
-        } finally {
-            doc.activeLayer.allLocked = true;
-        }
-    }
+    $.evalFile(currentFolder + "/flagLayer.jsx");
     if (activeDocument.quickMaskMode == true) { activeDocument.quickMaskMode = false; }
     // var newLayer1 = doc.artLayers.add();
     // newLayer1.name = "Color Balance";
-    // newLayer1.move(doc.artLayers["Not delete"], ElementPlacement.PLACEAFTER);
+    // newLayer1.move(doc.layerSets["GroupEdit"].artLayers["Not delete"], ElementPlacement.PLACEAFTER);
     // mergeVisible();
     // //thay vao day
     // actionCharID("ClrB");
@@ -26,7 +16,7 @@
     //     addMask(); applyMask();
     // }
     makeColorBalance();
-    doc.activeLayer.move(doc.artLayers["Not delete"], ElementPlacement.PLACEAFTER);
+    doc.activeLayer.move(doc.layerSets["GroupEdit"].artLayers["Not delete"], ElementPlacement.PLACEAFTER);
 })();
 
 function layerViaCopy(nameLayer) {

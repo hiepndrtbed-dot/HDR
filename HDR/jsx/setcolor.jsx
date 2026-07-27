@@ -10,7 +10,7 @@
     // alert("Đang load màu từ file: " + jsonFile.fsName);
     var flagLoadColor = false;
     var localColorData;
-    if (jsonFile.exists) {
+    if (jsonFile.exists && fixColor == false) {
         jsonFile.open("r");
         localColorData = JSON.parse(jsonFile.read());
         jsonFile.close();
@@ -34,7 +34,7 @@
         }
         if (layerExists(nameLayerSolid)) {
             // alert("Layer color da ton tai, se load mau tu layer nay");
-            doc.activeLayer = doc.layers[nameLayerSolid];
+            selectLayer(nameLayerSolid);
             addSelectionToChannelName(nameChannel);
             belowLayer();
             selectMask();
@@ -54,6 +54,7 @@
         } catch (error) {
             doc.activeLayer = doc.backgroundLayer;
         } finally {
+            $.evalFile(currentFolder + "/flagLayer.jsx");
             //kiem tra co luu vung chon truoc do chua.
             checkSelectionName(nameChannel) ? addSelectionToChannelName(nameChannel) : saveAlphaChnl(nameChannel);
             if (expandSelection != null) doc.selection.expand(expandSelection);
@@ -65,21 +66,19 @@
             blendingOptions(0, 0, 255, 255, 0, 0, destWhiteMin, 255);// blendingOptions(0, 47, 189, 255, 0, 36, 233, 255);
             doc.activeLayer.opacity = opacityValue;
             try {
-                //Di chuyen xuogn duoi layer den trang;
-                doc.activeLayer.move(doc.layers.getByName("BLACK && WHITE"), ElementPlacement.PLACEAFTER);
+                doc.activeLayer.move(doc.layerSets["GroupEdit"], ElementPlacement.INSIDE);
             } catch (error) {
                 doc.activeLayer.move(doc.layers[0], ElementPlacement.PLACEBEFORE);
             } finally {
                 selectRGB();
                 // Tạo layer màu mới nếu chưa tồn tại
-                doc.activeLayer.visible = false;
+                doc.layerSets["GroupEdit"].artLayers[nameLayer].visible = false;
                 createSolidWithColorPicker(flagLoadColor);
-                doc.activeLayer.visible = true;
+                doc.layerSets["GroupEdit"].artLayers[nameLayer].visible = true;
                 doc.activeLayer.blendMode = BlendMode.COLORBLEND;
                 doc.activeLayer.grouped = true;
-                doc.activeLayer = doc.layers[nameLayer];
-
-                if (flagLoadColor == false) {
+                doc.activeLayer = doc.layerSets["GroupEdit"].artLayers[nameLayer];
+                if (flagLoadColor == false && fixColor == false) {
                     //Save màu vao json
                     var fg = app.foregroundColor; // màu đã chọn
                     var colorData = {

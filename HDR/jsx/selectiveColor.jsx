@@ -1,15 +1,5 @@
 (function main() {
-    if (!selectLayer("Not delete")) {
-        var newLayer = doc.artLayers.add();
-        newLayer.name = "Not delete";
-        try {
-            newLayer.move(doc.artLayers["MERGE 1"], ElementPlacement.PLACEBEFORE);
-        } catch (error) {
-            newLayer.move(doc.artLayers["Background"], ElementPlacement.PLACEBEFORE);
-        } finally {
-            doc.activeLayer.allLocked = true;
-        }
-    }
+    $.evalFile(currentFolder + "/flagLayer.jsx");
     if (activeDocument.quickMaskMode == true) { activeDocument.quickMaskMode = false; }
     makeSelectiveColor("Remove Blue");
     setSelectiveColor("Bls ", {
@@ -17,16 +7,16 @@
         "Ylw ": 100
     });
 
-    doc.activeLayer.move(doc.artLayers["Not delete"], ElementPlacement.PLACEAFTER);
+    doc.activeLayer.move(doc.layerSets["GroupEdit"].artLayers["Not delete"], ElementPlacement.PLACEAFTER);
     makeSelectiveColor("Remove Cyan");
     setSelectiveColor("Cyns", {
         "Cyn ": -42,
         "Ylw ": 100
     });
 
-    doc.activeLayer.move(doc.artLayers["Not delete"], ElementPlacement.PLACEAFTER);
+    doc.activeLayer.move(doc.layerSets["GroupEdit"].artLayers["Not delete"], ElementPlacement.PLACEAFTER);
     doc.activeLayer.grouped = true;
-    doc.activeLayer = doc.artLayers["Remove Blue"];
+    doc.activeLayer = doc.layerSets["GroupEdit"].artLayers["Remove Blue"];
 
     doc.activeLayer.invert();
     selecTool("paintbrushTool");

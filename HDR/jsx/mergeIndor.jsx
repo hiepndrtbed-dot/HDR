@@ -3,6 +3,7 @@ var nameTxtPreset = "/PresetI.txt";
 var valuePreset = null;
 var withDialog = false;
 (function main() {
+    // if (doc.activeLayer.bounds[0] == 0) { alert("❌ Kiem tra retouch neu can!"); }
     $.evalFile(currentFolder + "/editPreset.jsx");
     //process
     if (selectLayer("Align") == true) {
@@ -20,6 +21,7 @@ var withDialog = false;
         doc.activeLayer.name = "MERGE 1";
         processPreset(valuePreset, withDialog);
         convertSmart();
+        cameraRawFilterALL(0, 0, 0, 0, 4, true);
         pasteFolder();
         doc.activeLayer.name = "WindowTemp";
         doc.activeLayer.move(doc.artLayers["MERGE 1"], ElementPlacement.PLACEAFTER);
@@ -39,11 +41,32 @@ var withDialog = false;
         selectLayer("MERGE 1");
         showCurves();
         shadowAndHighlight(0, 0);
+        duplicateFilterToWindowTemp();
         selecTool("penTool");
     }
 })();
 
-
+function duplicateFilterToWindowTemp() {
+    var idDplc = charIDToTypeID("Dplc");
+    var desc6490 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref374 = new ActionReference();
+    var idfilterFX = stringIDToTypeID("filterFX");
+    ref374.putIndex(idfilterFX, 1);
+    var idLyr = charIDToTypeID("Lyr ");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref374.putEnumerated(idLyr, idOrdn, idTrgt);
+    desc6490.putReference(idnull, ref374);
+    var idT = charIDToTypeID("T   ");
+    var ref375 = new ActionReference();
+    var idfilterFX = stringIDToTypeID("filterFX");
+    ref375.putIndex(idfilterFX, 1);
+    var idLyr = charIDToTypeID("Lyr ");
+    ref375.putIndex(idLyr, 1);
+    desc6490.putReference(idT, ref375);
+    executeAction(idDplc, desc6490, DialogModes.NO);
+}
 function cameraRawIndor(temp, withDialog) {
     var a = new ActionDescriptor();
     a.putInteger(charIDToTypeID('PrVN'), 6);// Process Version

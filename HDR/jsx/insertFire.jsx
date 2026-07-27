@@ -1,6 +1,7 @@
 
 (function main() {
     if (!hasSelection()) { alert("Chua co vung chon!"); return; }
+    $.evalFile(currentFolder + "/flagLayer.jsx");
     var nameTxt = "/Fire.txt"
     var path = "/Library PE/Library/Fireplace/";
     ////
@@ -38,7 +39,7 @@
     try {
         doc.activeLayer.name = "Fire";
         doc.activeLayer.blendMode = BlendMode.SCREEN;
-        doc.activeLayer.move(doc.layers[0], ElementPlacement.PLACEBEFORE);
+        doc.activeLayer.move(doc.layerSets["GroupEdit"], ElementPlacement.INSIDE);
         resizeLayer(widthSelection, heightSelection);
         doc.selection.load(doc.channels.getByName("Fire"));
         doc.channels.getByName("Fire").remove();

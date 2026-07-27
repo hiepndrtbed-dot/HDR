@@ -39,8 +39,9 @@
         }
     }
     try {
+        $.evalFile(currentFolder + "/flagLayer.jsx");
         doc.activeLayer.name = "TV";
-        doc.activeLayer.move(doc.layers[0], ElementPlacement.PLACEBEFORE);
+        doc.artLayers["TV"].move(doc.layerSets["GroupEdit"], ElementPlacement.INSIDE);
         resizeLayer(widthSelection, heightSelection);
         doc.selection.load(doc.channels.getByName("TV"));
         doc.channels.getByName("TV").remove();

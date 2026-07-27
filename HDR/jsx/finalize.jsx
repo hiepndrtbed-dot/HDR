@@ -18,7 +18,7 @@ var temp = 0;
         showCurves();
         // alert("Check VERTICAL && CAMERA!!");
         // cameraRawIndor(2, true);
-        cameraRawFilterALL(temp, 0, 0, 0, 4, withDialog);
+        // cameraRawFilterALL(temp, 0, 0, 0, 4, withDialog);
     } catch (error) {
         doc.artLayers.getByName("FINALIZE").remove();
         doc.activeLayer = doc.artLayers["MERGE 1"];
