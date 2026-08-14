@@ -9,10 +9,12 @@
         doc.activeLayer = doc.artLayers.getByName("WindowTemp");
         doc.activeLayer.move(doc.layerSets["GroupEdit"], ElementPlacement.INSIDE);
         doc.activeLayer.name = "Window";
+        // convertSmart();
+        // doc.selection.load(doc.channels.getByName("Window"));
         addMask(); selectRGB();
         setFeatherMask(featherMask);
         setLevels(0, 255, 0, 255);
-        makeColorAndVibrane(7, 5);
+        makeColorAndVibrane(2, 1, 10, 10);
         doc.activeLayer.grouped = true;
         doc.activeLayer = doc.layerSets["GroupEdit"].artLayers["Window"];
         // loadSelectionByMask(doc.activeLayer.id);

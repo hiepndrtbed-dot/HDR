@@ -46,7 +46,7 @@ var jsonFile = new File(scriptFolder.fsName + "/Data" + nameJson);
 })();
 
 function saveResize(percentResize) {
-    var sizeWidth = 2000;
+    var sizeWidth = 1500;
     var sizeHeight = null;
     // Lưu lựa chọn vào file Json
     // alert(parseInt(doc.width));

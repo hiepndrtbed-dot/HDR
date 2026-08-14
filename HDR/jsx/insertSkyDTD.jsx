@@ -9,7 +9,6 @@
 
     try {
         doc.activeLayer = doc.layerSets["GroupEdit"].artLayers.getByName("Sky");
-        alert("Da co layer Sky, vui long xoa layer Sky truoc khi chay script!");
         loadSelectionMask();
     } catch (error) {
         slectionSky();

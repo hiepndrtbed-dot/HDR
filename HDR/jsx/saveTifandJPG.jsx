@@ -1,6 +1,9 @@
 var nameFileJson = "/resizeImage.json";
 (function () {
     purgeAll();
+    if(layerExists("WindowTemp")){
+        doc.artLayers["WindowTemp"].remove();
+    }
     var jsonFile = new File(scriptFolder.fsName + "/Data" + nameFileJson);
     if (jsonFile.exists) {
         // alert("Resize về kích thước gốc!");

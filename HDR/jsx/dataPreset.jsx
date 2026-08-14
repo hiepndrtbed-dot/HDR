@@ -64,6 +64,10 @@ function cameraRawIndor(withDialog) {
         a.putInteger(charIDToTypeID('DfGA'), 0);//Green Amount
         a.putInteger(charIDToTypeID('DPGL'), 40);//Green Hue (in)
         a.putInteger(charIDToTypeID('DPGH'), 60);//Green Hue (out)
+
+        //Vertical
+        // a.putInteger(charIDToTypeID('PerU'), 4);//vertical
+
         executeAction(stringIDToTypeID('Adobe Camera Raw Filter'), a, withDialog ? DialogModes.ALL : DialogModes.NO);
     } catch (error) {
         doc.activeLayer.remove();

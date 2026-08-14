@@ -12,7 +12,7 @@ var flagresize = true;
         const versionTo = JSON.parse(fileVersion.read()).version;
         fileVersion.close();
     }
-    var currentFolder = scriptFolder.fsName + "/jsxbin";
+    var currentFolder = scriptFolder.fsName + "/jsx";
     $.evalFile(currentFolder + "/resetStruck.jsx");
     $.evalFile(currentFolder + "/dataPreset.jsx");
     var flagMerge = false;
@@ -2170,7 +2170,7 @@ function makeColorBalance() {
     executeAction(idMk, desc494, DialogModes.NO);
 }
 
-function makeColorAndVibrane(temp, tint) {
+function makeColorAndVibrane(temp, tint,vibrance,saturation) {
     var idMk = charIDToTypeID("Mk  ");
     var desc3908 = new ActionDescriptor();
     var idnull = charIDToTypeID("null");
@@ -2208,9 +2208,9 @@ function makeColorAndVibrane(temp, tint) {
     var idtint = stringIDToTypeID("tint");
     desc124156.putInteger(idtint, tint);
     var idvibrance = stringIDToTypeID("vibrance");
-    desc124156.putInteger(idvibrance, 0);
+    desc124156.putInteger(idvibrance, vibrance);
     var idStrt = charIDToTypeID("Strt");
-    desc124156.putInteger(idStrt, 0);
+    desc124156.putInteger(idStrt, saturation);
     var iduseLegacy = stringIDToTypeID("useLegacy");
     desc124156.putBoolean(iduseLegacy, false);
     var idvibrance = stringIDToTypeID("vibrance");

@@ -50,9 +50,9 @@ var destWhiteMin = 180;
     // alert(doc.layers.length);
     // alert(doc.layers[0].id);
 
-    for (var index = 0; index < activeDocument.artLayers.length; index++) {
-        if (hasLayerStyle(activeDocument.artLayers[index])) {
-            activeDocument.activeLayer = activeDocument.artLayers[index];
+    for (var index = 0; index < activeDocument.layerSets["GroupEdit"].artLayers.length; index++) {
+        if (hasLayerStyle(activeDocument.layerSets["GroupEdit"].artLayers[index])) {
+            activeDocument.activeLayer = activeDocument.layerSets["GroupEdit"].artLayers[index];
             blendingOptions(0, 0, 255, 255, 0, 0, destWhiteMin, 255);
         }else{
             // alert("Layer " + activeDocument.artLayers[index].name + " chưa có Blending Options");

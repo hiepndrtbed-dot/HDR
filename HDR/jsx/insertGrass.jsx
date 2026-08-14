@@ -2,10 +2,10 @@ var nameTxt = "/Grass.txt"
 var path = "/Library PE/Library/Grass/";
 
 (function main() {
+    var group = doc.layerSets.add();
+    group.name = "Grass";
     if (!hasSelection()) {
         // alert("Chua co vung chon Grass!");
-        var group = doc.layerSets.add();
-        group.name = "Grass";
         var newLayer = doc.artLayers.add();
         newLayer.name = "RetouchGrass";
         doc.activeLayer.blendMode = BlendMode.COLORBLEND;
@@ -43,8 +43,8 @@ var path = "/Library PE/Library/Grass/";
         }
     }
     try {
-        doc.activeLayer.name = "Grass";
-        doc.activeLayer.move(doc.layers[0], ElementPlacement.PLACEBEFORE);
+        doc.activeLayer.move(doc.layers["Grass"], ElementPlacement.INSIDE);
+        doc.activeLayer.name = "Gras";
         doc.activeLayer.opacity = 85;
         resizeImage2(widthSelection, heightSelection);
         setLevels(0.8);

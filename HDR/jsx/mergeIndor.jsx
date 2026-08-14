@@ -13,36 +13,29 @@ var withDialog = false;
     //Create file window temp
     try {
         doc.activeLayer = doc.layerSets[0].artLayers[0];
-        selectRGB();
-        doc.selection.selectAll();
-        doc.selection.copy();
-        selectChoseMultiLayer(doc.layers[0].name, doc.layers[doc.layers.length - 1].name);
+        var layerDuplicate = doc.activeLayer.duplicate(doc.layers[0], ElementPlacement.PLACEBEFORE);
+        layerDuplicate.name = "WindowTemp";
+        doc.activeLayer = doc.artLayers["WindowTemp"];
+        deleteMask();
+        convertSmart();
+        selectChoseMultiLayer(doc.layers[1].name, doc.layers[doc.layers.length - 1].name);
         convertSmart();
         doc.activeLayer.name = "MERGE 1";
         processPreset(valuePreset, withDialog);
         convertSmart();
-        cameraRawFilterALL(0, 0, 0, 0, 4, true);
-        pasteFolder();
-        doc.activeLayer.name = "WindowTemp";
-        doc.activeLayer.move(doc.artLayers["MERGE 1"], ElementPlacement.PLACEAFTER);
-        convertSmart();
-    } catch (error) {
-        return;
-        // doc.activeLayer.name = "MERGE 1";
-        // convertSmart();
-        // processPreset(valuePreset, withDialog);
-        // convertSmart();
-    } finally {
+        doc.activeLayer.move(doc.artLayers["WindowTemp"], ElementPlacement.PLACEBEFORE);
         if (flagMerge == true) {
             selectChoseMultiLayer(doc.layers[0].name, doc.layers[doc.layers.length - 1].name);
             freeTransform(101);
             actionMenu("freeTransform");
         }
         selectLayer("MERGE 1");
+        // shadowAndHighlight(0, 0);
+        // duplicateFilterToWindowTemp();
         showCurves();
-        shadowAndHighlight(0, 0);
-        duplicateFilterToWindowTemp();
         selecTool("penTool");
+    } catch (error) {
+        return;
     }
 })();
 

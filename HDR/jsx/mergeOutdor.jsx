@@ -11,11 +11,12 @@ var withDialog = true;
     selectChoseMultiLayer(doc.layers[0].name, doc.layers[doc.layers.length - 1].name);
     doc.activeLayer.name = "MERGE 1";
     convertSmart();
+    processPreset(valuePreset, withDialog);
+    convertSmart();
     if (flagMerge == true) {
         freeTransform(101);
         actionMenu("freeTransform");
     }
-    processPreset(valuePreset, withDialog);
     // cameraRawOutdoor(1, true, 4);
     shadowAndHighlight(0, 0);
     selecTool("penTool");

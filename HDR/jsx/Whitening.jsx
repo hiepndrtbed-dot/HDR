@@ -45,13 +45,10 @@ if (!hasSelection()) {
             doc.activeLayer.blendMode = BlendMode.COLORBLEND;
             doc.activeLayer.grouped = true;
             deleteMask();
-            makeColorAndVibrane(2, 0);
-            doc.activeLayer.grouped = true;
-            deleteMask();
             if (valuePreset == 1 || valuePreset == 7) { // kiem tra neu la preset trang xam
-                doc.activeLayer.visible = true;
-            } else {
-                doc.activeLayer.visible = false;
+                makeColorAndVibrane(2, 0, 0, 0);
+                doc.activeLayer.grouped = true;
+                deleteMask();
             }
             doc.activeLayer = doc.layerSets["GroupEdit"].artLayers[nameLayer];
         } else {

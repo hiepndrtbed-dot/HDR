@@ -32,11 +32,11 @@
             var nameLayerSolid = (Math.round(localColorData.hue) + " " + Math.round(localColorData.saturation) + " " + Math.round(localColorData.brightness));
         } catch (error) {
         }
-        if (layerExists(nameLayerSolid)) {
+        if (layerExists(nameLayerSolid) && layerExists(nameLayer)) {
             // alert("Layer color da ton tai, se load mau tu layer nay");
-            selectLayer(nameLayerSolid);
+            selectLayer(nameLayer);
             addSelectionToChannelName(nameChannel);
-            belowLayer();
+            // belowLayer();
             selectMask();
             fillColor(255, 255, 255);
             doc.selection.deselect();
