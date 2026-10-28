@@ -1,7 +1,7 @@
 var nameFileJson = "/resizeImage.json";
 (function () {
     purgeAll();
-    if(layerExists("WindowTemp")){
+    if (layerExists("WindowTemp")) {
         doc.artLayers["WindowTemp"].remove();
     }
     var jsonFile = new File(scriptFolder.fsName + "/Data" + nameFileJson);
@@ -59,11 +59,12 @@ var nameFileJson = "/resizeImage.json";
         var jpgFile = new File(folderJpg + "/" + fileName + ".jpg");
         var jpgFileNoGrass = new File(folderJpgNoGrass + "/" + fileName + ".jpg");
         var jpgFileDTD = new File(folderJpg + "/" + fileName + "_addon_dtd.jpg");
+        var jpgFilePl = new File(folderJpg + "/" + fileName + "_addon_pl.jpg");
 
-        doc.convertProfile("sRGB IEC61966-2.1",
-            Intent.RELATIVECOLORIMETRIC,
-            true,
-            true);
+        // doc.convertProfile("sRGB IEC61966-2.1",
+        //     Intent.RELATIVECOLORIMETRIC,
+        //     true,
+        //     true);
 
         // Setup JPG
         var jpgOptions = new JPEGSaveOptions();
@@ -71,6 +72,18 @@ var nameFileJson = "/resizeImage.json";
         jpgOptions.formatOptions = FormatOptions.STANDARDBASELINE;  // Đảm bảo tương thích cao nhất
         jpgOptions.matte = MatteType.NONE;                          // Không áp nền (tránh dính màu nền)
         jpgOptions.quality = 12;
+
+        //Save JPG Pl
+        if (selectLayer("PL Color")) {
+            if (selectLayer("DTD")) {
+                doc.layers.getByName("DTD").visible = false;
+            }
+            doc.layers.getByName("PL Color").visible = true;
+            doc.layers.getByName("PL Background Adjustments").visible = true;
+            doc.saveAs(jpgFilePl, jpgOptions, true);
+            doc.layers.getByName("PL Color").visible = false;
+            doc.layers.getByName("PL Background Adjustments").visible = false;
+        }
 
         if (selectLayer("Grass")) {
             if (selectLayer("DTD")) {
@@ -117,6 +130,7 @@ var nameFileJson = "/resizeImage.json";
         var tifOptions = new TiffSaveOptions();
         tifOptions.imageCompression = TIFFEncoding.NONE;
         tifOptions.layers = true;
+        
         doc.saveAs(tifFile, tifOptions, true);
         doc.close(SaveOptions.DONOTSAVECHANGES);
 

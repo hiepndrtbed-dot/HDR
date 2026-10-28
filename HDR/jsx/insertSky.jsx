@@ -16,7 +16,7 @@ var nameFileJson = "/resizeImage.json";
     try {
         if (layerExists("Window")) {
             intersectSelectionWithMask("Window");
-            doc.selection.expand(2);
+            doc.selection.expand(1);
             disableMask("Window");
             slectionSky();
             enableMask("Window");

@@ -14,16 +14,18 @@ for (i; i < lengthGroup; i++) {
     if (lengthGroup == 2) {
         saveAlphaChnl("Details")
     }
-    if (lengthGroup == 1) {
+    // if (lengthGroup == 1) {
+    //     loadSelectionByMask(doc.layerSets[i].id);
+    //     doc.selection.expand(1);
+    //     saveAlphaChnl("San");
+    //     doc.layerSets[i].remove();
+    //     doc.selection.deselect();
+    //     selecTool("quickSelectTool");
+    //     break;
+    // }
+    if (lengthGroup == 2 && layerExists("GroupEdit") || lengthGroup == 1) {
         loadSelectionByMask(doc.layerSets[i].id);
-        saveAlphaChnl("San");
-        doc.layerSets[i].remove();
-        doc.selection.deselect();
-        selecTool("quickSelectTool");
-        break;
-    }
-     if (lengthGroup == 2 && layerExists("GroupEdit")) {
-        loadSelectionByMask(doc.layerSets[i].id);
+        doc.selection.expand(1);
         saveAlphaChnl("San");
         doc.layerSets[i].remove();
         doc.selection.deselect();

@@ -6,5 +6,6 @@ var nameTxtLV = "/levelColor3.txt";
 const opacityValue = 100;
 var middleLevelsValue = 1;
 var destWhiteMin = 180;
+var statusLevels = true;
 var nameJsonColor = "/color3.json";
 $.evalFile(currentFolder + "/setcolor.jsx");

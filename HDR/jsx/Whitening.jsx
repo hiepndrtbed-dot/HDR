@@ -3,7 +3,7 @@ preferences.rulerUnits = Units.PIXELS
 app.preferences.typeunits = TypeUnits.PIXELS;
 
 var nameLayer = "BLACK && WHITE";
-var feather = 1;
+var feather = 0.1;
 var hueValue = 100;
 var expandSelection = 1;
 var middleLevelsValue = 1.2;

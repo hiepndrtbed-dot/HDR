@@ -4,6 +4,7 @@ var path = "/Library PE/Library/Grass/";
 (function main() {
     var group = doc.layerSets.add();
     group.name = "Grass";
+    
     if (!hasSelection()) {
         // alert("Chua co vung chon Grass!");
         var newLayer = doc.artLayers.add();

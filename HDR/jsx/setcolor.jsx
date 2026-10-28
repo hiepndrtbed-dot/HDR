@@ -61,7 +61,6 @@
             makeLevelsAdjustment(middleLevelsValue);
             doc.activeLayer.name = nameLayer;
             setColorLayer("Bl  ");
-
             setFeatherMask(feather);
             blendingOptions(0, 0, 255, 255, 0, 0, destWhiteMin, 255);// blendingOptions(0, 47, 189, 255, 0, 36, 233, 255);
             doc.activeLayer.opacity = opacityValue;
@@ -73,6 +72,13 @@
                 selectRGB();
                 // Tạo layer màu mới nếu chưa tồn tại
                 doc.layerSets["GroupEdit"].artLayers[nameLayer].visible = false;
+
+                // //Them layer Hue/Saturation co the xoa di cho gon.
+                // makeHue(0, -100, 0);
+                // doc.activeLayer.grouped = true;
+                // deleteMask();
+                // //xoa toi doan nay 
+
                 createSolidWithColorPicker(flagLoadColor);
                 doc.layerSets["GroupEdit"].artLayers[nameLayer].visible = true;
                 doc.activeLayer.blendMode = BlendMode.COLORBLEND;

@@ -11,7 +11,7 @@ var jsonFile = new File(scriptFolder.fsName + "/Data" + nameJson);
         jsonFile.open("r");
         var localData = JSON.parse(jsonFile.read());
         jsonFile.close();
-        if (localData.nameDocument != doc.name) {
+        if (localData.nameDocument.replace(/\.[^\.]+$/, '') != doc.name.replace(/\.[^\.]+$/, '')) {
             alert("Về files ** " + localData.nameDocument + " ** để thực hiện nhé!");
             return false;
         }

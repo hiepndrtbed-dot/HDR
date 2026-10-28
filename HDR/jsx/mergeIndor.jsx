@@ -27,7 +27,7 @@ var withDialog = false;
         if (flagMerge == true) {
             selectChoseMultiLayer(doc.layers[0].name, doc.layers[doc.layers.length - 1].name);
             freeTransform(101);
-            actionMenu("freeTransform");
+            // actionMenu("freeTransform");
         }
         selectLayer("MERGE 1");
         // shadowAndHighlight(0, 0);

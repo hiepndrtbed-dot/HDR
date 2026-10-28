@@ -2,9 +2,9 @@ var nameFileJson = "/resizeImage.json";
 var temp = 0;
 (function main() {
     purgeAll();
-    if (layerExists("WindowTemp")) {
-        doc.artLayers["WindowTemp"].remove();
-    }
+    // if (layerExists("WindowTemp")) {
+    //     doc.artLayers["WindowTemp"].remove();
+    // }
     //kiem tra ressize.
     // var jsonFile = new File(scriptFolder.fsName + "/Data" + nameFileJson);
     // if (jsonFile.exists) {

@@ -675,7 +675,7 @@ function loginCheck() {
             if (daysBetween(loginTime) > localData.makLastLogin) {
                 alert("⚠️ Tài khoản hết hạn. Vui lòng liên hệ 0982858221 để được cấp.");
                 var scriptFolder = File($.fileName).parent;
-                var targetScript = File(scriptFolder + "/logout.jsx");
+                var targetScript = File(scriptFolder + "/py/logout.jsx");
                 if (targetScript.exists) {
                     $.evalFile(targetScript);
                 }

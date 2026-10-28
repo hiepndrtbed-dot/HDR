@@ -1,7 +1,13 @@
 (function () {
     var featherMask = 1;
+    if (activeDocument.quickMaskMode == true) { activeDocument.quickMaskMode = false; }
     if (doc.artLayers["MERGE 1"].visible == false) {
-        showLayerVisibele("WindowTemp");
+        try {
+            showLayerVisibele("WindowTemp");
+        } catch (error) {
+            alert("WindowTemp layer does not exist.");
+        }
+
     }
     saveChannel("Window");
     if (layerExists("WindowTemp")) {
@@ -14,6 +20,8 @@
         addMask(); selectRGB();
         setFeatherMask(featherMask);
         setLevels(0, 255, 0, 255);
+        makeHue(0, 0, 0);
+        doc.activeLayer.grouped = true;
         makeColorAndVibrane(2, 1, 10, 10);
         doc.activeLayer.grouped = true;
         doc.activeLayer = doc.layerSets["GroupEdit"].artLayers["Window"];
@@ -23,29 +31,7 @@
         // doc.channels.getByName("Window").remove();
         // selecTool("lassoTool");
     } else {
-        doc.activeLayer = doc.layerSets[0].artLayers[0];
-        doc.selection.expand(20);
-        doc.selection.copy();
-        doc.activeLayer = doc.layers[0];
-        doc.selection.load(doc.channels.getByName("Window"));
-        doc.channels.getByName("Window").remove();
-        var idpasteInto = stringIDToTypeID("pasteInto");
-        executeAction(idpasteInto, undefined, DialogModes.NO);
-        // pasteFolder();
-        // doc.activeLayer.merge();
-        // doc.selection.load(doc.channels.getByName("Window"));
-        // doc.selection.expand(20);
-        // doc.selection.invert();
-        // doc.selection.clear();
-        // doc.selection.deselect();
-        doc.activeLayer.name = "Window";
-        // setCurves(0, 0, 250, 255, 0, 0, 255, 250); 
-        setFeatherMask(1);
-        // actionCharID("Lvls");
-        setLevels(0, 255, 0, 255);
-        selectMask();
-        // loadSelectionByMask(doc.activeLayer.id);
-        selecTool("paintbrushTool");
+        alert("WindowTemp layer does not exist.");
     }
 })();
 

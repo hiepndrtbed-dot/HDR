@@ -304,7 +304,7 @@ function cameraRawOutdoorMLP(withDialog) {
 
 // Preset Outdoor
 function cameraRawOutdoor(withDialog) {
-    alert("Preset Outdoor - check VERTICAL && CAMERA");
+    // alert("Preset Outdoor - check VERTICAL && CAMERA");
     var a = new ActionDescriptor();
     a.putInteger(charIDToTypeID('PrVN'), 6);// Process Version
     a.putInteger(charIDToTypeID('Cr12'), 5);//contract
