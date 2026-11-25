@@ -6,7 +6,7 @@ var withDialog = false;
     // if (doc.activeLayer.bounds[0] == 0) { alert("❌ Kiem tra retouch neu can!"); }
     $.evalFile(currentFolder + "/editPreset.jsx");
     //process
-    if (selectLayer("Align") == true) {
+    if (selectLayer("Retouch.") == true) {
         flagMerge = true;
     }
     //process

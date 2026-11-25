@@ -4,6 +4,9 @@
     $.evalFile(currentFolder + "/checkBlending.jsx");
     //Kiem tra levels;
     $.evalFile(currentFolder + "/setmidlevels.jsx");
+    if (flagLevels == false) {// alert("Chua chon midlevels, se thoat!");
+      return;
+    }
 
     //kiem tra color;
     var jsonFile = new File(scriptFolder.fsName + "/Data" + nameJsonColor);
@@ -65,7 +68,13 @@
             blendingOptions(0, 0, 255, 255, 0, 0, destWhiteMin, 255);// blendingOptions(0, 47, 189, 255, 0, 36, 233, 255);
             doc.activeLayer.opacity = opacityValue;
             try {
-                doc.activeLayer.move(doc.layerSets["GroupEdit"], ElementPlacement.INSIDE);
+                if (layerExists("Window") == true) {
+                    // alert("Layer Window da ton tai, se move layer color vao sau layer Window");
+                    doc.activeLayer.move(doc.layerSets["GroupEdit"].artLayers["Window"], ElementPlacement.PLACEAFTER);
+                }
+                else {
+                    doc.activeLayer.move(doc.layerSets["GroupEdit"], ElementPlacement.INSIDE);
+                }
             } catch (error) {
                 doc.activeLayer.move(doc.layers[0], ElementPlacement.PLACEBEFORE);
             } finally {
@@ -94,7 +103,7 @@
                     };
 
                     //save color for swatches
-                    addSwatch(Math.round(fg.hsb.hue) + " " + Math.round(fg.hsb.saturation) + " " + Math.round(fg.hsb.brightness), colorData.hue, colorData.saturation, colorData.brightness);
+                    // addSwatch(Math.round(fg.hsb.hue) + " " + Math.round(fg.hsb.saturation) + " " + Math.round(fg.hsb.brightness), colorData.hue, colorData.saturation, colorData.brightness);
                     jsonFile.open("w");
                     jsonFile.write(JSON.stringify(colorData));
                     jsonFile.close();

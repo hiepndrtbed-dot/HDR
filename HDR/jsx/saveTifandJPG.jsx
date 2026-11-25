@@ -15,6 +15,27 @@ var nameFileJson = "/resizeImage.json";
             return;
         }
     }
+    try { doc.pathItems.getByName("Wall").remove(); } catch (error) { }
+
+    //luu path vung tuong
+    var hasWorkPath = false;
+    for (var i = 0; i < doc.pathItems.length; i++) {
+        if (doc.pathItems[i].name === "Wall") {
+            hasWorkPath = true;
+            break;
+        }
+    }
+    if (!hasWorkPath) {
+        try {
+            doc.selection.load(doc.channels.getByName("Wall"));
+            if (doc.selection) {
+                // alert("Đang lưu vùng tường vào path Wall!");
+                makeWorkPath(0.5);
+                doc.pathItems.getByName("Work Path").name = "Wall";
+            }
+        } catch (error) { }
+    }
+
     // Kiểm tra xem có tài liệu đang mở không
     if (app.documents.length > 0) {
         //Channels to path
@@ -74,8 +95,8 @@ var nameFileJson = "/resizeImage.json";
         jpgOptions.quality = 12;
 
         //Save JPG Pl
-        if (selectLayer("PL Color")) {
-            if (selectLayer("DTD")) {
+        if (layerExists("PL Color")) {
+            if (layerExists("DTD")) {
                 doc.layers.getByName("DTD").visible = false;
             }
             doc.layers.getByName("PL Color").visible = true;
@@ -85,8 +106,8 @@ var nameFileJson = "/resizeImage.json";
             doc.layers.getByName("PL Background Adjustments").visible = false;
         }
 
-        if (selectLayer("Grass")) {
-            if (selectLayer("DTD")) {
+        if (layerExists("Grass")) {
+            if (layerExists("DTD")) {
                 //Save JPG
                 doc.layers.getByName("DTD").visible = false;
                 doc.saveAs(jpgFile, jpgOptions, true);
@@ -110,7 +131,7 @@ var nameFileJson = "/resizeImage.json";
 
             }
         } else {
-            if (selectLayer("DTD")) {
+            if (layerExists("DTD")) {
                 //Save JPG
                 doc.layers.getByName("DTD").visible = false;
                 doc.saveAs(jpgFile, jpgOptions, true);
@@ -130,7 +151,7 @@ var nameFileJson = "/resizeImage.json";
         var tifOptions = new TiffSaveOptions();
         tifOptions.imageCompression = TIFFEncoding.NONE;
         tifOptions.layers = true;
-        
+
         doc.saveAs(tifFile, tifOptions, true);
         doc.close(SaveOptions.DONOTSAVECHANGES);
 
@@ -151,4 +172,27 @@ var nameFileJson = "/resizeImage.json";
         alert("Không có tài liệu nào đang mở.");
     }
 })();
+
+
+
+function makeWorkPath(tolerance) {
+    var c2t = function (s) {
+        return app.charIDToTypeID(s);
+    };
+
+    var s2t = function (s) {
+        return app.stringIDToTypeID(s);
+    };
+
+    var descriptor = new ActionDescriptor();
+    var reference = new ActionReference();
+    var reference2 = new ActionReference();
+
+    reference.putClass(s2t("path"));
+    descriptor.putReference(c2t("null"), reference);
+    reference2.putProperty(s2t("selectionClass"), s2t("selection"));
+    descriptor.putReference(s2t("from"), reference2);
+    descriptor.putUnitDouble(s2t("tolerance"), s2t("pixelsUnit"), tolerance);
+    executeAction(s2t("make"), descriptor, DialogModes.NO);
+}
 

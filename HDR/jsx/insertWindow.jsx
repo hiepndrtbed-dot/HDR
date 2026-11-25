@@ -20,7 +20,11 @@
         addMask(); selectRGB();
         setFeatherMask(featherMask);
         setLevels(0, 255, 0, 255);
-        makeHue(0, 0, 0);
+        makeSelectiveColor("Remove Cyan");
+        setSelectiveColor("Cyns", {
+            "Cyn ": -42,
+            "Ylw ": 100
+        });
         doc.activeLayer.grouped = true;
         makeColorAndVibrane(2, 1, 10, 10);
         doc.activeLayer.grouped = true;

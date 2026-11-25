@@ -2295,6 +2295,60 @@ function layerExists(layerName) {
     }
 }
 
+function setSelectiveColor(colorRange, values) {
+
+    var desc = new ActionDescriptor();
+    var ref = new ActionReference();
+
+    ref.putEnumerated(
+        charIDToTypeID("AdjL"),
+        charIDToTypeID("Ordn"),
+        charIDToTypeID("Trgt")
+    );
+
+    desc.putReference(charIDToTypeID("null"), ref);
+
+    var toDesc = new ActionDescriptor();
+
+    var list = new ActionList();
+    var colorDesc = new ActionDescriptor();
+
+    colorDesc.putEnumerated(
+        charIDToTypeID("Clrs"),
+        charIDToTypeID("Clrs"),
+        charIDToTypeID(colorRange)
+    );
+
+    for (var key in values) {
+
+        if (values[key] != null) {
+
+            colorDesc.putUnitDouble(
+                charIDToTypeID(key),
+                charIDToTypeID("#Prc"),
+                values[key]
+            );
+
+        }
+    }
+
+    list.putObject(charIDToTypeID("ClrC"), colorDesc);
+
+    toDesc.putList(charIDToTypeID("ClrC"), list);
+
+    desc.putObject(
+        charIDToTypeID("T   "),
+        charIDToTypeID("SlcC"),
+        toDesc
+    );
+
+    executeAction(
+        charIDToTypeID("setd"),
+        desc,
+        DialogModes.NO
+    );
+}
+
 // blendingOptions(0, 0, 255, 255, 0, 0, 180, 255);
 function blendingOptions(srcBlackMin, srcBlackMax, srcWhiteMin, srcWhiteMax, destBlackMin, destBlackMax, destWhiteMin, Dstt) {
     var c2t = function (s) {

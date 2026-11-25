@@ -14,7 +14,7 @@ const doc = activeDocument;
     makeHue(0, -80, 0);
     doc.activeLayer.name = "Dong bo tham";
     doc.activeLayer.move(doc.layerSets["GroupEdit"].artLayers["Not delete"], ElementPlacement.PLACEAFTER);
-    makeColorAndVibrane(6, 3, 0, 0);
+    makeColorAndVibrane(3, 1, 0, 0);
     doc.activeLayer.grouped = true;
     // mergeVisible();
     // addMask(); applyMask();
