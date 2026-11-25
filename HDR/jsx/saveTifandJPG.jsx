@@ -15,26 +15,22 @@ var nameFileJson = "/resizeImage.json";
             return;
         }
     }
-    try { doc.pathItems.getByName("Wall").remove(); } catch (error) { }
 
     //luu path vung tuong
-    var hasWorkPath = false;
     for (var i = 0; i < doc.pathItems.length; i++) {
         if (doc.pathItems[i].name === "Wall") {
-            hasWorkPath = true;
+            doc.pathItems[i].remove();
             break;
         }
     }
-    if (!hasWorkPath) {
-        try {
-            doc.selection.load(doc.channels.getByName("Wall"));
-            if (doc.selection) {
-                // alert("Đang lưu vùng tường vào path Wall!");
-                makeWorkPath(0.5);
-                doc.pathItems.getByName("Work Path").name = "Wall";
-            }
-        } catch (error) { }
-    }
+    try {
+        doc.selection.load(doc.channels.getByName("Wall"));
+        if (doc.selection) {
+            // alert("Đang lưu vùng tường vào path Wall!");
+            makeWorkPath(0.5);
+            doc.pathItems.getByName("Work Path").name = "Wall";
+        }
+    } catch (error) { }
 
     // Kiểm tra xem có tài liệu đang mở không
     if (app.documents.length > 0) {

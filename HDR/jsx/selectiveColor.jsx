@@ -40,5 +40,10 @@
 // "Bls " // Blues
 // "Mgnt" // Magentas
 
+//exambles
+setSelectiveColor("Bls ", {
+    "Cyn ": -42,
+    "Ylw ": 100
+});
 
 

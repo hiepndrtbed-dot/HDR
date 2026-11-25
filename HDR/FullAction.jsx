@@ -117,10 +117,6 @@ var flagresize = true;
             "MergeFlash các Layer có các độ sáng khác nhau!"
         );
 
-
-
-
-
         var buttonDTD = createButton(
             group1,
             "DTD",
